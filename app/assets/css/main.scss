@@ -1,0 +1,23 @@
+// Caricamento Google Font
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+// Caricamento Icone Bootstrap
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// Colori Bootstrap (Utilizza un colore solido come base)
+$danger: #B3221C;
+
+// Caricamento CSS Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Custom Gradients & Utilities
+$danger-gradient: linear-gradient(135deg, #b91c1c 0%, #d52b1e 50%, #991b1b 100%);
+
+.bg-danger-gradient {
+  background: $danger-gradient;
+}
+
+// Font globale
+body {
+  font-family: 'Montserrat', sans-serif;
+}
