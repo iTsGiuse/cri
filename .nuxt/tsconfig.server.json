@@ -132,7 +132,6 @@
   ],
   "exclude": [
     "../node_modules",
-    "../../../../../../../../node_modules",
     "../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/node_modules",
     "../node_modules/.pnpm/@nuxt+image@2.1.0_magic-string@1.2.3_magicast@0.5.4_rolldown@1.2.8_unplugin@3.3.0_esbui_fba6af01930d5f3a7a33e90f37a6d79b/node_modules/@nuxt/image/node_modules",
     "../node_modules/.pnpm/@nuxt+telemetry@2.9.1_@nuxt+kit@4.5.2_magic-string@1.2.3_magicast@0.5.4_rolldown@1.2.8__60d45f32f48a05c409addaf3fad2f71b/node_modules/@nuxt/telemetry/node_modules",

@@ -1,0 +1,75 @@
+<template>
+  <div>
+    <Hero />
+    <LazySezioniAlternate :sezioni="datiSezioni" />
+  </div>
+</template>
+
+<script setup lang="ts">
+const datiSezioni = [
+  {
+    id: 1,
+    titolo: 'NUE 112: Il Numero Unico Europeo per le Emergenze',
+    descrizione: 'In Europa e in Italia, il 112 è il numero gratuito per richiedere qualsiasi tipo di soccorso. Una volta effettuata la chiamata, la Centrale Unica di Risposta (CUR) localizza il chiamante, individua la natura dell\'emergenza e smista la richiesta entro pochi secondi alla centrale operativa più idonea (Sanità, Forze dell\'Ordine o Vigili del Fuoco).',
+    immagine: 'https://picsum.photos/seed/nue112/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+  {
+    id: 2,
+    titolo: 'Emergenza Sanitaria e Centrale Operativa 118',
+    descrizione: 'Il 118 (o l\'estensione sanitaria del 112) è dedicato alle urgenze mediche, malori e traumi gravemente compromettenti per la vita. Gli operatori di centrale valutano la gravità dell\'evento tramite il triage telefonico, guidano il chiamante nelle prime manovre di soccorso e inviano il mezzo adeguato (Ambulanza di Base, Mezzo di Soccorso Avanzato con Infermiere o Automedica).',
+    immagine: 'https://picsum.photos/seed/soccorso118/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+  {
+    id: 3,
+    titolo: 'Soccorso Stradale e Autostradale',
+    descrizione: 'Negli incidenti stradali, la tempestività è fondamentale. La chiamata attiva simultaneamente la catena del soccorso: il personale sanitario per la cura dei feriti, i Vigili del Fuoco per l\'estricazione dei passeggeri o la messa in sicurezza dei veicoli e le Forze dell\'Ordine per la gestione della viabilità e i rilievi.',
+    immagine: 'https://picsum.photos/seed/stradale/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+  {
+    id: 4,
+    titolo: 'Elisoccorso e Servizio HEMS',
+    descrizione: 'L\'elisoccorso (Helicopter Emergency Medical Service) interviene quando le condizioni del paziente sono critiche o quando la zona dell\'evento è difficile o lenta da raggiungere via terra. A bordo dell\'elicottero sono sempre presenti un medico anestesista-rianimatore, un infermiere di area critica e personale tecnico di volo o di soccorso alpino.',
+    immagine: 'https://picsum.photos/seed/elisoccorso/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+  {
+    id: 5,
+    titolo: 'Soccorso Acquatico e Fluviale',
+    descrizione: 'Per emergenze in mare, laghi, fiumi o durante eventi alluvionali, il sistema d\'emergenza si avvale di idroambulanze, imbarcazioni speciali e moto d\'acqua gestite da personale sanitario con brevetti di salvamento acquatico, spesso operanti in stretta collaborazione con la Guardia Costiera e i Sommozzatori.',
+    immagine: 'https://picsum.photos/seed/idroambulanza/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+  {
+    id: 6,
+    titolo: 'Soccorso Alpino e Ambientale',
+    descrizione: 'In caso di infortuni in montagna, valanghe, forre o ambienti ipogei (grotte), intervengono le squadre di terra del Soccorso Alpino. Svolgono operazioni di ricerca dispersi e recupero in contesti impervi, coordinandosi frequentemente con l\'elisoccorso per l\'impiego del verricello.',
+    immagine: 'https://picsum.photos/seed/alpino/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+  {
+    id: 7,
+    titolo: 'Geolocalizzazione: L\'App "Where Are U"',
+    descrizione: 'L\'applicazione ufficiale collegata alle centrali NUE 112 permette di effettuare chiamate di emergenza inviando automaticamente le coordinate GPS esatte della tua posizione. Consente anche di effettuare chiamate "mute" o d\'emergenza tramite chat e icone per chi si trova in impossibilità di parlare o per persone con disabilità.',
+    immagine: 'https://picsum.photos/seed/app112/800/600',
+    testoPulsante: 'Scarica l\'App (iOS / Android)',
+    linkPulsante: 'https://where.areu.lombardia.it/#getApp',
+  },
+  {
+    id: 8,
+    titolo: 'Cosa Fare e Dire Durante la Chiamata',
+    descrizione: 'Quando si compone il 112 o il 118, occorre mantenere la calma e rispondere con precisione alle domande dell\'operatore: indicare DOVE ci si trova (comune, via, punti di riferimento), COSA è successo, QUANTE persone sono coinvolte e le LORO CONDIZIONI. Non riattaccare mai per primi: l\'operatore darà indicazioni pre-arrivo fondamentali.',
+    immagine: 'https://picsum.photos/seed/primosoccorso/800/600',
+    testoPulsante: '',
+    linkPulsante: '',
+  },
+]
+</script>

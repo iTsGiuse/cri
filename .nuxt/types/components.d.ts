@@ -17,13 +17,18 @@ interface _GlobalComponents {
   Breadcrumbs: typeof import("../../app/components/Breadcrumbs.vue")['default']
   Carosello: typeof import("../../app/components/Carosello.vue")['default']
   Cta: typeof import("../../app/components/Cta.vue")['default']
+  Divisore: typeof import("../../app/components/Divisore.vue")['default']
+  Donazione: typeof import("../../app/components/Donazione.vue")['default']
+  Faq: typeof import("../../app/components/Faq.vue")['default']
   Footer: typeof import("../../app/components/Footer.vue")['default']
   Header: typeof import("../../app/components/Header.vue")['default']
   Hero: typeof import("../../app/components/Hero.vue")['default']
   SezioniAlternate: typeof import("../../app/components/SezioniAlternate.vue")['default']
   Sponsor: typeof import("../../app/components/Sponsor.vue")['default']
+  Storia: typeof import("../../app/components/Storia.vue")['default']
   StrutturaGovernance: typeof import("../../app/components/StrutturaGovernance.vue")['default']
   TopBar: typeof import("../../app/components/TopBar.vue")['default']
+  TrasparenzaDocumenti: typeof import("../../app/components/TrasparenzaDocumenti.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/dist/app/components/nuxt-layout")['default']
   NuxtErrorBoundary: typeof import("../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -51,13 +56,18 @@ interface _GlobalComponents {
   LazyBreadcrumbs: LazyComponent<typeof import("../../app/components/Breadcrumbs.vue")['default']>
   LazyCarosello: LazyComponent<typeof import("../../app/components/Carosello.vue")['default']>
   LazyCta: LazyComponent<typeof import("../../app/components/Cta.vue")['default']>
+  LazyDivisore: LazyComponent<typeof import("../../app/components/Divisore.vue")['default']>
+  LazyDonazione: LazyComponent<typeof import("../../app/components/Donazione.vue")['default']>
+  LazyFaq: LazyComponent<typeof import("../../app/components/Faq.vue")['default']>
   LazyFooter: LazyComponent<typeof import("../../app/components/Footer.vue")['default']>
   LazyHeader: LazyComponent<typeof import("../../app/components/Header.vue")['default']>
   LazyHero: LazyComponent<typeof import("../../app/components/Hero.vue")['default']>
   LazySezioniAlternate: LazyComponent<typeof import("../../app/components/SezioniAlternate.vue")['default']>
   LazySponsor: LazyComponent<typeof import("../../app/components/Sponsor.vue")['default']>
+  LazyStoria: LazyComponent<typeof import("../../app/components/Storia.vue")['default']>
   LazyStrutturaGovernance: LazyComponent<typeof import("../../app/components/StrutturaGovernance.vue")['default']>
   LazyTopBar: LazyComponent<typeof import("../../app/components/TopBar.vue")['default']>
+  LazyTrasparenzaDocumenti: LazyComponent<typeof import("../../app/components/TrasparenzaDocumenti.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
   LazyNuxtErrorBoundary: LazyComponent<typeof import("../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_2d0f774cbdd328a44c29a5743a71b931/node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>

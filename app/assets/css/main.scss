@@ -4,17 +4,37 @@
 // Caricamento Icone Bootstrap
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
-// Colori Bootstrap (Utilizza un colore solido come base)
+// Colori Bootstrap
 $danger: #B3221C;
 
-// Caricamento CSS Bootstrap
+// Caricamento Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
 // Custom Gradients & Utilities
-$danger-gradient: linear-gradient(135deg, #b91c1c 0%, #d52b1e 50%, #991b1b 100%);
+$danger-gradient: linear-gradient(
+  135deg,
+  #b91c1c 0%,
+  #d52b1e 50%,
+  #991b1b 100%
+);
 
 .bg-danger-gradient {
   background: $danger-gradient;
+}
+
+// Rimuove il focus ring
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 // Font globale

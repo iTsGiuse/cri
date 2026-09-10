@@ -5,10 +5,8 @@
     class="bg-danger py-3 px-3"
   >
     <div class="container d-flex justify-content-start mt-3">
-      <!-- PILLOLA STILE BADGE CON SEPARATORI BIANCHI (PURE BOOTSTRAP) -->
       <div class="d-inline-flex align-items-center bg-white bg-opacity-10 rounded-pill px-3 py-1 border border-white border-opacity-25 shadow-sm overflow-hidden">
         <ul class="list-unstyled mb-0 small d-flex align-items-center flex-nowrap">
-          <!-- LINK HOME -->
           <li class="d-inline-flex align-items-center">
             <NuxtLink
               to="/"
@@ -19,26 +17,23 @@
             </NuxtLink>
           </li>
 
-          <!-- VOCI DINAMICHE CON SEPARATORE BIANCO E ICONA -->
           <li
             v-for="(voce, index) in percorsiBreadcrumb"
             :key="voce.url"
             class="d-inline-flex align-items-center"
           >
-            <!-- Separatore / bianco e visibile -->
             <span class="text-white opacity-75 mx-2 user-select-none" aria-hidden="true">/</span>
 
-            <!-- Ultimo elemento (Pagina Corrente) -->
             <span
-              v-if="index === percorsiBreadcrumb.length - 1"
+              v-if="index === percorsiBreadcrumb.length - 1 || !voce.cliccabile"
               class="fw-semibold text-white text-nowrap d-inline-flex align-items-center"
-              aria-current="page"
+              :class="{ 'opacity-75': !voce.cliccabile && index !== percorsiBreadcrumb.length - 1 }"
+              :aria-current="index === percorsiBreadcrumb.length - 1 ? 'page' : undefined"
             >
               <i :class="[voce.icona, 'me-1']" aria-hidden="true"></i>
               <span>{{ voce.etichetta }}</span>
             </span>
 
-            <!-- Passaggio intermedio -->
             <NuxtLink
               v-else
               :to="voce.url"
@@ -58,57 +53,61 @@
 import { computed } from 'vue'
 
 const route = useRoute()
+const requestUrl = useRequestURL()
 
 type DatiVoce = {
   etichetta: string
   icona: string
 }
 
-// Mappa con etichetta e icona Bootstrap dedicata per ciascun segmento
 const dizionarioEtichette: Record<string, DatiVoce> = {
   'chi-siamo': { etichetta: 'Chi siamo', icona: 'bi bi-people-fill' },
-  'il-comitato': { etichetta: 'Il Comitato', icona: 'bi bi-building' },
-  'storia': { etichetta: 'La nostra storia', icona: 'bi bi-journal-bookmark-fill' },
+  'il-comitato': { etichetta: 'Il Comitato', icona: 'bi bi-building-fill' },
+  'storia': { etichetta: 'La nostra storia', icona: 'bi bi-clock-history' },
   'organizzazione': { etichetta: 'Organizzazione e governance', icona: 'bi bi-diagram-3-fill' },
   'principi-e-valori': { etichetta: 'Principi e valori', icona: 'bi bi-heart-fill' },
   'trasparenza': { etichetta: 'Trasparenza e documenti', icona: 'bi bi-file-earmark-text-fill' },
-  'dove-siamo': { etichetta: 'Dove siamo', icona: 'bi bi-geo-alt-fill' },
+  'sede-e-contatti': { etichetta: 'Sede e contatti', icona: 'bi bi-geo-alt-fill' },
+
   'cosa-facciamo': { etichetta: 'Cosa facciamo', icona: 'bi bi-activity' },
-  'emergenza-e-soccorso': { etichetta: 'Emergenza e soccorso', icona: 'bi bi-telephone-inbound-fill' },
-  'trasporto-sanitario': { etichetta: 'Trasporto sanitario', icona: 'bi bi-truck-front-fill' },
-  'assistenza-sociale': { etichetta: 'Assistenza sociale', icona: 'bi bi-hand-thumbs-up-fill' },
-  'inclusione-e-supporto': { etichetta: 'Inclusione e supporto', icona: 'bi bi-person-heart' },
-  'giovani': { etichetta: 'Giovani', icona: 'bi bi-emoji-smile-fill' },
-  'educazione-e-prevenzione': { etichetta: 'Educazione e prevenzione', icona: 'bi bi-shield-check' },
-  'protezione-civile': { etichetta: 'Protezione civile', icona: 'bi bi-shield-fill-exclamation' },
-  'attivita-per-la-comunita': { etichetta: 'Attività per la comunità', icona: 'bi bi-globe-europe-africa' },
+  'salute': { etichetta: 'Salute e Prevenzione', icona: 'bi bi-heart-pulse-fill' },
+  'sociale': { etichetta: 'Sociale e Inclusione', icona: 'bi bi-people-fill' },
+  'protezione-civile': { etichetta: 'Emergenza e Protezione Civile', icona: 'bi bi-shield-fill-check' },
+  'diritto-umanitario': { etichetta: 'Principi e Diritto Umanitario', icona: 'bi bi-book-fill' },
+  'giovani': { etichetta: 'Giovani', icona: 'bi bi-person-hearts' },
+  'sviluppo': { etichetta: 'Sviluppo e Comunicazione', icona: 'bi bi-graph-up-arrow' },
+
   'servizi': { etichetta: 'Servizi', icona: 'bi bi-grid-fill' },
-  'richiedi-trasporto': { etichetta: 'Richiedi un trasporto', icona: 'bi bi-calendar-plus-fill' },
-  'corsi': { etichetta: 'Corsi', icona: 'bi bi-mortarboard-fill' },
-  'servizi-sanitari': { etichetta: 'Servizi sanitari', icona: 'bi bi-bandaid-fill' },
-  'assistenza': { etichetta: 'Assistenza', icona: 'bi bi-life-preserver' },
-  'prenotazioni-e-informazioni': { etichetta: 'Prenotazioni e informazioni', icona: 'bi bi-info-circle-fill' },
-  'faq': { etichetta: 'FAQ', icona: 'bi bi-question-circle-fill' },
+  'emergenza-118': { etichetta: 'Emergenza e Soccorso 118 / 112', icona: 'bi bi-exclamation-triangle-fill' },
+  'richiedi-trasporto': { etichetta: 'Richiedi un trasporto sanitario', icona: 'bi bi-truck-front-fill' },
+  'assistenza-eventi': { etichetta: 'Assistenza sanitaria a manifestazioni', icona: 'bi bi-hospital-fill' },
+  'corsi-popolazione': { etichetta: 'Corsi per la popolazione', icona: 'bi bi-mortarboard-fill' },
+  'corsi-aziende': { etichetta: 'Corsi aziendali (D.Lgs 81/08)', icona: 'bi bi-briefcase-fill' },
+  'supporto-sociale': { etichetta: 'Supporto sociale e assistenza', icona: 'bi bi-house-heart-fill' },
+  'prenotazioni-e-informazioni': { etichetta: 'Prenotazioni e informazioni', icona: 'bi bi-calendar-check-fill' },
+
   'volontariato': { etichetta: 'Volontariato', icona: 'bi bi-person-plus-fill' },
-  'diventa-volontario': { etichetta: 'Diventa volontario', icona: 'bi bi-person-badge-fill' },
-  'come-funziona': { etichetta: 'Come funziona', icona: 'bi bi-gear-wide-connected' },
-  'percorso-formativo': { etichetta: 'Percorso formativo', icona: 'bi bi-book-half' },
-  'attivita-e-gruppi': { etichetta: 'Attività e gruppi', icona: 'bi bi-people' },
-  'diventa-socio': { etichetta: 'Diventa socio', icona: 'bi bi-card-heading' },
+  'diventa-volontario': { etichetta: 'Diventa volontario', icona: 'bi bi-person-plus-fill' },
+  'corso-di-accesso': { etichetta: 'Come funziona il corso di accesso', icona: 'bi bi-info-circle-fill' },
+  'percorso-formativo': { etichetta: 'Percorso formativo e qualifiche', icona: 'bi bi-mortarboard-fill' },
+  'attivita-e-gruppi': { etichetta: 'Attività e gruppi di lavoro', icona: 'bi bi-people-fill' },
+
+  'news': { etichetta: 'News & Eventi', icona: 'bi bi-newspaper' },
   'notizie': { etichetta: 'Notizie', icona: 'bi bi-newspaper' },
   'eventi': { etichetta: 'Eventi', icona: 'bi bi-calendar-event-fill' },
-  'campagne': { etichetta: 'Campagne', icona: 'bi bi-megaphone-fill' },
-  'comunicati': { etichetta: 'Comunicati', icona: 'bi bi-broadcast' },
-  'contatti': { etichetta: 'Contatti', icona: 'bi bi-envelope-fill' },
-  'sede': { etichetta: 'Sede', icona: 'bi bi-house-door' },
-  'orari': { etichetta: 'Orari', icona: 'bi bi-clock-fill' },
-  'come-raggiungerci': { etichetta: 'Come raggiungerci', icona: 'bi bi-signpost-split-fill' },
-  'numeri-utili': { etichetta: 'Numeri utili', icona: 'bi bi-telephone-fill' },
-  'social': { etichetta: 'Social', icona: 'bi bi-share-fill' },
-  'dona': { etichetta: 'Dona', icona: 'bi bi-heart-pulse-fill' }
+  'campagne': { etichetta: 'Campagne di sensibilizzazione', icona: 'bi bi-megaphone-fill' },
+
+  'faq': { etichetta: 'FAQ', icona: 'bi bi-question-circle-fill' },
+  'servizi-e-trasporti': { etichetta: 'Trasporti e Servizi Sanitari', icona: 'bi bi-truck-front-fill' },
+  'corsi-formazione': { etichetta: 'Corsi di Formazione', icona: 'bi bi-mortarboard-fill' },
+  'donazioni': { etichetta: 'Donazioni e 5x1000', icona: 'bi bi-piggy-bank-fill' },
+
+  'dona': { etichetta: 'Dona ora', icona: 'bi bi-heart-fill' },
+  'contatti': { etichetta: 'Contatti', icona: 'bi bi-envelope-fill' }
 }
 
-// Genera i segmenti del breadcrumb analizzando il percorso dell'URL
+const categorieNonCliccabili = ['chi-siamo', 'cosa-facciamo', 'servizi', 'volontariato', 'news', 'faq']
+
 const percorsiBreadcrumb = computed(() => {
   if (route.path === '/') return []
 
@@ -126,12 +125,12 @@ const percorsiBreadcrumb = computed(() => {
     return {
       etichetta: configurazioneVoce ? configurazioneVoce.etichetta : etichettaFormattata,
       icona: configurazioneVoce ? configurazioneVoce.icona : 'bi bi-folder-fill',
-      url: accumulatoreUrl
+      url: accumulatoreUrl,
+      cliccabile: !categorieNonCliccabili.includes(segmento)
     }
   })
 })
 
-// Dati strutturati Schema.org per la SEO (BreadcrumbList)
 useHead({
   script: [
     {
@@ -139,18 +138,20 @@ useHead({
       children: computed(() => {
         if (percorsiBreadcrumb.value.length === 0) return ''
 
+        const baseUrl = requestUrl.origin
+
         const itemListElement = [
           {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: 'https://crocerossarubiera.it/'
+            item: `${baseUrl}/`
           },
           ...percorsiBreadcrumb.value.map((voce, index) => ({
             '@type': 'ListItem',
             position: index + 2,
             name: voce.etichetta,
-            item: `https://crocerossarubiera.it${voce.url}`
+            item: `${baseUrl}${voce.url}`
           }))
         ]
 

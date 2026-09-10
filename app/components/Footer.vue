@@ -158,7 +158,7 @@
 
             <NuxtLink
               :to="footer.chiamataAzione.url"
-              class="btn btn-danger rounded-pill fw-semibold px-4 py-2 text-nowrap shadow-sm"
+              class="btn btn-danger rounded-pill fw-semibold px-4 py-2 text-nowrap shadow-sm pulsante-azione"
             >
               <i
                 :class="[footer.chiamataAzione.icona, 'me-2']"
@@ -166,7 +166,14 @@
               />
 
               {{ footer.chiamataAzione.etichetta }}
+
+              <i
+                class="bi bi-chevron-right freccia-azione small"
+                aria-hidden="true"
+              />
             </NuxtLink>
+
+
           </div>
         </div>
       </div>
@@ -179,7 +186,7 @@
           class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3"
         >
           <p class="text-whitesmall mb-0 text-center text-lg-start">
-            © {{ annoCorrente }} {{ footer.copyright }}
+            {{ footer.fiscali }}
           </p>
 
           <nav
@@ -279,7 +286,7 @@ type FooterData = {
 
   collegamentiLegali: CollegamentoFooter[];
 
-  copyright: string;
+  fiscali: string;
 };
 
 defineProps<{
@@ -290,12 +297,26 @@ const annoCorrente = new Date().getFullYear();
 </script>
 
 <style scoped>
-/* =========================================================
-   LOGO (Uguale a quello dell'header)
-   ========================================================= */
 .brand-logo {
   max-height: 120px;
   width: auto;
   object-fit: contain;
 }
+
+
+.pulsante-azione .freccia-azione {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(
+    0.175,
+    0.885,
+    0.32,
+    1.275
+  );
+}
+
+.pulsante-azione:hover .freccia-azione,
+.pulsante-azione:focus-visible .freccia-azione {
+  transform: translateX(8px);
+}
+
 </style>
