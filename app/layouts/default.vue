@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopBar :messaggio="datiMessaggio" />
+    <TopBar :info="datiInfo" />
 
     <Header :header="datiHeader" />
 
@@ -21,9 +21,25 @@
 
 const route = useRoute()
 
-const datiMessaggio = {
-  testo: '⚠️ Avviso: domenica il servizio sarà temporaneamente sospeso. ⚠️',
-};
+const datiInfo = {
+  email: 'info@crirubiera.it',
+  social: [
+    {
+      nome: 'Facebook',
+      url: 'https://facebook.com/...',
+      icona: 'mdi:facebook'
+    },
+    {
+      nome: 'Instagram',
+      url: 'https://instagram.com/...',
+      icona: 'mdi:instagram'
+    }
+  ],
+  indirizzo: {
+    testo: 'Via del Comitato di Rubiera',
+    url: 'https://maps.google.com/...'
+  }
+}
 
 const datiHeader = {
   marchio: {
@@ -172,21 +188,21 @@ const datiHeader = {
     },
 
     {
-      etichetta: 'News & Eventi',
+      etichetta: 'Comunicazioni',
       figli: [
         {
           etichetta: 'Notizie',
-          url: '/news/notizie',
+          url: '/news',
           icona: 'i-bi:newspaper',
         },
         {
           etichetta: 'Eventi',
-          url: '/news/eventi',
+          url: '/eventi',
           icona: 'i-bi:calendar-event-fill',
         },
         {
           etichetta: 'Campagne di sensibilizzazione',
-          url: '/news/campagne',
+          url: '/campagne',
           icona: 'i-bi:megaphone-fill',
         },
       ],
