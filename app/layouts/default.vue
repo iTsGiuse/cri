@@ -10,8 +10,8 @@
       <slot />
     </main>
 
-    <LazyDivisore v-if="!['/dona', '/chi-siamo/trasparenza', '/chi-siamo/storia'].includes(route.path)" />
-    <LazyCta :cta="datiCta" v-if="!['/dona', '/chi-siamo/trasparenza', '/chi-siamo/storia'].includes(route.path)" />
+    <LazyDivisore v-if="!['/dona', '/chi-siamo/trasparenza', '/chi-siamo/storia', '/chi-siamo/principi-e-valori'].includes(route.path)" />
+    <LazyCta :cta="datiCta" v-if="!['/dona', '/chi-siamo/trasparenza', '/chi-siamo/storia', '/chi-siamo/principi-e-valori'].includes(route.path)" />
 
     <LazyFooter :footer="datiFooter" />
   </div>
@@ -38,32 +38,32 @@ const datiHeader = {
         {
           etichetta: 'Il Comitato',
           url: '/chi-siamo/il-comitato',
-          icona: 'bi bi-building-fill',
+          icona: 'i-bi:building-fill',
         },
         {
           etichetta: 'La nostra storia',
           url: '/chi-siamo/storia',
-          icona: 'bi bi-clock-history',
+          icona: 'i-bi:clock-history',
         },
         {
           etichetta: 'Organizzazione e governance',
           url: '/chi-siamo/organizzazione',
-          icona: 'bi bi-diagram-3-fill',
+          icona: 'i-bi:diagram-3-fill',
         },
         {
           etichetta: 'Principi e valori',
           url: '/chi-siamo/principi-e-valori',
-          icona: 'bi bi-heart-fill',
+          icona: 'i-bi:heart-fill',
         },
         {
           etichetta: 'Trasparenza e documenti',
           url: '/chi-siamo/trasparenza',
-          icona: 'bi bi-file-earmark-text-fill',
+          icona: 'i-bi:file-earmark-text-fill',
         },
         {
           etichetta: 'Sede e contatti',
           url: '/chi-siamo/sede-e-contatti',
-          icona: 'bi bi-geo-alt-fill',
+          icona: 'i-bi:geo-alt-fill',
         },
       ],
     },
@@ -74,32 +74,32 @@ const datiHeader = {
         {
           etichetta: 'Salute e Prevenzione',
           url: '/cosa-facciamo/salute',
-          icona: 'bi bi-heart-pulse-fill',
+          icona: 'i-bi:heart-pulse-fill',
         },
         {
           etichetta: 'Sociale e Inclusione',
           url: '/cosa-facciamo/sociale',
-          icona: 'bi bi-people-fill',
+          icona: 'i-bi:people-fill',
         },
         {
           etichetta: 'Emergenza e Protezione Civile',
           url: '/cosa-facciamo/protezione-civile',
-          icona: 'bi bi-shield-fill-check',
+          icona: 'i-bi:shield-fill-check',
         },
         {
           etichetta: 'Principi e Diritto Umanitario',
           url: '/cosa-facciamo/diritto-umanitario',
-          icona: 'bi bi-book-fill',
+          icona: 'i-bi:book-fill',
         },
         {
           etichetta: 'Giovani',
           url: '/cosa-facciamo/giovani',
-          icona: 'bi bi-person-hearts',
+          icona: 'i-bi:person-hearts',
         },
         {
           etichetta: 'Sviluppo e Comunicazione',
           url: '/cosa-facciamo/sviluppo',
-          icona: 'bi bi-graph-up-arrow',
+          icona: 'i-bi:graph-up-arrow',
         },
       ],
     },
@@ -110,37 +110,37 @@ const datiHeader = {
         {
           etichetta: 'Emergenza e Soccorso 118 / 112',
           url: '/servizi/emergenza-118',
-          icona: 'bi bi-exclamation-triangle-fill',
+          icona: 'i-bi:exclamation-triangle-fill',
         },
         {
           etichetta: 'Richiedi un trasporto sanitario',
           url: '/servizi/richiedi-trasporto',
-          icona: 'bi bi-truck-front-fill',
+          icona: 'i-bi:truck-front-fill',
         },
         {
           etichetta: 'Assistenza sanitaria a manifestazioni',
           url: '/servizi/assistenza-eventi',
-          icona: 'bi bi-hospital-fill',
+          icona: 'i-bi:hospital-fill',
         },
         {
           etichetta: 'Corsi per la popolazione',
           url: '/servizi/corsi-popolazione',
-          icona: 'bi bi-mortarboard-fill',
+          icona: 'i-bi:mortarboard-fill',
         },
         {
           etichetta: 'Corsi aziendali (D.Lgs 81/08)',
           url: '/servizi/corsi-aziende',
-          icona: 'bi bi-briefcase-fill',
+          icona: 'i-bi:briefcase-fill',
         },
         {
           etichetta: 'Supporto sociale e assistenza',
           url: '/servizi/supporto-sociale',
-          icona: 'bi bi-house-heart-fill',
+          icona: 'i-bi:house-heart-fill',
         },
         {
           etichetta: 'Prenotazioni e informazioni',
           url: '/servizi/prenotazioni-e-informazioni',
-          icona: 'bi bi-calendar-check-fill',
+          icona: 'i-bi:calendar-check-fill',
         },
       ],
     },
@@ -151,22 +151,22 @@ const datiHeader = {
         {
           etichetta: 'Diventa volontario',
           url: '/volontariato/diventa-volontario',
-          icona: 'bi bi-person-plus-fill',
+          icona: 'i-bi:person-plus-fill',
         },
         {
           etichetta: 'Come funziona il corso di accesso',
           url: '/volontariato/corso-di-accesso',
-          icona: 'bi bi-info-circle-fill',
+          icona: 'i-bi:info-circle-fill',
         },
         {
           etichetta: 'Percorso formativo e qualifiche',
           url: '/volontariato/percorso-formativo',
-          icona: 'bi bi-mortarboard-fill',
+          icona: 'i-bi:mortarboard-fill',
         },
         {
           etichetta: 'Attività e gruppi di lavoro',
           url: '/volontariato/attivita-e-gruppi',
-          icona: 'bi bi-people-fill',
+          icona: 'i-bi:people-fill',
         },
       ],
     },
@@ -177,17 +177,17 @@ const datiHeader = {
         {
           etichetta: 'Notizie',
           url: '/news/notizie',
-          icona: 'bi bi-newspaper',
+          icona: 'i-bi:newspaper',
         },
         {
           etichetta: 'Eventi',
           url: '/news/eventi',
-          icona: 'bi bi-calendar-event-fill',
+          icona: 'i-bi:calendar-event-fill',
         },
         {
           etichetta: 'Campagne di sensibilizzazione',
           url: '/news/campagne',
-          icona: 'bi bi-megaphone-fill',
+          icona: 'i-bi:megaphone-fill',
         },
       ],
     },
@@ -198,22 +198,22 @@ const datiHeader = {
         {
           etichetta: 'Trasporti e Servizi Sanitari',
           url: '/faq/servizi-e-trasporti',
-          icona: 'bi bi-truck-front-fill',
+          icona: 'i-bi:truck-front-fill',
         },
         {
           etichetta: 'Corsi di Formazione',
           url: '/faq/corsi-formazione',
-          icona: 'bi bi-mortarboard-fill',
+          icona: 'i-bi:mortarboard-fill',
         },
         {
           etichetta: 'Diventare Volontario',
           url: '/faq/volontariato',
-          icona: 'bi bi-person-heart',
+          icona: 'i-bi:person-heart',
         },
         {
           etichetta: 'Donazioni e 5x1000',
           url: '/faq/donazioni',
-          icona: 'bi bi-piggy-bank-fill',
+          icona: 'i-bi:piggy-bank-fill',
         },
       ],
     },
@@ -222,7 +222,7 @@ const datiHeader = {
   azione: {
     etichetta: 'Dona ora',
     url: '/dona',
-    icona: 'bi bi-heart-fill',
+    icona: 'i-bi:heart-fill',
   },
 };
 
@@ -253,17 +253,17 @@ const datiFooter = {
     {
       etichetta: 'Facebook',
       url: '#',
-      icona: 'bi bi-facebook',
+      icona: 'i-bi:facebook',
     },
     {
       etichetta: 'Instagram',
       url: '#',
-      icona: 'bi bi-instagram',
+      icona: 'i-bi:instagram',
     },
     {
       etichetta: 'YouTube',
       url: '#',
-      icona: 'bi bi-youtube',
+      icona: 'i-bi:youtube',
     },
   ],
 
@@ -320,19 +320,19 @@ const datiFooter = {
       etichetta: 'Via E. Fermi, 1 - 42048 Rubiera (RE)',
       url:
         'https://www.google.com/maps/search/?api=1&query=Croce+Rossa+Italiana+Comitato+di+Rubiera',
-      icona: 'bi bi-geo-alt-fill',
+      icona: 'i-bi:geo-alt-fill',
     },
 
     telefono: {
       etichetta: '+39 0522 628 888',
       valore: '+390522628888',
-      icona: 'bi bi-telephone-fill',
+      icona: 'i-bi:telephone-fill',
     },
 
     email: {
       etichetta: 'rubiera@cri.it',
       valore: 'rubiera@cri.it',
-      icona: 'bi bi-envelope-fill',
+      icona: 'i-bi:envelope-fill',
     },
   },
 
@@ -342,7 +342,7 @@ const datiFooter = {
       'Sostieni la Croce Rossa Italiana o diventa volontario: il tuo contributo può fare la differenza nella nostra comunità.',
     etichetta: 'Diventa volontario',
     url: '/volontariato/diventa-volontario',
-    icona: 'bi bi-person-plus-fill',
+    icona: 'i-bi:person-plus-fill',
   },
 
   collegamentiLegali: [

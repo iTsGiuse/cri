@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-warning text-dark py-3">
+  <div class="bg-danger text-white py-3">
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">

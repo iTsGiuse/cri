@@ -61,7 +61,7 @@ const datiSezioni = [
     descrizione: 'L\'applicazione ufficiale collegata alle centrali NUE 112 permette di effettuare chiamate di emergenza inviando automaticamente le coordinate GPS esatte della tua posizione. Consente anche di effettuare chiamate "mute" o d\'emergenza tramite chat e icone per chi si trova in impossibilità di parlare o per persone con disabilità.',
     immagine: 'https://picsum.photos/seed/app112/800/600',
     testoPulsante: 'Scarica l\'App (iOS / Android)',
-    linkPulsante: 'https://where.areu.lombardia.it/#getApp',
+    linkPulsante: 'https://where.areu.lombardia.it/',
   },
   {
     id: 8,

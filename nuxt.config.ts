@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
   devtools: {
-    enabled: false,
+    enabled: true,
   },
 
   css: [
@@ -11,29 +11,57 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/image',
+    '@nuxt/fonts',
+    'nuxt-security',
+    '@nuxt/hints',
+    '@nuxt/a11y',
+    '@nuxtjs/seo',
+    '@nuxt/icon',
+    '@nuxt/scripts',
+    '@nuxt/devtools',
   ],
+
+  site: {
+    url: 'https://rubiera.cri.it',
+    name: 'Croce Rossa Italiana – Comitato di Rubiera',
+    description: 'Croce Rossa Italiana – Comitato di Rubiera. Attività, volontariato, iniziative e informazioni sul Comitato.',
+    defaultLocale: 'it',
+    indexable: true,
+  },
+
+  fonts: {
+    families: [
+      {
+        name: 'Montserrat',
+        provider: 'google',
+        weights: [400, 500, 600, 700, 800],
+      },
+    ],
+  },
+
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': ["'self'", 'data:', 'blob:', 'https:'],
+        'script-src': ["'self'", "'unsafe-inline'", 'https://*.iubenda.com', 'https://www.googletagmanager.com'],
+        'style-src': ["'self'", "'unsafe-inline'", 'https://*.iubenda.com'],
+        'connect-src': ["'self'", 'https://*.iubenda.com', 'https://www.google-analytics.com', 'https://region1.google-analytics.com'],
+      },
+      crossOriginEmbedderPolicy: 'unsafe-none',
+    },
+  },
 
   runtimeConfig: {
     public: {
-      siteName:
-        'Croce Rossa Italiana – Comitato di Rubiera',
-
-      siteShortName:
-        'Croce Rossa Rubiera',
-
+      siteName: 'Croce Rossa Italiana – Comitato di Rubiera',
+      siteShortName: 'Croce Rossa Rubiera',
       siteDescription:
         'Croce Rossa Italiana – Comitato di Rubiera. Attività, volontariato, iniziative e informazioni sul Comitato.',
-
-      siteUrl: '',
-
+      siteUrl: 'https://rubiera.cri.it',
       locale: 'it_IT',
-
       language: 'it',
-
       email: 'rubiera@cri.it',
-
       phone: '0522 620956',
-
       address: {
         street: 'Via Alcide De Gasperi 1/B',
         postalCode: '42048',
@@ -41,12 +69,19 @@ export default defineNuxtConfig({
         province: 'RE',
         country: 'Italia',
       },
-
       social: {
         facebook: '',
         instagram: '',
         youtube: '',
         linkedin: '',
+      },
+      iubenda: {
+        siteId: '',
+        cookiePolicyId: '',
+        privacyPolicyId: '',
+      },
+      analytics: {
+        measurementId: '',
       },
     },
   },
@@ -56,89 +91,15 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'it',
       },
-
-      title:
-        'Croce Rossa Italiana – Comitato di Rubiera',
-
+      title: 'Croce Rossa Italiana – Comitato di Rubiera',
       meta: [
-        {
-          charset: 'utf-8',
-        },
-        {
-          name: 'viewport',
-          content:
-            'width=device-width, initial-scale=1',
-        },
-        {
-          name: 'description',
-          content:
-            'Croce Rossa Italiana – Comitato di Rubiera. Attività, volontariato, iniziative e informazioni sul Comitato.',
-        },
-        {
-          name: 'author',
-          content:
-            'Croce Rossa Italiana – Comitato di Rubiera',
-        },
-        {
-          name: 'robots',
-          content:
-            'index, follow, max-image-preview:large',
-        },
-        {
-          name: 'theme-color',
-          content: '#dc3545',
-        },
-        {
-          name: 'color-scheme',
-          content: 'light',
-        },
-
-        {
-          property: 'og:type',
-          content: 'website',
-        },
-        {
-          property: 'og:locale',
-          content: 'it_IT',
-        },
-        {
-          property: 'og:site_name',
-          content:
-            'Croce Rossa Italiana – Comitato di Rubiera',
-        },
-        {
-          property: 'og:title',
-          content:
-            'Croce Rossa Italiana – Comitato di Rubiera',
-        },
-        {
-          property: 'og:description',
-          content:
-            'Attività, volontariato, iniziative e informazioni della Croce Rossa Italiana – Comitato di Rubiera.',
-        },
-
-        {
-          name: 'twitter:card',
-          content: 'summary_large_image',
-        },
-        {
-          name: 'twitter:title',
-          content:
-            'Croce Rossa Italiana – Comitato di Rubiera',
-        },
-        {
-          name: 'twitter:description',
-          content:
-            'Attività, volontariato, iniziative e informazioni della Croce Rossa Italiana – Comitato di Rubiera.',
-        },
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: '#dc3545' },
+        { name: 'color-scheme', content: 'light' },
       ],
-
       link: [
-        {
-          rel: 'icon',
-          type: 'image/x-icon',
-          href: '/favicon.ico',
-        },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         {
           rel: 'icon',
           type: 'image/png',
@@ -162,12 +123,7 @@ export default defineNuxtConfig({
 
   image: {
     quality: 85,
-
-    formats: [
-      'avif',
-      'webp',
-    ],
-
+    formats: ['avif', 'webp'],
     screens: {
       xs: 320,
       sm: 640,
@@ -176,11 +132,7 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536,
     },
-
-    densities: [
-      1,
-      2,
-    ],
+    densities: [1, 2],
   },
 
   nitro: {

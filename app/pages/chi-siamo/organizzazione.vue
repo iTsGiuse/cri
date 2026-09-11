@@ -3,7 +3,7 @@
     <!-- Hero sopra la piega (caricamento immediato) -->
     <Hero />
 
-    <LazyStrutturaGovernance 
+    <LazyGovernance 
       hydrate-on-visible 
       :governance="datiStrutturaGovernance" 
     />
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GruppoGovernance } from '~/components/StrutturaGovernance.vue'
+import type { GruppoGovernance } from '~/components/Governance.vue'
 
 const datiStrutturaGovernance: GruppoGovernance[] = [
   {
