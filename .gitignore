@@ -1,0 +1,22 @@
+# Nuxt build output and local caches
+.nuxt/
+.output/
+.data/
+
+# Dependencies and package-manager files generated locally
+node_modules/
+.pnpm-store/
+
+# Logs, coverage and test artefacts
+*.log
+coverage/
+test-results/
+playwright-report/
+
+# Local environment and editor settings
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/

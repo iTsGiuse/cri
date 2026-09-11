@@ -52,8 +52,9 @@
                 >
                   <span>{{ voce.etichetta }}</span>
 
-                  <i
-                    class="bi bi-chevron-down ms-auto freccia-menu small"
+                  <Icon
+                    name="i-bi:chevron-down"
+                    class="ms-auto freccia-menu small"
                     :class="{
                       'rotate-180': menuAperti[voce.etichetta],
                     }"
@@ -74,16 +75,18 @@
                       rel="noopener noreferrer"
                       class="dropdown-item d-flex align-items-center gap-3 rounded-2 py-2"
                     >
-                      <i
+                      <Icon
                         v-if="figlio.icona"
-                        :class="[figlio.icona, 'text-danger']"
+                        :name="figlio.icona"
+                        class="text-danger"
                         aria-hidden="true"
                       />
 
                       <span>{{ figlio.etichetta }}</span>
 
-                      <i
-                        class="bi bi-box-arrow-up-right ms-auto text-secondary small freccia-dropdown"
+                      <Icon
+                        name="i-bi:box-arrow-up-right"
+                        class="ms-auto text-secondary small freccia-dropdown"
                         aria-hidden="true"
                       />
                     </a>
@@ -97,16 +100,18 @@
                         'dropdown-item-attivo': isLinkAttivo(figlio.url),
                       }"
                     >
-                      <i
+                      <Icon
                         v-if="figlio.icona"
-                        :class="[figlio.icona, 'text-danger']"
+                        :name="figlio.icona"
+                        class="text-danger"
                         aria-hidden="true"
                       />
 
                       <span>{{ figlio.etichetta }}</span>
 
-                      <i
-                        class="bi bi-chevron-right ms-auto text-secondary small freccia-dropdown"
+                      <Icon
+                        name="i-bi:chevron-right"
+                        class="ms-auto text-secondary small freccia-dropdown"
                         aria-hidden="true"
                       />
                     </NuxtLink>
@@ -126,8 +131,9 @@
                 >
                   <span>{{ voce.etichetta }}</span>
 
-                  <i
-                    class="bi bi-box-arrow-up-right ms-auto freccia-menu small"
+                  <Icon
+                    name="i-bi:box-arrow-up-right"
+                    class="ms-auto freccia-menu small"
                     aria-hidden="true"
                   />
                 </a>
@@ -143,8 +149,9 @@
                 >
                   <span>{{ voce.etichetta }}</span>
 
-                  <i
-                    class="bi bi-chevron-right ms-auto freccia-menu small"
+                  <Icon
+                    name="i-bi:chevron-right"
+                    class="ms-auto freccia-menu small"
                     aria-hidden="true"
                   />
                 </NuxtLink>
@@ -157,15 +164,16 @@
                 :to="header.azione.url"
                 class="btn btn-light text-danger fw-semibold rounded-pill px-4 py-2 w-100 d-flex align-items-center justify-content-center gap-2 pulsante-azione"
               >
-                <i
-                  :class="[header.azione.icona]"
+                <Icon
+                  :name="header.azione.icona"
                   aria-hidden="true"
                 />
 
                 <span>{{ header.azione.etichetta }}</span>
 
-                <i
-                  class="bi bi-chevron-right icona-pulsante small"
+                <Icon
+                  name="i-bi:chevron-right"
+                  class="icona-pulsante small"
                   aria-hidden="true"
                 />
               </NuxtLink>

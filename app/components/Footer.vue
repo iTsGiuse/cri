@@ -32,7 +32,7 @@
               class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center p-0"
               style="width: 38px; height: 38px"
             >
-              <i :class="social.icona" aria-hidden="true"></i>
+              <Icon :name="social.icona" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -95,11 +95,9 @@
                 rel="noopener noreferrer"
                 class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none d-flex gap-2 align-items-start"
               >
-                <i
-                  :class="[
-                    footer.contatti.indirizzo.icona,
-                    'mt-1 flex-shrink-0 opacity-75',
-                  ]"
+                <Icon
+                  :name="footer.contatti.indirizzo.icona"
+                  class="mt-1 flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
                 <span>{{ footer.contatti.indirizzo.etichetta }}</span>
@@ -111,11 +109,9 @@
                 :href="`tel:${footer.contatti.telefono.valore}`"
                 class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none d-flex gap-2 align-items-center"
               >
-                <i
-                  :class="[
-                    footer.contatti.telefono.icona,
-                    'flex-shrink-0 opacity-75',
-                  ]"
+                <Icon
+                  :name="footer.contatti.telefono.icona"
+                  class="flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
                 <span>{{ footer.contatti.telefono.etichetta }}</span>
@@ -127,8 +123,9 @@
                 :href="`mailto:${footer.contatti.email.valore}`"
                 class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none d-flex gap-2 align-items-center"
               >
-                <i
-                  :class="[footer.contatti.email.icona, 'flex-shrink-0 opacity-75']"
+                <Icon
+                  :name="footer.contatti.email.icona"
+                  class="flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
                 <span class="text-break">
@@ -160,15 +157,17 @@
               :to="footer.chiamataAzione.url"
               class="btn btn-danger rounded-pill fw-semibold px-4 py-2 text-nowrap shadow-sm pulsante-azione"
             >
-              <i
-                :class="[footer.chiamataAzione.icona, 'me-2']"
+              <Icon
+                :name="footer.chiamataAzione.icona"
+                class="me-2"
                 aria-hidden="true"
               />
 
               {{ footer.chiamataAzione.etichetta }}
 
-              <i
-                class="bi bi-chevron-right freccia-azione small"
+              <Icon
+                name="i-bi:chevron-right"
+                class="freccia-azione small"
                 aria-hidden="true"
               />
             </NuxtLink>

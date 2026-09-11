@@ -10,7 +10,7 @@
               <label class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Cerca documento</label>
               <div class="input-group">
                 <span class="input-group-text bg-light border-end-0 text-secondary rounded-start-3">
-                  <i class="bi bi-search"></i>
+                  <Icon name="i-bi:search" class="" />
                 </span>
                 <input
                   v-model="filtroRicerca"
@@ -57,7 +57,7 @@
           @click="resetFiltri"
           class="btn btn-link text-danger text-decoration-none p-0 fw-semibold text-sm d-flex align-items-center gap-1 hover-opacity"
         >
-          <i class="bi bi-x-circle"></i> Ripristina filtri
+          <Icon name="i-bi:x-circle" class="" /> Ripristina filtri
         </button>
       </div>
 
@@ -75,7 +75,7 @@
               <div class="col-12 col-md-8 col-lg-9 d-flex align-items-center gap-3">
                 <!-- Icon Box -->
                 <div class="icon-box rounded-4 bg-danger-subtle text-danger d-flex align-items-center justify-content-center flex-shrink-0">
-                  <i :class="getIconaEstensione(doc.formato)" class="fs-2"></i>
+                  <Icon :name="getIconaEstensione(doc.formato)" class="fs-2" />
                 </div>
 
                 <!-- Text Content -->
@@ -98,15 +98,15 @@
                   <!-- File Meta Info -->
                   <div class="d-flex align-items-center gap-2 gap-md-3 text-muted text-xs flex-wrap">
                     <span class="d-inline-flex align-items-center gap-1">
-                      <i class="bi bi-file-earmark-code text-danger"></i> {{ doc.formato.toUpperCase() }}
+                      <Icon name="i-bi:file-earmark-code" class=" text-danger" /> {{ doc.formato.toUpperCase() }}
                     </span>
                     <span class="dot-separator"></span>
                     <span class="d-inline-flex align-items-center gap-1">
-                      <i class="bi bi-hdd-network text-danger"></i> {{ doc.dimensione }}
+                      <Icon name="i-bi:hdd-network" class=" text-danger" /> {{ doc.dimensione }}
                     </span>
                     <span class="dot-separator"></span>
                     <span class="d-inline-flex align-items-center gap-1">
-                      <i class="bi bi-calendar-event text-danger"></i> Pubblicato: {{ doc.dataPubblicazione }}
+                      <Icon name="i-bi:calendar-event" class=" text-danger" /> Pubblicato: {{ doc.dataPubblicazione }}
                     </span>
                   </div>
                 </div>
@@ -122,7 +122,7 @@
                   @click="onDownload(doc)"
                   class="btn btn-danger btn-download rounded-3 px-4 py-2.5 w-100 w-md-auto d-inline-flex align-items-center justify-content-center gap-2 shadow-sm fw-semibold"
                 >
-                  <i class="bi bi-download download-icon"></i>
+                  <Icon name="i-bi:download" class=" download-icon" />
                   <span>Scarica File</span>
                 </a>
               </div>
@@ -135,7 +135,7 @@
       <div v-else class="card border-0 shadow-sm rounded-4 text-center py-5 px-3 bg-white">
         <div class="card-body">
           <div class="empty-icon-wrapper rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center mb-3">
-            <i class="bi bi-folder-x fs-1"></i>
+            <Icon name="i-bi:folder-x" class=" fs-1" />
           </div>
           <h4 class="fw-bold text-dark mb-2">Nessun documento trovato</h4>
           <p class="text-secondary mx-auto max-w-md mb-4">
@@ -145,7 +145,7 @@
             @click="resetFiltri"
             class="btn btn-outline-danger btn-md rounded-3 px-4 fw-semibold"
           >
-            <i class="bi bi-arrow-counterclockwise me-1"></i> Ripristina tutti i filtri
+            <Icon name="i-bi:arrow-counterclockwise" class=" me-1" /> Ripristina tutti i filtri
           </button>
         </div>
       </div>
@@ -157,7 +157,7 @@
       <div class="card bg-light border-0 rounded-4 p-4 p-md-5 text-center shadow-lg">
         <div class="card-body p-0">
           <div class="d-inline-flex align-items-center justify-content-center bg-danger text-white rounded-circle mb-3 p-3" style="width: 50px; height: 50px;">
-            <i :class="ctaInfoCalculated.icona" class="fs-4"></i>
+            <Icon :name="ctaInfoCalculated.icona" class="fs-4" />
           </div>
           
           <h4 class="fw-bold text-dark mb-2">{{ ctaInfoCalculated.titolo }}</h4>
@@ -170,7 +170,7 @@
             class="btn btn-danger btn-lg rounded-pill px-4 py-2 text-white fw-semibold d-inline-flex align-items-center gap-2 shadow-sm"
           >
             <span>{{ ctaInfoCalculated.testoPulsante }}</span>
-            <i :class="ctaInfoCalculated.iconaPulsante" aria-hidden="true"></i>
+            <Icon :name="ctaInfoCalculated.iconaPulsante" aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -250,8 +250,8 @@ const ctaInfoCalculated = computed<Required<CtaConfig>>(() => {
       'I soci ed i cittadini aventi diritto possono presentare una richiesta formale di accesso agli atti e verbali direttamente alla nostra segreteria amministrativa.',
     emailPec: props.ctaInfo.emailPec ?? 'comitato.rubiera@cert.cri.it',
     testoPulsante: props.ctaInfo.testoPulsante ?? 'Invia richiesta via PEC',
-    icona: props.ctaInfo.icona ?? 'bi bi-file-earmark-lock',
-    iconaPulsante: props.ctaInfo.iconaPulsante ?? 'bi bi-envelope-at'
+    icona: props.ctaInfo.icona ?? 'i-bi:file-earmark-lock',
+    iconaPulsante: props.ctaInfo.iconaPulsante ?? 'i-bi:envelope-at'
   }
 })
 
@@ -294,19 +294,19 @@ const getNomeCategoria = (categoriaId: string): string => {
 const getIconaEstensione = (formato: string): string => {
   switch (formato.toLowerCase()) {
     case 'pdf':
-      return 'bi bi-file-earmark-pdf-fill'
+      return 'i-bi:file-earmark-pdf-fill'
     case 'zip':
     case 'rar':
-      return 'bi bi-file-earmark-zip-fill'
+      return 'i-bi:file-earmark-zip-fill'
     case 'xlsx':
     case 'xls':
     case 'csv':
-      return 'bi bi-file-earmark-excel-fill'
+      return 'i-bi:file-earmark-excel-fill'
     case 'doc':
     case 'docx':
-      return 'bi bi-file-earmark-word-fill'
+      return 'i-bi:file-earmark-word-fill'
     default:
-      return 'bi bi-file-earmark-text-fill'
+      return 'i-bi:file-earmark-text-fill'
   }
 }
 

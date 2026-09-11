@@ -94,7 +94,7 @@
                 :to="configStoria.conclusione.urlPulsante"
                 class="btn btn-danger fw-bold px-4 py-3 shadow-sm rounded-pill text-white"
               >
-                <i :class="configStoria.conclusione.iconaPulsante" class="me-2" aria-hidden="true"></i>
+                <Icon :name="configStoria.conclusione.iconaPulsante" class="me-2" aria-hidden="true" />
                 {{ configStoria.conclusione.testoPulsante }}
               </NuxtLink>
             </div>
@@ -147,7 +147,7 @@ const configStoria = {
     testo: 'La storia della Croce Rossa a Rubiera non appartiene al passato: è un racconto in costante evoluzione che si arricchisce ogni giorno grazie all’energia, al tempo e al cuore di chi sceglie di donarsi agli altri. Unisciti a noi.',
     testoPulsante: 'Scopri come diventare volontario',
     urlPulsante: '/chi-siamo/sede-e-contatti',
-    iconaPulsante: 'bi bi-heart-fill'
+    iconaPulsante: 'i-bi:heart-fill'
   },
 }
 

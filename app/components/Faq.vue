@@ -55,7 +55,7 @@
         <div class="card bg-light border-0 rounded-4 p-4 p-md-5 text-center shadow-lg">
           <div class="card-body p-0">
             <div class="d-inline-flex align-items-center justify-content-center bg-danger text-white rounded-circle mb-3 p-3" style="width: 50px; height: 50px;">
-              <i class="bi bi-question-lg fs-4"></i>
+              <Icon name="i-bi:question-lg" class=" fs-4" />
             </div>
             
             <h4 class="fw-bold text-dark mb-2">Non hai trovato la risposta che cercavi?</h4>
@@ -68,7 +68,7 @@
               class="btn btn-danger btn-lg rounded-pill px-4 py-2 text-white fw-semibold d-inline-flex align-items-center gap-2 shadow-sm"
             >
               <span>Contatta il Comitato di Rubiera</span>
-              <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              <Icon name="i-bi:arrow-right" class="" aria-hidden="true" />
             </NuxtLink>
           </div>
         </div>

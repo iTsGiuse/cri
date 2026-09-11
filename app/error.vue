@@ -35,10 +35,10 @@
             class="btn btn-light text-danger fw-bold px-4 py-3 shadow-sm d-inline-flex align-items-center gap-2 mb-4 mb-lg-5 justify-content-center"
             @click="gestisciHome"
           >
-            <i
-              :class="configVisuale.pulsanteHome.icona"
+            <Icon
+              :name="configVisuale.pulsanteHome.icona"
               aria-hidden="true"
-            ></i>
+            ></Icon>
 
             <span>
               {{ configVisuale.pulsanteHome.testo }}
@@ -82,7 +82,7 @@
                   rel="noopener noreferrer"
                   class="btn btn-outline-light d-inline-flex align-items-center gap-2 rounded-pill px-3 "
                 >
-                  <i :class="social.icona" aria-hidden="true"></i>
+                  <Icon :name="social.icona" aria-hidden="true"></Icon>
 
                   <span>
                     {{ social.etichetta }}
@@ -106,10 +106,10 @@
                   height: `${configVisuale.boxAiuto.iconaDimensione}px`,
                 }"
               >
-                <i
-                  :class="configVisuale.boxAiuto.icona"
+                <Icon
+                  :name="configVisuale.boxAiuto.icona"
                   aria-hidden="true"
-                ></i>
+                ></Icon>
               </div>
 
               <div>
@@ -142,10 +142,10 @@
                         height: `${configVisuale.contatti.emergenza.iconaDimensione}px`,
                       }"
                     >
-                      <i
-                        :class="configVisuale.contatti.emergenza.icona"
+                      <Icon
+                        :name="configVisuale.contatti.emergenza.icona"
                         aria-hidden="true"
-                      ></i>
+                      ></Icon>
                     </div>
 
                     <div class="flex-grow-1">
@@ -163,10 +163,10 @@
                       </span>
                     </div>
 
-                    <i
-                      :class="configVisuale.contatti.emergenza.iconaFreccia"
+                    <Icon
+                      :name="configVisuale.contatti.emergenza.iconaFreccia"
                       aria-hidden="true"
-                    ></i>
+                    ></Icon>
                   </div>
                 </div>
               </a>
@@ -190,10 +190,10 @@
                         height: `${configVisuale.contatti.indirizzo.iconaDimensione}px`,
                       }"
                     >
-                      <i
-                        :class="configVisuale.contatti.indirizzo.icona"
+                      <Icon
+                        :name="configVisuale.contatti.indirizzo.icona"
                         aria-hidden="true"
-                      ></i>
+                      ></Icon>
                     </div>
 
                     <div class="flex-grow-1">
@@ -211,10 +211,10 @@
                       </span>
                     </div>
 
-                    <i
-                      :class="configVisuale.contatti.indirizzo.iconaFreccia"
+                    <Icon
+                      :name="configVisuale.contatti.indirizzo.iconaFreccia"
                       aria-hidden="true"
-                    ></i>
+                    ></Icon>
                   </div>
                 </div>
               </a>
@@ -236,10 +236,10 @@
                         height: `${configVisuale.contatti.telefonoUffici.iconaDimensione}px`,
                       }"
                     >
-                      <i
-                        :class="configVisuale.contatti.telefonoUffici.icona"
+                      <Icon
+                        :name="configVisuale.contatti.telefonoUffici.icona"
                         aria-hidden="true"
-                      ></i>
+                      ></Icon>
                     </div>
 
                     <div class="flex-grow-1">
@@ -257,10 +257,10 @@
                       </span>
                     </div>
 
-                    <i
-                      :class="configVisuale.contatti.telefonoUffici.iconaFreccia"
+                    <Icon
+                      :name="configVisuale.contatti.telefonoUffici.iconaFreccia"
                       aria-hidden="true"
-                    ></i>
+                    ></Icon>
                   </div>
                 </div>
               </a>
@@ -328,7 +328,7 @@ const configVisuale = {
 
   pulsanteHome: {
     testo: 'Torna al sito',
-    icona: 'bi bi-arrow-left fs-5',
+    icona: 'i-bi:arrow-left',
   },
 
   errore: {
@@ -341,7 +341,7 @@ const configVisuale = {
   boxAiuto: {
     titolo: 'Contatti utili',
     sottotitolo: 'Siamo a tua disposizione',
-    icona: 'bi bi-telephone-fill fs-5',
+    icona: 'i-bi:telephone-fill',
     iconaDimensione: 48,
   },
 
@@ -349,8 +349,8 @@ const configVisuale = {
     emergenza: {
       etichetta: 'Emergenze sanitarie',
       numero: '118',
-      icona: 'bi bi-heart-pulse-fill fs-5',
-      iconaFreccia: 'bi bi-arrow-right text-danger fs-4',
+      icona: 'i-bi:heart-pulse-fill',
+      iconaFreccia: 'i-bi:arrow-right',
       iconaDimensione: 44,
       etichettaDimensione: '0.75rem',
     },
@@ -360,8 +360,8 @@ const configVisuale = {
       testo: 'Via Emilia Est, 12 - Rubiera (RE)',
       urlMaps:
         'https://www.google.com/maps/search/?api=1&query=Croce+Rossa+Italiana+Comitato+di+Rubiera',
-      icona: 'bi bi-geo-alt-fill fs-5',
-      iconaFreccia: 'bi bi-box-arrow-up-right text-secondary fs-6',
+      icona: 'i-bi:geo-alt-fill',
+      iconaFreccia: 'i-bi:box-arrow-up-right',
       iconaDimensione: 44,
       etichettaDimensione: '0.8rem',
     },
@@ -370,8 +370,8 @@ const configVisuale = {
       etichetta: 'Telefono',
       numeroGrezzo: '+390522626262',
       numeroVisualizzato: '0522 626262',
-      icona: 'bi bi-telephone-fill fs-5',
-      iconaFreccia: 'bi bi-arrow-right text-danger fs-5',
+      icona: 'i-bi:telephone-fill',
+      iconaFreccia: 'i-bi:arrow-right',
       iconaDimensione: 44,
       etichettaDimensione: '0.8rem',
     },
@@ -380,17 +380,17 @@ const configVisuale = {
   listaSocial: [
     {
       etichetta: 'Facebook',
-      icona: 'bi bi-facebook',
+      icona: 'i-bi:facebook',
       url: 'https://www.facebook.com/CRIRubiera',
     },
     {
       etichetta: 'Instagram',
-      icona: 'bi bi-instagram',
+      icona: 'i-bi:instagram',
       url: 'https://www.instagram.com/cri_rubiera',
     },
     {
       etichetta: 'YouTube',
-      icona: 'bi bi-youtube',
+      icona: 'i-bi:youtube',
       url: '',
     },
   ] satisfies ElementoSocial[],

@@ -12,7 +12,7 @@
               to="/"
               class="text-white text-opacity-75 text-opacity-100-hover text-decoration-none d-inline-flex align-items-center"
             >
-              <i class="bi bi-house-door-fill me-1" aria-hidden="true"></i>
+              <Icon name="i-bi:house-door-fill" class=" me-1" aria-hidden="true" />
               <span>Home</span>
             </NuxtLink>
           </li>
@@ -30,7 +30,7 @@
               :class="{ 'opacity-75': !voce.cliccabile && index !== percorsiBreadcrumb.length - 1 }"
               :aria-current="index === percorsiBreadcrumb.length - 1 ? 'page' : undefined"
             >
-              <i :class="[voce.icona, 'me-1']" aria-hidden="true"></i>
+              <Icon :name="voce.icona" class="me-1" aria-hidden="true" />
               <span>{{ voce.etichetta }}</span>
             </span>
 
@@ -39,7 +39,7 @@
               :to="voce.url"
               class="text-white text-opacity-75 text-opacity-100-hover text-decoration-none text-nowrap d-inline-flex align-items-center"
             >
-              <i :class="[voce.icona, 'me-1']" aria-hidden="true"></i>
+              <Icon :name="voce.icona" class="me-1" aria-hidden="true" />
               <span>{{ voce.etichetta }}</span>
             </NuxtLink>
           </li>
@@ -61,49 +61,49 @@ type DatiVoce = {
 }
 
 const dizionarioEtichette: Record<string, DatiVoce> = {
-  'chi-siamo': { etichetta: 'Chi siamo', icona: 'bi bi-people-fill' },
-  'il-comitato': { etichetta: 'Il Comitato', icona: 'bi bi-building-fill' },
-  'storia': { etichetta: 'La nostra storia', icona: 'bi bi-clock-history' },
-  'organizzazione': { etichetta: 'Organizzazione e governance', icona: 'bi bi-diagram-3-fill' },
-  'principi-e-valori': { etichetta: 'Principi e valori', icona: 'bi bi-heart-fill' },
-  'trasparenza': { etichetta: 'Trasparenza e documenti', icona: 'bi bi-file-earmark-text-fill' },
-  'sede-e-contatti': { etichetta: 'Sede e contatti', icona: 'bi bi-geo-alt-fill' },
+  'chi-siamo': { etichetta: 'Chi siamo', icona: 'i-bi:people-fill' },
+  'il-comitato': { etichetta: 'Il Comitato', icona: 'i-bi:building-fill' },
+  'storia': { etichetta: 'La nostra storia', icona: 'i-bi:clock-history' },
+  'organizzazione': { etichetta: 'Organizzazione e governance', icona: 'i-bi:diagram-3-fill' },
+  'principi-e-valori': { etichetta: 'Principi e valori', icona: 'i-bi:heart-fill' },
+  'trasparenza': { etichetta: 'Trasparenza e documenti', icona: 'i-bi:file-earmark-text-fill' },
+  'sede-e-contatti': { etichetta: 'Sede e contatti', icona: 'i-bi:geo-alt-fill' },
 
-  'cosa-facciamo': { etichetta: 'Cosa facciamo', icona: 'bi bi-activity' },
-  'salute': { etichetta: 'Salute e Prevenzione', icona: 'bi bi-heart-pulse-fill' },
-  'sociale': { etichetta: 'Sociale e Inclusione', icona: 'bi bi-people-fill' },
-  'protezione-civile': { etichetta: 'Emergenza e Protezione Civile', icona: 'bi bi-shield-fill-check' },
-  'diritto-umanitario': { etichetta: 'Principi e Diritto Umanitario', icona: 'bi bi-book-fill' },
-  'giovani': { etichetta: 'Giovani', icona: 'bi bi-person-hearts' },
-  'sviluppo': { etichetta: 'Sviluppo e Comunicazione', icona: 'bi bi-graph-up-arrow' },
+  'cosa-facciamo': { etichetta: 'Cosa facciamo', icona: 'i-bi:activity' },
+  'salute': { etichetta: 'Salute e Prevenzione', icona: 'i-bi:heart-pulse-fill' },
+  'sociale': { etichetta: 'Sociale e Inclusione', icona: 'i-bi:people-fill' },
+  'protezione-civile': { etichetta: 'Emergenza e Protezione Civile', icona: 'i-bi:shield-fill-check' },
+  'diritto-umanitario': { etichetta: 'Principi e Diritto Umanitario', icona: 'i-bi:book-fill' },
+  'giovani': { etichetta: 'Giovani', icona: 'i-bi:person-hearts' },
+  'sviluppo': { etichetta: 'Sviluppo e Comunicazione', icona: 'i-bi:graph-up-arrow' },
 
-  'servizi': { etichetta: 'Servizi', icona: 'bi bi-grid-fill' },
-  'emergenza-118': { etichetta: 'Emergenza e Soccorso 118 / 112', icona: 'bi bi-exclamation-triangle-fill' },
-  'richiedi-trasporto': { etichetta: 'Richiedi un trasporto sanitario', icona: 'bi bi-truck-front-fill' },
-  'assistenza-eventi': { etichetta: 'Assistenza sanitaria a manifestazioni', icona: 'bi bi-hospital-fill' },
-  'corsi-popolazione': { etichetta: 'Corsi per la popolazione', icona: 'bi bi-mortarboard-fill' },
-  'corsi-aziende': { etichetta: 'Corsi aziendali (D.Lgs 81/08)', icona: 'bi bi-briefcase-fill' },
-  'supporto-sociale': { etichetta: 'Supporto sociale e assistenza', icona: 'bi bi-house-heart-fill' },
-  'prenotazioni-e-informazioni': { etichetta: 'Prenotazioni e informazioni', icona: 'bi bi-calendar-check-fill' },
+  'servizi': { etichetta: 'Servizi', icona: 'i-bi:grid-fill' },
+  'emergenza-118': { etichetta: 'Emergenza e Soccorso 118 / 112', icona: 'i-bi:exclamation-triangle-fill' },
+  'richiedi-trasporto': { etichetta: 'Richiedi un trasporto sanitario', icona: 'i-bi:truck-front-fill' },
+  'assistenza-eventi': { etichetta: 'Assistenza sanitaria a manifestazioni', icona: 'i-bi:hospital-fill' },
+  'corsi-popolazione': { etichetta: 'Corsi per la popolazione', icona: 'i-bi:mortarboard-fill' },
+  'corsi-aziende': { etichetta: 'Corsi aziendali (D.Lgs 81/08)', icona: 'i-bi:briefcase-fill' },
+  'supporto-sociale': { etichetta: 'Supporto sociale e assistenza', icona: 'i-bi:house-heart-fill' },
+  'prenotazioni-e-informazioni': { etichetta: 'Prenotazioni e informazioni', icona: 'i-bi:calendar-check-fill' },
 
-  'volontariato': { etichetta: 'Volontariato', icona: 'bi bi-person-plus-fill' },
-  'diventa-volontario': { etichetta: 'Diventa volontario', icona: 'bi bi-person-plus-fill' },
-  'corso-di-accesso': { etichetta: 'Come funziona il corso di accesso', icona: 'bi bi-info-circle-fill' },
-  'percorso-formativo': { etichetta: 'Percorso formativo e qualifiche', icona: 'bi bi-mortarboard-fill' },
-  'attivita-e-gruppi': { etichetta: 'Attività e gruppi di lavoro', icona: 'bi bi-people-fill' },
+  'volontariato': { etichetta: 'Volontariato', icona: 'i-bi:person-plus-fill' },
+  'diventa-volontario': { etichetta: 'Diventa volontario', icona: 'i-bi:person-plus-fill' },
+  'corso-di-accesso': { etichetta: 'Come funziona il corso di accesso', icona: 'i-bi:info-circle-fill' },
+  'percorso-formativo': { etichetta: 'Percorso formativo e qualifiche', icona: 'i-bi:mortarboard-fill' },
+  'attivita-e-gruppi': { etichetta: 'Attività e gruppi di lavoro', icona: 'i-bi:people-fill' },
 
-  'news': { etichetta: 'News & Eventi', icona: 'bi bi-newspaper' },
-  'notizie': { etichetta: 'Notizie', icona: 'bi bi-newspaper' },
-  'eventi': { etichetta: 'Eventi', icona: 'bi bi-calendar-event-fill' },
-  'campagne': { etichetta: 'Campagne di sensibilizzazione', icona: 'bi bi-megaphone-fill' },
+  'news': { etichetta: 'News & Eventi', icona: 'i-bi:newspaper' },
+  'notizie': { etichetta: 'Notizie', icona: 'i-bi:newspaper' },
+  'eventi': { etichetta: 'Eventi', icona: 'i-bi:calendar-event-fill' },
+  'campagne': { etichetta: 'Campagne di sensibilizzazione', icona: 'i-bi:megaphone-fill' },
 
-  'faq': { etichetta: 'FAQ', icona: 'bi bi-question-circle-fill' },
-  'servizi-e-trasporti': { etichetta: 'Trasporti e Servizi Sanitari', icona: 'bi bi-truck-front-fill' },
-  'corsi-formazione': { etichetta: 'Corsi di Formazione', icona: 'bi bi-mortarboard-fill' },
-  'donazioni': { etichetta: 'Donazioni e 5x1000', icona: 'bi bi-piggy-bank-fill' },
+  'faq': { etichetta: 'FAQ', icona: 'i-bi:question-circle-fill' },
+  'servizi-e-trasporti': { etichetta: 'Trasporti e Servizi Sanitari', icona: 'i-bi:truck-front-fill' },
+  'corsi-formazione': { etichetta: 'Corsi di Formazione', icona: 'i-bi:mortarboard-fill' },
+  'donazioni': { etichetta: 'Donazioni e 5x1000', icona: 'i-bi:piggy-bank-fill' },
 
-  'dona': { etichetta: 'Dona ora', icona: 'bi bi-heart-fill' },
-  'contatti': { etichetta: 'Contatti', icona: 'bi bi-envelope-fill' }
+  'dona': { etichetta: 'Dona ora', icona: 'i-bi:heart-fill' },
+  'contatti': { etichetta: 'Contatti', icona: 'i-bi:envelope-fill' }
 }
 
 const categorieNonCliccabili = ['chi-siamo', 'cosa-facciamo', 'servizi', 'volontariato', 'news', 'faq']
@@ -124,7 +124,7 @@ const percorsiBreadcrumb = computed(() => {
 
     return {
       etichetta: configurazioneVoce ? configurazioneVoce.etichetta : etichettaFormattata,
-      icona: configurazioneVoce ? configurazioneVoce.icona : 'bi bi-folder-fill',
+      icona: configurazioneVoce ? configurazioneVoce.icona : 'i-bi:folder-fill',
       url: accumulatoreUrl,
       cliccabile: !categorieNonCliccabili.includes(segmento)
     }

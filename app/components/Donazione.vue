@@ -213,14 +213,14 @@ const copyValue = async (value, key) => {
                       )
                     "
                   >
-                    <i
-                      :class="
+                    <Icon
+                      :name="
                         copied === 'taxCode'
-                          ? 'bi bi-check-lg'
-                          : 'bi bi-copy'
+                          ? 'i-bi:check-lg'
+                          : 'i-bi:copy'
                       "
                       class="me-2"
-                    ></i>
+                    ></Icon>
 
                     {{
                       copied === 'taxCode'
@@ -363,14 +363,14 @@ const copyValue = async (value, key) => {
                     class="btn btn-outline-danger btn-sm flex-shrink-0"
                     @click="copyValue(field.value, field.id)"
                   >
-                    <i
-                      :class="
+                    <Icon
+                      :name="
                         copied === field.id
-                          ? 'bi bi-check-lg'
-                          : 'bi bi-copy'
+                          ? 'i-bi:check-lg'
+                          : 'i-bi:copy'
                       "
                       class="me-1"
-                    ></i>
+                    ></Icon>
 
                     {{
                       copied === field.id
@@ -397,7 +397,7 @@ const copyValue = async (value, key) => {
                 :href="`mailto:${donationData.bankTransfer.contact.email}`"
                 class="btn btn-danger flex-shrink-0"
               >
-                <i class="bi bi-envelope me-2"></i>
+                <Icon name="i-bi:envelope" class=" me-2" />
 
                 {{ donationData.bankTransfer.contact.label }}
               </a>
@@ -503,9 +503,8 @@ const copyValue = async (value, key) => {
 
                 <div class="d-flex align-items-start gap-3 py-3 border-bottom">
 
-                  <i
-                    class="bi bi-check-lg text-danger fs-5 flex-shrink-0"
-                  ></i>
+                  <Icon name="i-bi:check-lg" class=" text-danger fs-5 flex-shrink-0"
+                   />
 
                   <span class="lh-base">
                     {{ item }}
@@ -523,9 +522,8 @@ const copyValue = async (value, key) => {
 
               <div class="d-flex align-items-start gap-3">
 
-                <i
-                  class="bi bi-info-circle text-danger fs-5 flex-shrink-0"
-                ></i>
+                <Icon name="i-bi:info-circle" class=" text-danger fs-5 flex-shrink-0"
+                 />
 
                 <div>
 
@@ -555,10 +553,10 @@ const copyValue = async (value, key) => {
                 :class="`btn-${contact.variant}`"
               >
 
-                <i
-                  :class="`bi ${contact.icon}`"
+                <Icon
+                  :name="`i-bi:${contact.icon}`"
                   class="me-2"
-                ></i>
+                ></Icon>
 
                 {{ contact.label }}
 
