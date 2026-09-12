@@ -515,48 +515,63 @@ const heroContentByPath: Record<string, HeroContent> = {
     },
   },
 
-  '/news/notizie': {
+  '/news': {
     badge: 'Comunicazione & Aggiornamenti',
     badgeIcon: 'i-bi:newspaper',
-    title: 'Notizie ed Attività',
+    title: 'Notizie',
     description:
-      'Rimani aggiornato su progetti, traguardi raggiunti, comunicati ufficiali e vita associativa del Comitato di Rubiera.',
+      'Rimani aggiornato sulle attività, le iniziative, i progetti e tutte le novità del Comitato di Rubiera.',
     imageUrl: 'https://picsum.photos/id/1058/1200/800',
-    imageAlt: 'Notizie dal Comitato',
+    imageAlt: 'Notizie della Croce Rossa Italiana - Comitato di Rubiera',
     primaryCta: {
-      label: 'Eventi',
-      url: '/news/eventi',
+      label: 'Scopri gli Eventi',
+      url: '/eventi',
       icon: 'i-bi:calendar-event-fill',
     },
-  },
-
-  '/news/eventi': {
-    badge: 'Appuntamenti sul Territorio',
-    badgeIcon: 'i-bi:calendar-event-fill',
-    title: 'Eventi e Iniziative',
-    description:
-      'Partecipa alle nostre giornate di prevenzione, eventi benefici, esercitazioni ed incontri aperti alla cittadinanza.',
-    imageUrl: 'https://picsum.photos/id/1048/1200/800',
-    imageAlt: 'Evento pubblico Croce Rossa',
-    primaryCta: {
+    secondaryCta: {
       label: 'Campagne',
-      url: '/news/campagne',
+      url: '/campagne',
       icon: 'i-bi:megaphone-fill',
     },
   },
 
-  '/news/campagne': {
+  '/eventi': {
+    badge: 'Appuntamenti sul Territorio',
+    badgeIcon: 'i-bi:calendar-event-fill',
+    title: 'Eventi',
+    description:
+      'Scopri gli eventi, le iniziative e gli appuntamenti organizzati dal Comitato di Rubiera e partecipa alla vita della nostra comunità.',
+    imageUrl: 'https://picsum.photos/id/1048/1200/800',
+    imageAlt: 'Eventi e iniziative della Croce Rossa Italiana - Comitato di Rubiera',
+    primaryCta: {
+      label: 'Scopri le Notizie',
+      url: '/news',
+      icon: 'i-bi:newspaper',
+    },
+    secondaryCta: {
+      label: 'Campagne',
+      url: '/campagne',
+      icon: 'i-bi:megaphone-fill',
+    },
+  },
+
+  '/campagne': {
     badge: 'Sensibilizzazione',
     badgeIcon: 'i-bi:megaphone-fill',
     title: 'Campagne di Sensibilizzazione',
     description:
-      'Scopri le nostre campagne nazionali e locali per promuovere la donazione del sangue, la sicurezza stradale e l’inclusione.',
+      'Scopri le campagne di sensibilizzazione promosse dalla Croce Rossa per diffondere prevenzione, consapevolezza, solidarietà e cultura umanitaria.',
     imageUrl: 'https://picsum.photos/id/1021/1200/800',
-    imageAlt: 'Campagne di sensibilizzazione',
+    imageAlt: 'Campagne di sensibilizzazione della Croce Rossa Italiana - Comitato di Rubiera',
     primaryCta: {
-      label: 'Dona Ora',
-      url: '/dona',
-      icon: 'i-bi:heart-fill',
+      label: 'Scopri le Notizie',
+      url: '/news',
+      icon: 'i-bi:newspaper',
+    },
+    secondaryCta: {
+      label: 'Scopri gli Eventi',
+      url: '/eventi',
+      icon: 'i-bi:calendar-event-fill',
     },
   },
 

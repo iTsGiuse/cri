@@ -1,255 +1,288 @@
+```vue
 <template>
-  <div class="bg-light">
+  <main class="bg-white">
 
-    <section class="bg-white border-bottom">
-      <div class="container py-4 py-lg-5">
+    <!-- =====================================================
+         TESTATA ARTICOLO
+         ===================================================== -->
+    <section class="bg-white">
+      <div class="container">
 
-        <nav
-          aria-label="breadcrumb"
-          class="mb-4"
-        >
-          <ol class="breadcrumb mb-0 small">
+        <!-- Torna alle news -->
+        <div class="pt-4 pt-lg-5">
 
-            <li class="breadcrumb-item">
-              <NuxtLink
-                to="/"
-                class="text-secondary text-decoration-none"
-              >
-                Home
-              </NuxtLink>
-            </li>
+          <NuxtLink
+            to="/news"
+            class="text-decoration-none fw-semibold d-inline-flex align-items-center gap-2 border rounded-5 py-3 px-3 bg-danger text-white "
+          >
+            <Icon
+              :name="pageConfig.back.icon"
+              aria-hidden="true"
+            />
 
-            <li class="breadcrumb-item">
-              <NuxtLink
-                to="/news"
-                class="text-secondary text-decoration-none"
-              >
-                News
-              </NuxtLink>
-            </li>
+            <span>
+              {{ pageConfig.back.label }}
+            </span>
+          </NuxtLink>
 
-            <li
-              class="breadcrumb-item active text-truncate"
-              aria-current="page"
+        </div>
+
+
+        <!-- Intestazione -->
+        <header class="py-5 py-lg-6">
+
+          <!-- Categoria -->
+          <div class="mb-3">
+
+            <span
+              class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 fw-semibold"
             >
-              {{ article.title }}
-            </li>
-
-          </ol>
-        </nav>
-
-        <div class="row">
-          <div class="col-12 col-xl-9 text-center text-lg-start">
-
-            <div class="mb-3">
-              <span
-                class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 fw-semibold"
-              >
-                <Icon
-                  name="i-bi:tag-fill"
-                  class="me-1"
-                />
-
-                {{ getCategoryName(article.categoryId) }}
-              </span>
-            </div>
-
-            <h1 class="display-4 fw-bold text-dark mb-4 articolo-titolo">
-              {{ article.title }}
-            </h1>
-
-            <p class="lead text-secondary mb-4 articolo-introduzione">
-              {{ article.description }}
-            </p>
-
-            <div class="d-flex align-items-center gap-2 text-secondary justify-content-center justify-content-lg-start">
-
               <Icon
-                name="i-bi:calendar3"
-                class="text-danger"
+                :name="pageConfig.meta.categoryIcon"
+                class="me-1"
+                aria-hidden="true"
               />
 
-              <span>
-                Pubblicato il
-                <strong class="text-dark">
+              {{ getCategoryName(article.categoryId) }}
+            </span>
+
+          </div>
+
+
+          <!-- Titolo -->
+          <h1
+            class="display-3 fw-bold text-dark lh-sm mb-4"
+          >
+            {{ article.title }}
+          </h1>
+
+
+          <!-- Descrizione -->
+          <p
+            class="lead text-secondary mb-4"
+          >
+            {{ article.description }}
+          </p>
+
+
+          <!-- Data -->
+          <time
+            :datetime="article.publishedAt"
+            class="text-secondary d-inline-flex align-items-center gap-2"
+          >
+
+            <Icon
+              :name="pageConfig.meta.dateIcon"
+              class="text-danger"
+              aria-hidden="true"
+            />
+
+            <span>
+              {{ pageConfig.meta.publishedLabel }}
+
+              <strong class="text-dark">
+                {{ formatDate(article.publishedAt) }}
+              </strong>
+            </span>
+
+          </time>
+
+        </header>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         IMMAGINE PRINCIPALE
+         ===================================================== -->
+    <section class="bg-white">
+      <div class="container pb-4 pb-lg-5">
+
+        <figure class="mb-0">
+
+          <div
+            class="ratio ratio-21x9 rounded-4 overflow-hidden bg-light shadow-sm"
+          >
+
+            <NuxtImg
+              :src="article.imageUrl"
+              :alt="article.title"
+              width="1400"
+              height="600"
+              format="webp"
+              preload
+              decoding="async"
+              class="w-100 h-100 object-fit-cover"
+            />
+
+          </div>
+
+        </figure>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         CONTENUTO ARTICOLO
+         ===================================================== -->
+    <section class="py-5 py-lg-6">
+      <div class="container">
+
+        <article class="contenuto-articolo">
+
+          <div
+            v-html="article.content"
+          />
+
+        </article>
+
+
+        <!-- =================================================
+             AUTORE + DATA
+             ================================================= -->
+        <div class="border-top mt-5 pt-4">
+
+          <div
+            class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-3 gap-sm-5"
+          >
+
+            <!-- Autore -->
+            <div class="d-flex align-items-center gap-3">
+
+              <div
+                class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center flex-shrink-0"
+                style="width: 2.75rem; height: 2.75rem;"
+                aria-hidden="true"
+              >
+                <Icon
+                  :name="pageConfig.author.icon"
+                />
+              </div>
+
+              <div>
+
+                <small class="text-secondary d-block">
+                  {{ pageConfig.author.label }}
+                </small>
+
+                <span class="fw-semibold text-dark">
+                  {{ article.author ?? pageConfig.author.defaultAuthor }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Data -->
+            <div class="d-flex align-items-center gap-3">
+
+              <div
+                class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center flex-shrink-0"
+                style="width: 2.75rem; height: 2.75rem;"
+                aria-hidden="true"
+              >
+                <Icon
+                  :name="pageConfig.meta.dateIcon"
+                />
+              </div>
+
+              <div>
+
+                <small class="text-secondary d-block">
+                  {{ pageConfig.meta.dateLabel }}
+                </small>
+
+                <time
+                  :datetime="article.publishedAt"
+                  class="fw-semibold text-dark"
+                >
                   {{ formatDate(article.publishedAt) }}
-                </strong>
-              </span>
+                </time>
+
+              </div>
 
             </div>
 
           </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="bg-white pb-4 pb-lg-5">
-      <div class="container">
-
-        <div class="articolo-immagine rounded-4 overflow-hidden shadow-lg">
-
-          <NuxtImg
-            :src="article.imageUrl"
-            :alt="article.title"
-            width="1400"
-            height="788"
-            format="webp"
-            preload
-            class="w-100 h-100 object-fit-cover"
-          />
 
         </div>
 
       </div>
     </section>
 
-    <section class="py-4 py-lg-5">
-      <div class="container">
 
-        <div class="row justify-content-center">
-
-          <div class="col-12 col-lg-8 col-xl-8">
-
-            <article class="card border-0 shadow-sm rounded-4">
-
-              <div class="card-body p-4 p-md-5">
-
-                <div
-                  class="contenuto-articolo"
-                  v-html="article.content"
-                />
-
-              </div>
-
-            </article>
-
-          </div>
-
-          <div class="col-12 col-lg-4 col-xl-3 mt-4 mt-lg-0">
-
-            <aside class="sticky-lg-top sidebar-articolo">
-
-              <div class="card border-0 shadow-sm rounded-4 mb-4">
-
-                <div class="card-body p-4">
-
-                  <h2 class="h6 text-uppercase fw-bold text-secondary mb-4">
-                    Informazioni
-                  </h2>
-
-                  <div class="d-flex align-items-center gap-3 mb-4">
-
-                    <div
-                      class="info-icon rounded-3 bg-danger-subtle text-danger d-flex align-items-center justify-content-center"
-                    >
-                      <Icon name="i-bi:tag" />
-                    </div>
-
-                    <div>
-                      <small class="text-secondary d-block">
-                        Categoria
-                      </small>
-
-                      <span class="fw-semibold text-dark">
-                        {{ getCategoryName(article.categoryId) }}
-                      </span>
-                    </div>
-
-                  </div>
-
-                  <div class="d-flex align-items-center gap-3">
-
-                    <div
-                      class="info-icon rounded-3 bg-danger-subtle text-danger d-flex align-items-center justify-content-center"
-                    >
-                      <Icon name="i-bi:calendar-event" />
-                    </div>
-
-                    <div>
-                      <small class="text-secondary d-block">
-                        Pubblicazione
-                      </small>
-
-                      <span class="fw-semibold text-dark">
-                        {{ formatDate(article.publishedAt) }}
-                      </span>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-
-              <NuxtLink
-                to="/news"
-                class="btn btn-danger w-100 rounded-3 py-3 fw-semibold d-flex align-items-center justify-content-center gap-2"
-              >
-                <Icon name="i-bi:arrow-left" />
-
-                Torna alle news
-              </NuxtLink>
-
-            </aside>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
+    <!-- =====================================================
+         NEWS CORRELATE
+         ===================================================== -->
     <section
       v-if="relatedArticles.length"
-      class="bg-white py-5"
+      class="bg-light border-top py-4 py-lg-5"
     >
       <div class="container">
 
-        <div class="row align-items-end mb-4">
+        <!-- Header -->
+        <div
+          class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-end gap-3 mb-4"
+        >
 
-          <div class="col">
+          <div>
 
             <span class="text-danger text-uppercase fw-bold small">
-              Continua a leggere
+              {{ pageConfig.related.eyebrow }}
             </span>
 
-            <h2 class="fw-bold text-dark mb-0 mt-1">
-              Altre news
+            <h2 class="h3 fw-bold text-dark mb-0 mt-1">
+              {{ pageConfig.related.title }}
             </h2>
 
           </div>
 
-          <div class="col-auto">
 
-            <NuxtLink
-              to="/news"
-              class="btn btn-outline-danger rounded-3 d-none d-sm-inline-flex align-items-center gap-2"
-            >
-              Tutte le news
+          <NuxtLink
+            to="/news"
+            class="btn btn-outline-danger rounded-3 d-inline-flex align-items-center gap-2"
+          >
 
-              <Icon name="i-bi:arrow-right" />
-            </NuxtLink>
+            {{ pageConfig.related.allLabel }}
 
-          </div>
+            <Icon
+              :name="pageConfig.related.allIcon"
+              aria-hidden="true"
+            />
+
+          </NuxtLink>
 
         </div>
 
-        <div class="row g-4">
+
+        <!-- =================================================
+             CARDS
+             ================================================= -->
+        <div class="row g-3 g-lg-4">
 
           <div
             v-for="related in relatedArticles"
             :key="related.id"
             class="col-12 col-md-6 col-lg-4"
           >
+
             <article
-              class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden news-card"
+              class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
             >
 
+              <!-- Immagine -->
               <NuxtLink
                 :to="`/news/${related.slug}`"
-                class="text-decoration-none"
+                class="d-block text-decoration-none"
+                :aria-label="`${pageConfig.related.openLabel}: ${related.title}`"
               >
-                <div class="ratio ratio-16x9 bg-light overflow-hidden">
+
+                <div
+                  class="ratio ratio-16x9 bg-light overflow-hidden"
+                >
 
                   <NuxtImg
                     :src="related.imageUrl"
@@ -258,36 +291,51 @@
                     height="450"
                     format="webp"
                     loading="lazy"
+                    decoding="async"
+                    sizes="100vw sm:50vw lg:33vw"
                     class="w-100 h-100 object-fit-cover"
                   />
 
                 </div>
+
               </NuxtLink>
 
-              <div class="card-body p-4 d-flex flex-column">
 
-                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+              <!-- Contenuto -->
+              <div class="card-body p-3 p-md-4 d-flex flex-column">
+
+                <!-- Categoria + data -->
+                <div
+                  class="d-flex flex-wrap align-items-center gap-2 mb-3"
+                >
 
                   <span
-                    class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2"
+                    class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2 fw-medium"
                   >
                     {{ getCategoryName(related.categoryId) }}
                   </span>
 
-                  <small class="text-secondary">
+
+                  <time
+                    :datetime="related.publishedAt"
+                    class="small text-secondary d-inline-flex align-items-center"
+                  >
 
                     <Icon
-                      name="i-bi:calendar-event"
+                      :name="pageConfig.related.dateIcon"
                       class="me-1"
+                      aria-hidden="true"
                     />
 
                     {{ formatDate(related.publishedAt) }}
 
-                  </small>
+                  </time>
 
                 </div>
 
-                <h3 class="h5 fw-bold text-dark mb-3">
+
+                <!-- Titolo -->
+                <h3 class="h5 fw-bold text-dark mb-2">
 
                   <NuxtLink
                     :to="`/news/${related.slug}`"
@@ -298,19 +346,28 @@
 
                 </h3>
 
-                <p class="text-secondary small mb-4">
+
+                <!-- Descrizione -->
+                <p class="text-secondary mb-4">
                   {{ related.description }}
                 </p>
 
+
+                <!-- Link -->
                 <div class="mt-auto">
 
                   <NuxtLink
                     :to="`/news/${related.slug}`"
                     class="text-danger fw-semibold text-decoration-none d-inline-flex align-items-center gap-2"
                   >
-                    Leggi la news
 
-                    <Icon name="i-bi:arrow-right" />
+                    {{ pageConfig.related.readLabel }}
+
+                    <Icon
+                      :name="pageConfig.related.readIcon"
+                      aria-hidden="true"
+                    />
+
                   </NuxtLink>
 
                 </div>
@@ -318,6 +375,7 @@
               </div>
 
             </article>
+
           </div>
 
         </div>
@@ -325,25 +383,77 @@
       </div>
     </section>
 
-  </div>
+  </main>
 </template>
 
-<script setup lang="ts">
 
+<script setup lang="ts">
 import { siteConfig } from '~/data/config'
+
 import {
   newsArticles,
   newsCategories,
 } from '~/data/news'
 
+
 const route = useRoute()
+
+
+// =========================================================
+// CONFIGURAZIONE PAGINA
+// =========================================================
+
+const pageConfig = {
+  back: {
+    label: 'Torna alle news',
+    icon: 'i-bi:arrow-left',
+  },
+
+  meta: {
+    categoryIcon: 'i-bi:tag-fill',
+    dateIcon: 'i-bi:calendar-event',
+    publishedLabel: 'Pubblicato il',
+    dateLabel: 'Pubblicazione',
+  },
+
+  author: {
+    label: 'Autore',
+    icon: 'i-bi:person-fill',
+    defaultAuthor:
+      'Croce Rossa Italiana – Comitato di Rubiera',
+  },
+
+  related: {
+    eyebrow: 'Potrebbe interessarti',
+    title: 'Altre news',
+    allLabel: 'Tutte le news',
+    allIcon: 'i-bi:arrow-right',
+    openLabel: 'Apri la news',
+    dateIcon: 'i-bi:calendar-event',
+    readLabel: 'Leggi la news',
+    readIcon: 'i-bi:arrow-right',
+  },
+
+  seo: {
+    twitterCard: 'summary_large_image',
+  },
+}
+
+
+// =========================================================
+// SLUG
+// =========================================================
 
 const slug = computed(() => {
   return String(route.params.slug)
 })
 
-const article = computed(() => {
 
+// =========================================================
+// ARTICOLO
+// =========================================================
+
+const article = computed(() => {
   const found = newsArticles.find(
     (item) => item.slug === slug.value,
   )
@@ -358,11 +468,14 @@ const article = computed(() => {
   return found
 })
 
-const relatedArticles = computed(() => {
 
+// =========================================================
+// NEWS CORRELATE
+// =========================================================
+
+const relatedArticles = computed(() => {
   return newsArticles
     .filter((item) => {
-
       return (
         item.id !== article.value.id &&
         item.categoryId === article.value.categoryId
@@ -370,20 +483,20 @@ const relatedArticles = computed(() => {
     })
     .sort(
       (first, second) =>
-        new Date(
-          second.publishedAt,
-        ).getTime() -
-        new Date(
-          first.publishedAt,
-        ).getTime(),
+        new Date(second.publishedAt).getTime() -
+        new Date(first.publishedAt).getTime(),
     )
     .slice(0, 3)
 })
 
+
+// =========================================================
+// CATEGORIA
+// =========================================================
+
 const getCategoryName = (
   categoryId: string,
 ): string => {
-
   const category = newsCategories.find(
     (item) => item.id === categoryId,
   )
@@ -391,10 +504,14 @@ const getCategoryName = (
   return category?.name ?? 'Generale'
 }
 
+
+// =========================================================
+// DATA
+// =========================================================
+
 const formatDate = (
   date: string,
 ): string => {
-
   return new Intl.DateTimeFormat(
     'it-IT',
     {
@@ -404,6 +521,11 @@ const formatDate = (
     },
   ).format(new Date(date))
 }
+
+
+// =========================================================
+// SEO
+// =========================================================
 
 useSeoMeta({
   title: () =>
@@ -421,36 +543,23 @@ useSeoMeta({
   ogImage: () =>
     article.value.imageUrl,
 
-  twitterCard: 'summary_large_image',
+  twitterCard: pageConfig.seo.twitterCard,
 })
-
 </script>
 
+
 <style scoped>
-
-.articolo-introduzione {
-  max-width: 850px;
-  line-height: 1.7;
-}
-
-.articolo-immagine {
-  height: min(60vh, 650px);
-  min-height: 300px;
-}
-
-.sidebar-articolo {
-  top: 1.5rem;
-}
-
-.info-icon {
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
-}
+/*
+ * Queste regole riguardano esclusivamente
+ * l'HTML dinamico proveniente dal contenuto
+ * dell'articolo.
+ *
+ * Il layout della pagina è realizzato con Bootstrap.
+ */
 
 .contenuto-articolo {
-  color: #495057;
-  font-size: 1.05rem;
+  color: var(--bs-body-color);
+  font-size: 1.075rem;
   line-height: 1.85;
 }
 
@@ -459,18 +568,20 @@ useSeoMeta({
 }
 
 .contenuto-articolo :deep(h2) {
-  color: #212529;
-  font-size: 1.65rem;
+  color: var(--bs-dark);
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-top: 2.75rem;
+  line-height: 1.3;
+  margin-top: 3rem;
   margin-bottom: 1rem;
 }
 
 .contenuto-articolo :deep(h3) {
-  color: #212529;
-  font-size: 1.3rem;
+  color: var(--bs-dark);
+  font-size: 1.35rem;
   font-weight: 700;
-  margin-top: 2rem;
+  line-height: 1.35;
+  margin-top: 2.25rem;
   margin-bottom: 1rem;
 }
 
@@ -484,62 +595,52 @@ useSeoMeta({
   margin-bottom: 0.5rem;
 }
 
-.news-card {
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+.contenuto-articolo :deep(blockquote) {
+  border-left: 4px solid var(--bs-danger);
+  color: var(--bs-secondary-color);
+  margin: 2rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
 }
 
-.news-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1) !important;
+.contenuto-articolo :deep(a) {
+  color: var(--bs-danger);
 }
 
-.news-card img {
-  transition: transform 0.4s ease;
+.contenuto-articolo :deep(img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: var(--bs-border-radius-lg);
 }
 
-.news-card:hover img {
-  transform: scale(1.04);
+.contenuto-articolo :deep(figure) {
+  margin: 2rem 0;
 }
 
-@media (max-width: 991.98px) {
-
-  .sidebar-articolo {
-    position: static !important;
-  }
-
+.contenuto-articolo :deep(figcaption) {
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  text-align: center;
 }
+
 
 @media (max-width: 767.98px) {
-
-  .articolo-titolo {
-    font-size: 2.2rem;
-  }
-
-  .articolo-immagine {
-    height: 300px;
-    min-height: 0;
-  }
-
   .contenuto-articolo {
     font-size: 1rem;
     line-height: 1.75;
   }
 
   .contenuto-articolo :deep(h2) {
-    font-size: 1.4rem;
+    font-size: 1.45rem;
+    margin-top: 2.25rem;
   }
 
-}
-
-@media (max-width: 575.98px) {
-
-  .articolo-immagine {
-    height: 240px;
-    border-radius: 1rem !important;
+  .contenuto-articolo :deep(h3) {
+    font-size: 1.2rem;
+    margin-top: 1.75rem;
   }
-
 }
-
 </style>
+```
