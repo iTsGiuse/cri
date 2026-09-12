@@ -6,42 +6,48 @@
         <!-- Accordion FAQ -->
         <div id="accordionFaqRubiera" class="accordion accordion-flush d-flex flex-column gap-3">
           <div
-            v-for="(elemento, indice) in faq.domande"
-            :key="elemento.tag"
+            v-for="(item, index) in faq.items"
+            :key="item.id"
             class="accordion-item border rounded-3 overflow-hidden shadow-sm"
           >
-            <h3 class="accordion-header" :id="`heading-${elemento.tag}`">
+            <h2 class="accordion-header" :id="`heading-${item.id}`">
+              <!--
+                La prima voce è aperta (`show` sul pannello) ma il pulsante
+                aveva comunque `collapsed`: stato visivo e aria-expanded
+                risultavano in contraddizione. Ora la classe segue il dato.
+              -->
               <button
-                class="accordion-button collapsed bg-white text-dark fw-semibold p-3 p-md-4 shadow-none"
+                class="accordion-button bg-white text-dark fw-semibold p-3 p-md-4 shadow-none"
+                :class="{ collapsed: index !== 0 }"
                 type="button"
                 data-bs-toggle="collapse"
-                :data-bs-target="`#faq-${elemento.tag}`"
-                :aria-expanded="indice === 0"
-                :aria-controls="`faq-${elemento.tag}`"
+                :data-bs-target="`#faq-${item.id}`"
+                :aria-expanded="index === 0"
+                :aria-controls="`faq-${item.id}`"
               >
                 <!-- Badge Numerico -->
                 <span class="badge bg-danger-subtle text-danger fs-6 rounded-pill me-3 px-3 py-2">
-                  {{ String(indice + 1).padStart(2, '0') }}
+                  {{ String(index + 1).padStart(2, '0') }}
                 </span>
 
                 <!-- Domanda -->
                 <span class="flex-grow-1 pe-3 fs-6 fs-md-5">
-                  {{ elemento.domanda }}
+                  {{ item.question }}
                 </span>
               </button>
-            </h3>
+            </h2>
 
             <!-- Contenuto Risposta -->
             <div
-              :id="`faq-${elemento.tag}`"
+              :id="`faq-${item.id}`"
               class="accordion-collapse collapse"
-              :class="{ show: indice === 0 }"
-              :aria-labelledby="`heading-${elemento.tag}`"
+              :class="{ show: index === 0 }"
+              :aria-labelledby="`heading-${item.id}`"
               data-bs-parent="#accordionFaqRubiera"
             >
               <div class="accordion-body bg-light text-secondary border-top p-3 p-md-4 lh-lg">
                 <p class="mb-0">
-                  {{ elemento.risposta }}
+                  {{ item.answer }}
                 </p>
               </div>
             </div>
@@ -58,7 +64,7 @@
               <Icon name="i-bi:question-lg" class=" fs-4" />
             </div>
             
-            <h4 class="fw-bold text-dark mb-2">Non hai trovato la risposta che cercavi?</h4>
+            <h2 class="h4 fw-bold text-dark mb-2">Non hai trovato la risposta che cercavi?</h2>
             <p class="text-secondary mb-4 col-md-8 mx-auto">
               Il nostro team è sempre a disposizione per fornirti tutte le informazioni necessarie sui nostri servizi e attività.
             </p>
@@ -79,18 +85,19 @@
 </template>
 
 <script setup lang="ts">
-export interface DomandaFaq {
-  tag: string
-  domanda: string
-  risposta: string
+export interface FaqItem {
+  /** Identificativo stabile: usato per gli id DOM dell'accordion. */
+  id: string
+  question: string
+  answer: string
 }
 
-export interface DatiFaq {
-  domande: DomandaFaq[]
+export interface FaqData {
+  items: FaqItem[]
 }
 
 defineProps<{
-  faq: DatiFaq
+  faq: FaqData
 }>()
 </script>
 

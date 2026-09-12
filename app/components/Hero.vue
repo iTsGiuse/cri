@@ -3,44 +3,44 @@
     <div class="container py-lg-4">
       <div class="row align-items-center g-5">
         <!-- COLONNA TESTO -->
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 text-center text-lg-start">
           <!-- BADGE (Se presente per la pagina corrente) -->
-          <div v-if="contenutoCorrente.badge" class="mb-3">
+          <div v-if="currentContent.badge" class="mb-3">
             <span class="badge bg-white bg-opacity-20 text-danger px-3 py-2 rounded-pill fw-semibold border border-white border-opacity-25 fs-6">
-              <Icon v-if="contenutoCorrente.badgeIcona" :name="contenutoCorrente.badgeIcona" class="me-2" />
-              {{ contenutoCorrente.badge }}
+              <Icon v-if="currentContent.badgeIcon" :name="currentContent.badgeIcon" class="me-2" />
+              {{ currentContent.badge }}
             </span>
           </div>
 
           <!-- TITOLO E SOTTOTITOLO -->
-          <h1 class="display-4 fw-bold text-white lh-sm mb-3">
-            {{ contenutoCorrente.titolo }}
-          </h1>
+          <component :is="headingLevel" class="display-4 fw-bold text-white lh-sm mb-3">
+            {{ currentContent.title }}
+          </component>
 
           <p class="lead text-white text-opacity-85 mb-4 fs-5">
-            {{ contenutoCorrente.descrizione }}
+            {{ currentContent.description }}
           </p>
 
           <!-- PULSANTI D'AZIONE -->
-          <div class="d-flex flex-column flex-sm-row gap-3">
+          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
             <!-- Pulsante Principale -->
             <NuxtLink
-              v-if="contenutoCorrente.ctaPrincipale"
-              :to="contenutoCorrente.ctaPrincipale.url"
+              v-if="currentContent.primaryCta"
+              :to="currentContent.primaryCta.url"
               class="btn btn-light text-danger btn-lg px-4 py-3 shadow-sm d-inline-flex align-items-center justify-content-center fw-bold"
             >
-              <Icon v-if="contenutoCorrente.ctaPrincipale.icona" :name="contenutoCorrente.ctaPrincipale.icona" class="me-2 fs-5" />
-              {{ contenutoCorrente.ctaPrincipale.label }}
+              <Icon v-if="currentContent.primaryCta.icon" :name="currentContent.primaryCta.icon" class="me-2 fs-5" />
+              {{ currentContent.primaryCta.label }}
             </NuxtLink>
 
             <!-- Pulsante Secondario -->
             <NuxtLink
-              v-if="contenutoCorrente.ctaSecondaria"
-              :to="contenutoCorrente.ctaSecondaria.url"
+              v-if="currentContent.secondaryCta"
+              :to="currentContent.secondaryCta.url"
               class="btn btn-outline-light btn-lg px-4 py-3 shadow-sm d-inline-flex align-items-center justify-content-center fw-semibold"
             >
-              <Icon v-if="contenutoCorrente.ctaSecondaria.icona" :name="contenutoCorrente.ctaSecondaria.icona" class="me-2 fs-5" />
-              {{ contenutoCorrente.ctaSecondaria.label }}
+              <Icon v-if="currentContent.secondaryCta.icon" :name="currentContent.secondaryCta.icon" class="me-2 fs-5" />
+              {{ currentContent.secondaryCta.label }}
             </NuxtLink>
           </div>
         </div>
@@ -49,13 +49,21 @@
         <div class="col-12 col-lg-6">
           <div class="hero-image-container position-relative">
             <div class="image-wrapper rounded-4 overflow-hidden shadow-lg border border-white border-opacity-25">
+              <!--
+                Immagine sopra la piega: è l'LCP della pagina, quindi va
+                caricata subito e con priorità alta (prima era `lazy`).
+                width/height riservano lo spazio ed evitano il CLS.
+              -->
               <NuxtImg
-                :src="contenutoCorrente.immagine"
-                :alt="contenutoCorrente.altImmagine || contenutoCorrente.titolo"
+                :src="currentContent.imageUrl"
+                :alt="currentContent.imageAlt || currentContent.title"
+                width="1200"
+                height="800"
                 class="img-fluid w-100 object-fit-cover"
                 sizes="sm:100vw md:100vw lg:50vw"
                 style="min-height: 380px; max-height: 480px"
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
                 decoding="async"
               />
             </div>
@@ -67,41 +75,49 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import type { CtaLink } from '~/types'
 
-interface CTA {
-  label: string
-  url: string
-  icona?: string
-}
-
-interface ContenutoPagina {
+interface HeroContent {
   badge?: string
-  badgeIcona?: string
-  titolo: string
-  descrizione: string
-  immagine: string
-  altImmagine?: string
-  ctaPrincipale?: CTA
-  ctaSecondaria?: CTA
+  badgeIcon?: string
+  title: string
+  description: string
+  imageUrl: string
+  imageAlt?: string
+  primaryCta?: CtaLink
+  secondaryCta?: CtaLink
 }
+
+/**
+ * Livello del titolo dell'hero.
+ *
+ * Di default è l'`h1` della pagina. Va abbassato a `h2` solo dove il
+ * contenuto sottostante espone già l'`h1` più significativo
+ * (es. il titolo di una news), per non avere due `h1` nella stessa pagina.
+ */
+withDefaults(
+  defineProps<{
+    headingLevel?: 'h1' | 'h2'
+  }>(),
+  { headingLevel: 'h1' },
+)
 
 const route = useRoute()
 
 // Mappa completa dei contenuti per ogni percorso del menu di navigazione
-const contenutiPagine: Record<string, ContenutoPagina> = {
+const heroContentByPath: Record<string, HeroContent> = {
   // ==========================================
   // HOME PAGE
   // ==========================================
   '/': {
     badge: 'Emergenza & Soccorso 24/7',
-    badgeIcona: 'i-bi:heart-pulse-fill',
-    titolo: 'Al servizio della comunità, ogni giorno.',
-    descrizione: 'La Croce Rossa Italiana - Comitato di Rubiera è al tuo fianco con servizi di trasporto sanitario, assistenza sociale e interventi di emergenza.',
-    immagine: 'https://picsum.photos/id/1025/1200/800',
-    altImmagine: 'Volontari Croce Rossa Rubiera',
-    ctaPrincipale: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icona: 'i-bi:person-plus-fill' },
-    ctaSecondaria: { label: 'Richiedi un trasporto', url: '/servizi/richiedi-trasporto', icona: 'i-bi:truck-front-fill' }
+    badgeIcon: 'i-bi:heart-pulse-fill',
+    title: 'Al servizio della comunità, ogni giorno.',
+    description: 'La Croce Rossa Italiana - Comitato di Rubiera è al tuo fianco con servizi di trasporto sanitario, assistenza sociale e interventi di emergenza.',
+    imageUrl: 'https://picsum.photos/id/1025/1200/800',
+    imageAlt: 'Volontari Croce Rossa Rubiera',
+    primaryCta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icon: 'i-bi:person-plus-fill' },
+    secondaryCta: { label: 'Richiedi un trasporto', url: '/servizi/richiedi-trasporto', icon: 'i-bi:truck-front-fill' }
   },
 
   // ==========================================
@@ -109,60 +125,60 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/chi-siamo/il-comitato': {
     badge: 'Chi Siamo',
-    badgeIcona: 'i-bi:building-fill',
-    titolo: 'Il Comitato di Rubiera',
-    descrizione: 'Scopri chi siamo, i nostri valori fondamentali e come operiamo sul territorio per offrire supporto quotidiano a chi ne ha più bisogno.',
-    immagine: 'https://picsum.photos/id/1018/1200/800',
-    altImmagine: 'Sede Croce Rossa Rubiera',
-    ctaPrincipale: { label: 'I Nostri Principi', url: '/chi-siamo/principi-e-valori', icona: 'i-bi:heart-fill' },
-    ctaSecondaria: { label: 'Organizzazione', url: '/chi-siamo/organizzazione', icona: 'i-bi:diagram-3-fill' }
+    badgeIcon: 'i-bi:building-fill',
+    title: 'Il Comitato di Rubiera',
+    description: 'Scopri chi siamo, i nostri valori fondamentali e come operiamo sul territorio per offrire supporto quotidiano a chi ne ha più bisogno.',
+    imageUrl: 'https://picsum.photos/id/1018/1200/800',
+    imageAlt: 'Sede Croce Rossa Rubiera',
+    primaryCta: { label: 'I Nostri Principi', url: '/chi-siamo/principi-e-valori', icon: 'i-bi:heart-fill' },
+    secondaryCta: { label: 'Organizzazione', url: '/chi-siamo/organizzazione', icon: 'i-bi:diagram-3-fill' }
   },
   '/chi-siamo/storia': {
     badge: 'Le Nostre Radici',
-    badgeIcona: 'i-bi:clock-history',
-    titolo: 'La Nostra Storia',
-    descrizione: 'Un viaggio nel tempo attraverso i momenti salienti, le sfide e i traguardi che hanno segnato la nascita e la crescita del nostro Comitato.',
-    immagine: 'https://picsum.photos/id/1059/1200/800',
-    altImmagine: 'Foto storica della Croce Rossa',
-    ctaPrincipale: { label: 'Scopri il Comitato', url: '/chi-siamo/il-comitato', icona: 'i-bi:building-fill' }
+    badgeIcon: 'i-bi:clock-history',
+    title: 'La Nostra Storia',
+    description: 'Un viaggio nel tempo attraverso i momenti salienti, le sfide e i traguardi che hanno segnato la nascita e la crescita del nostro Comitato.',
+    imageUrl: 'https://picsum.photos/id/1059/1200/800',
+    imageAlt: 'Foto storica della Croce Rossa',
+    primaryCta: { label: 'Scopri il Comitato', url: '/chi-siamo/il-comitato', icon: 'i-bi:building-fill' }
   },
   '/chi-siamo/organizzazione': {
     badge: 'Trasparenza & Struttura',
-    badgeIcona: 'i-bi:diagram-3-fill',
-    titolo: 'Organizzazione e Governance',
-    descrizione: 'La struttura organizzativa, il Consiglio Direttivo e gli organi di gestione che guidano responsabilmente le attività del Comitato.',
-    immagine: 'https://picsum.photos/id/1069/1200/800',
-    altImmagine: 'Organizzazione e Governance',
-    ctaPrincipale: { label: 'Trasparenza e Atti', url: '/chi-siamo/trasparenza', icona: 'i-bi:file-earmark-text-fill' },
-    ctaSecondaria: { label: 'Sede e Contatti', url: '/chi-siamo/sede-e-contatti', icona: 'i-bi:geo-alt-fill' }
+    badgeIcon: 'i-bi:diagram-3-fill',
+    title: 'Organizzazione e Governance',
+    description: 'La struttura organizzativa, il Consiglio Direttivo e gli organi di gestione che guidano responsabilmente le attività del Comitato.',
+    imageUrl: 'https://picsum.photos/id/1069/1200/800',
+    imageAlt: 'Organizzazione e Governance',
+    primaryCta: { label: 'Trasparenza e Atti', url: '/chi-siamo/trasparenza', icon: 'i-bi:file-earmark-text-fill' },
+    secondaryCta: { label: 'Sede e Contatti', url: '/chi-siamo/sede-e-contatti', icon: 'i-bi:geo-alt-fill' }
   },
   '/chi-siamo/principi-e-valori': {
     badge: 'Movimento Internazionale',
-    badgeIcona: 'i-bi:heart-fill',
-    titolo: 'I 7 Principi Fondamentali',
-    descrizione: 'Umanità, Imparzialità, Neutralità, Indipendenza, Volontariato, Unità ed Universalità: le linee guida di ogni nostra azione.',
-    immagine: 'https://picsum.photos/id/1081/1200/800',
-    altImmagine: 'I sette principi della Croce Rossa',
-    ctaPrincipale: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icona: 'i-bi:person-plus-fill' }
+    badgeIcon: 'i-bi:heart-fill',
+    title: 'I 7 Principi Fondamentali',
+    description: 'Umanità, Imparzialità, Neutralità, Indipendenza, Volontariato, Unità ed Universalità: le linee guida di ogni nostra azione.',
+    imageUrl: 'https://picsum.photos/id/1081/1200/800',
+    imageAlt: 'I sette principi della Croce Rossa',
+    primaryCta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icon: 'i-bi:person-plus-fill' }
   },
   '/chi-siamo/trasparenza': {
     badge: 'Amministrazione Trasparente',
-    badgeIcona: 'i-bi:file-earmark-text-fill',
-    titolo: 'Trasparenza e Documenti',
-    descrizione: 'Consulta i bilanci consuntivi, le rendicontazioni dei contributi pubblici, gli atti ufficiali e i regolamenti associativi del Comitato.',
-    immagine: 'https://picsum.photos/id/1068/1200/800',
-    altImmagine: 'Documenti e trasparenza',
-    ctaPrincipale: { label: 'Richiedi Info', url: '/chi-siamo/sede-e-contatti', icona: 'i-bi:envelope-fill' }
+    badgeIcon: 'i-bi:file-earmark-text-fill',
+    title: 'Trasparenza e Documenti',
+    description: 'Consulta i bilanci consuntivi, le rendicontazioni dei contributi pubblici, gli atti ufficiali e i regolamenti associativi del Comitato.',
+    imageUrl: 'https://picsum.photos/id/1068/1200/800',
+    imageAlt: 'Documenti e trasparenza',
+    primaryCta: { label: 'Richiedi Info', url: '/chi-siamo/sede-e-contatti', icon: 'i-bi:envelope-fill' }
   },
   '/chi-siamo/sede-e-contatti': {
     badge: 'Siamo Qui per Te',
-    badgeIcona: 'i-bi:geo-alt-fill',
-    titolo: 'Sede e Contatti',
-    descrizione: 'Vieni a trovarci o mettiti in contatto con i nostri uffici centrali per informazioni, servizi e richieste amministrative.',
-    immagine: 'https://picsum.photos/id/1011/1200/800',
-    altImmagine: 'Contatti e centralino Rubiera',
-    ctaPrincipale: { label: 'Prenotazioni', url: '/servizi/prenotazioni-e-informazioni', icona: 'i-bi:calendar-check-fill' },
-    ctaSecondaria: { label: 'Richiedi Trasporto', url: '/servizi/richiedi-trasporto', icona: 'i-bi:truck-front-fill' }
+    badgeIcon: 'i-bi:geo-alt-fill',
+    title: 'Sede e Contatti',
+    description: 'Vieni a trovarci o mettiti in contatto con i nostri uffici centrali per informazioni, servizi e richieste amministrative.',
+    imageUrl: 'https://picsum.photos/id/1011/1200/800',
+    imageAlt: 'Contatti e centralino Rubiera',
+    primaryCta: { label: 'Prenotazioni', url: '/servizi/prenotazioni-e-informazioni', icon: 'i-bi:calendar-check-fill' },
+    secondaryCta: { label: 'Richiedi Trasporto', url: '/servizi/richiedi-trasporto', icon: 'i-bi:truck-front-fill' }
   },
 
   // ==========================================
@@ -170,57 +186,57 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/cosa-facciamo/salute': {
     badge: 'Area 1 - Salute',
-    badgeIcona: 'i-bi:heart-pulse-fill',
-    titolo: 'Salute e Prevenzione',
-    descrizione: 'Promuoviamo la tutela della salute, la prevenzione e stili di vita sani attraverso iniziative sul territorio e formazione della popolazione.',
-    immagine: 'https://picsum.photos/id/1020/1200/800',
-    altImmagine: 'Attività di tutela della salute',
-    ctaPrincipale: { label: 'Corsi Popolazione', url: '/servizi/corsi-popolazione', icona: 'i-bi:mortarboard-fill' }
+    badgeIcon: 'i-bi:heart-pulse-fill',
+    title: 'Salute e Prevenzione',
+    description: 'Promuoviamo la tutela della salute, la prevenzione e stili di vita sani attraverso iniziative sul territorio e formazione della popolazione.',
+    imageUrl: 'https://picsum.photos/id/1020/1200/800',
+    imageAlt: 'Attività di tutela della salute',
+    primaryCta: { label: 'Corsi Popolazione', url: '/servizi/corsi-popolazione', icon: 'i-bi:mortarboard-fill' }
   },
   '/cosa-facciamo/sociale': {
     badge: 'Area 2 - Sociale',
-    badgeIcona: 'i-bi:people-fill',
-    titolo: 'Sociale e Inclusione',
-    descrizione: 'Combattiamo la povertà, la solitudine e le fragilità sociali offrendo supporto concreto alle famiglie e alle persone vulnerabili.',
-    immagine: 'https://picsum.photos/id/1005/1200/800',
-    altImmagine: 'Assistenza e supporto sociale',
-    ctaPrincipale: { label: 'Supporto Sociale', url: '/servizi/supporto-sociale', icona: 'i-bi:house-heart-fill' }
+    badgeIcon: 'i-bi:people-fill',
+    title: 'Sociale e Inclusione',
+    description: 'Combattiamo la povertà, la solitudine e le fragilità sociali offrendo supporto concreto alle famiglie e alle persone vulnerabili.',
+    imageUrl: 'https://picsum.photos/id/1005/1200/800',
+    imageAlt: 'Assistenza e supporto sociale',
+    primaryCta: { label: 'Supporto Sociale', url: '/servizi/supporto-sociale', icon: 'i-bi:house-heart-fill' }
   },
   '/cosa-facciamo/protezione-civile': {
     badge: 'Area 3 - Emergenze',
-    badgeIcona: 'i-bi:shield-fill-check',
-    titolo: 'Emergenza e Protezione Civile',
-    descrizione: 'Prepariamo le comunità alle emergenze e garantiamo una risposta tempestiva e coordinata in caso di calamità naturali o crisi.',
-    immagine: 'https://picsum.photos/id/1043/1200/800',
-    altImmagine: 'Mezzi e squadra Protezione Civile',
-    ctaPrincipale: { label: 'Servizio 118', url: '/servizi/emergenza-118', icona: 'i-bi:exclamation-triangle-fill' }
+    badgeIcon: 'i-bi:shield-fill-check',
+    title: 'Emergenza e Protezione Civile',
+    description: 'Prepariamo le comunità alle emergenze e garantiamo una risposta tempestiva e coordinata in caso di calamità naturali o crisi.',
+    imageUrl: 'https://picsum.photos/id/1043/1200/800',
+    imageAlt: 'Mezzi e squadra Protezione Civile',
+    primaryCta: { label: 'Servizio 118', url: '/servizi/emergenza-118', icon: 'i-bi:exclamation-triangle-fill' }
   },
   '/cosa-facciamo/diritto-umanitario': {
     badge: 'Area 4 - Principi',
-    badgeIcona: 'i-bi:book-fill',
-    titolo: 'Principi e Diritto Umanitario',
-    descrizione: 'Diffondiamo il Diritto Internazionale Umanitario, la cultura della pace, del rispetto e della non discriminazione.',
-    immagine: 'https://picsum.photos/id/1024/1200/800',
-    altImmagine: 'Diffusione Diritto Umanitario',
-    ctaPrincipale: { label: 'Scopri i Principi', url: '/chi-siamo/principi-e-valori', icona: 'i-bi:heart-fill' }
+    badgeIcon: 'i-bi:book-fill',
+    title: 'Principi e Diritto Umanitario',
+    description: 'Diffondiamo il Diritto Internazionale Umanitario, la cultura della pace, del rispetto e della non discriminazione.',
+    imageUrl: 'https://picsum.photos/id/1024/1200/800',
+    imageAlt: 'Diffusione Diritto Umanitario',
+    primaryCta: { label: 'Scopri i Principi', url: '/chi-siamo/principi-e-valori', icon: 'i-bi:heart-fill' }
   },
   '/cosa-facciamo/giovani': {
     badge: 'Area 5 - Gioventù',
-    badgeIcona: 'i-bi:person-hearts',
-    titolo: 'Giovani e Futuro',
-    descrizione: 'Promuoviamo lo sviluppo dei giovani e il loro coinvolgimento attivo come agenti di cambiamento positivo nella comunità.',
-    immagine: 'https://picsum.photos/id/1012/1200/800',
-    altImmagine: 'Gruppo Giovani Croce Rossa',
-    ctaPrincipale: { label: 'Unisciti ai Giovani', url: '/volontariato/diventa-volontario', icona: 'i-bi:person-plus-fill' }
+    badgeIcon: 'i-bi:person-hearts',
+    title: 'Giovani e Futuro',
+    description: 'Promuoviamo lo sviluppo dei giovani e il loro coinvolgimento attivo come agenti di cambiamento positivo nella comunità.',
+    imageUrl: 'https://picsum.photos/id/1012/1200/800',
+    imageAlt: 'Gruppo Giovani Croce Rossa',
+    primaryCta: { label: 'Unisciti ai Giovani', url: '/volontariato/diventa-volontario', icon: 'i-bi:person-plus-fill' }
   },
   '/cosa-facciamo/sviluppo': {
     badge: 'Area 6 - Sviluppo',
-    badgeIcona: 'i-bi:graph-up-arrow',
-    titolo: 'Sviluppo e Comunicazione',
-    descrizione: 'Lavoriamo per rafforzare la trasparenza, l’efficienza organizzativa, la presenza sul territorio e la raccolta fondi.',
-    immagine: 'https://picsum.photos/id/1074/1200/800',
-    altImmagine: 'Sviluppo e Comunicazione',
-    ctaPrincipale: { label: 'Dona Ora', url: '/dona', icona: 'i-bi:heart-fill' }
+    badgeIcon: 'i-bi:graph-up-arrow',
+    title: 'Sviluppo e Comunicazione',
+    description: 'Lavoriamo per rafforzare la trasparenza, l’efficienza organizzativa, la presenza sul territorio e la raccolta fondi.',
+    imageUrl: 'https://picsum.photos/id/1074/1200/800',
+    imageAlt: 'Sviluppo e Comunicazione',
+    primaryCta: { label: 'Dona Ora', url: '/dona', icon: 'i-bi:heart-fill' }
   },
 
   // ==========================================
@@ -228,68 +244,68 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/servizi/emergenza-118': {
     badge: 'Soccorso Sanitario',
-    badgeIcona: 'i-bi:exclamation-triangle-fill',
-    titolo: 'Emergenza e Soccorso 118 / 112',
-    descrizione: 'Operiamo H24 in convenzione con il sistema di emergenza-urgenza territoriale 118 per garantire interventi di primo soccorso tempestivi.',
-    immagine: 'https://picsum.photos/id/1070/1200/800',
-    altImmagine: 'Ambulanza in servizio di emergenza',
-    ctaPrincipale: { label: 'Iscriviti ai Corsi', url: '/servizi/corsi-popolazione', icona: 'i-bi:mortarboard-fill' },
-    ctaSecondaria: { label: 'Richiedi Trasporto', url: '/servizi/richiedi-trasporto', icona: 'i-bi:truck-front-fill' }
+    badgeIcon: 'i-bi:exclamation-triangle-fill',
+    title: 'Emergenza e Soccorso 118 / 112',
+    description: 'Operiamo H24 in convenzione con il sistema di emergenza-urgenza territoriale 118 per garantire interventi di primo soccorso tempestivi.',
+    imageUrl: 'https://picsum.photos/id/1070/1200/800',
+    imageAlt: 'Ambulanza in servizio di emergenza',
+    primaryCta: { label: 'Iscriviti ai Corsi', url: '/servizi/corsi-popolazione', icon: 'i-bi:mortarboard-fill' },
+    secondaryCta: { label: 'Richiedi Trasporto', url: '/servizi/richiedi-trasporto', icon: 'i-bi:truck-front-fill' }
   },
   '/servizi/richiedi-trasporto': {
     badge: 'Trasporto Intramurale & Privato',
-    badgeIcona: 'i-bi:truck-front-fill',
-    titolo: 'Richiedi un Trasporto Sanitario',
-    descrizione: 'Organizziamo trasferimenti in ambulanza o con mezzi attrezzati con pedana per visite mediche, ricoveri, terapie ed esami.',
-    immagine: 'https://picsum.photos/id/1071/1200/800',
-    altImmagine: 'Mezzo attrezzato per trasporto sanitario',
-    ctaPrincipale: { label: 'Prenota o Richiedi Info', url: '/servizi/prenotazioni-e-informazioni', icona: 'i-bi:calendar-check-fill' },
-    ctaSecondaria: { label: 'FAQ Trasporti', url: '/faq/servizi-e-trasporti', icona: 'i-bi:question-circle-fill' }
+    badgeIcon: 'i-bi:truck-front-fill',
+    title: 'Richiedi un Trasporto Sanitario',
+    description: 'Organizziamo trasferimenti in ambulanza o con mezzi attrezzati con pedana per visite mediche, ricoveri, terapie ed esami.',
+    imageUrl: 'https://picsum.photos/id/1071/1200/800',
+    imageAlt: 'Mezzo attrezzato per trasporto sanitario',
+    primaryCta: { label: 'Prenota o Richiedi Info', url: '/servizi/prenotazioni-e-informazioni', icon: 'i-bi:calendar-check-fill' },
+    secondaryCta: { label: 'FAQ Trasporti', url: '/faq/servizi-e-trasporti', icon: 'i-bi:question-circle-fill' }
   },
   '/servizi/assistenza-eventi': {
     badge: 'Grandi Eventi e Manifestazioni',
-    badgeIcona: 'i-bi:hospital-fill',
-    titolo: 'Assistenza Sanitaria Eventi',
-    descrizione: 'Offriamo servizio di presidio sanitario e soccorso per eventi sportivi, concerti, fiere e manifestazioni pubbliche o private.',
-    immagine: 'https://picsum.photos/id/1050/1200/800',
-    altImmagine: 'Assistenza sanitaria a manifestazione',
-    ctaPrincipale: { label: 'Contatta gli Uffici', url: '/servizi/prenotazioni-e-informazioni', icona: 'i-bi:envelope-fill' }
+    badgeIcon: 'i-bi:hospital-fill',
+    title: 'Assistenza Sanitaria Eventi',
+    description: 'Offriamo servizio di presidio sanitario e soccorso per eventi sportivi, concerti, fiere e manifestazioni pubbliche o private.',
+    imageUrl: 'https://picsum.photos/id/1050/1200/800',
+    imageAlt: 'Assistenza sanitaria a manifestazione',
+    primaryCta: { label: 'Contatta gli Uffici', url: '/servizi/prenotazioni-e-informazioni', icon: 'i-bi:envelope-fill' }
   },
   '/servizi/corsi-popolazione': {
     badge: 'Formazione Cittadini',
-    badgeIcona: 'i-bi:mortarboard-fill',
-    titolo: 'Corsi per la Popolazione',
-    descrizione: 'Impara le manovre salvavita, la disostruzione delle vie aeree pediatriche e l’uso del defibrillatore (DAE) con i nostri istruttori qualificati.',
-    immagine: 'https://picsum.photos/id/1062/1200/800',
-    altImmagine: 'Corso Primo Soccorso popolazione',
-    ctaPrincipale: { label: 'FAQ Corsi', url: '/faq/corsi-formazione', icona: 'i-bi:question-circle-fill' }
+    badgeIcon: 'i-bi:mortarboard-fill',
+    title: 'Corsi per la Popolazione',
+    description: 'Impara le manovre salvavita, la disostruzione delle vie aeree pediatriche e l’uso del defibrillatore (DAE) con i nostri istruttori qualificati.',
+    imageUrl: 'https://picsum.photos/id/1062/1200/800',
+    imageAlt: 'Corso Primo Soccorso popolazione',
+    primaryCta: { label: 'FAQ Corsi', url: '/faq/corsi-formazione', icon: 'i-bi:question-circle-fill' }
   },
   '/servizi/corsi-aziende': {
     badge: 'Sicurezza sul Lavoro',
-    badgeIcona: 'i-bi:briefcase-fill',
-    titolo: 'Corsi Aziendali (D.Lgs 81/08)',
-    descrizione: 'Formazione professionale e aggiornamento in materia di primo soccorso aziendale per datori di lavoro e dipendenti (Gruppo A, B, C).',
-    immagine: 'https://picsum.photos/id/1076/1200/800',
-    altImmagine: 'Corso aziendale sicurezza',
-    ctaPrincipale: { label: 'Richiedi Preventivo', url: '/chi-siamo/sede-e-contatti', icona: 'i-bi:envelope-fill' }
+    badgeIcon: 'i-bi:briefcase-fill',
+    title: 'Corsi Aziendali (D.Lgs 81/08)',
+    description: 'Formazione professionale e aggiornamento in materia di primo soccorso aziendale per datori di lavoro e dipendenti (Gruppo A, B, C).',
+    imageUrl: 'https://picsum.photos/id/1076/1200/800',
+    imageAlt: 'Corso aziendale sicurezza',
+    primaryCta: { label: 'Richiedi Preventivo', url: '/chi-siamo/sede-e-contatti', icon: 'i-bi:envelope-fill' }
   },
   '/servizi/supporto-sociale': {
     badge: 'Inclusione & Aiuto Concreto',
-    badgeIcona: 'i-bi:house-heart-fill',
-    titolo: 'Supporto Sociale e Assistenza',
-    descrizione: 'Consegna farmaci e spesa a domicilio, distribuzione viveri e supporto morale alle persone anziane e con difficoltà motorie.',
-    immagine: 'https://picsum.photos/id/1027/1200/800',
-    altImmagine: 'Volontario in assistenza sociale',
-    ctaPrincipale: { label: 'Contatta il Centralino', url: '/chi-siamo/sede-e-contatti', icona: 'i-bi:telephone-fill' }
+    badgeIcon: 'i-bi:house-heart-fill',
+    title: 'Supporto Sociale e Assistenza',
+    description: 'Consegna farmaci e spesa a domicilio, distribuzione viveri e supporto morale alle persone anziane e con difficoltà motorie.',
+    imageUrl: 'https://picsum.photos/id/1027/1200/800',
+    imageAlt: 'Volontario in assistenza sociale',
+    primaryCta: { label: 'Contatta il Centralino', url: '/chi-siamo/sede-e-contatti', icon: 'i-bi:telephone-fill' }
   },
   '/servizi/prenotazioni-e-informazioni': {
     badge: 'Ufficio Servizi',
-    badgeIcona: 'i-bi:calendar-check-fill',
-    titolo: 'Prenotazioni e Informazioni',
-    descrizione: 'Modulo unico per prenotare un trasporto ordinario, richiedere un preventivo o ricevere informazioni sui nostri servizi territoriali.',
-    immagine: 'https://picsum.photos/id/1015/1200/800',
-    altImmagine: 'Modulo prenotazioni e info',
-    ctaPrincipale: { label: 'FAQ Servizi', url: '/faq/servizi-e-trasporti', icona: 'i-bi:question-circle-fill' }
+    badgeIcon: 'i-bi:calendar-check-fill',
+    title: 'Prenotazioni e Informazioni',
+    description: 'Modulo unico per prenotare un trasporto ordinario, richiedere un preventivo o ricevere informazioni sui nostri servizi territoriali.',
+    imageUrl: 'https://picsum.photos/id/1015/1200/800',
+    imageAlt: 'Modulo prenotazioni e info',
+    primaryCta: { label: 'FAQ Servizi', url: '/faq/servizi-e-trasporti', icon: 'i-bi:question-circle-fill' }
   },
 
   // ==========================================
@@ -297,41 +313,41 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/volontariato/diventa-volontario': {
     badge: 'Fai la Differenza',
-    badgeIcona: 'i-bi:person-plus-fill',
-    titolo: 'Diventa Volontario',
-    descrizione: 'Metti il tuo tempo, le tue competenze e il tuo cuore al servizio degli altri. Diventa parte della più grande organizzazione umanitaria al mondo.',
-    immagine: 'https://picsum.photos/id/1005/1200/800',
-    altImmagine: 'Volontari sorridenti Croce Rossa',
-    ctaPrincipale: { label: 'Il Corso di Accesso', url: '/volontariato/corso-di-accesso', icona: 'i-bi:info-circle-fill' },
-    ctaSecondaria: { label: 'Percorso Formativo', url: '/volontariato/percorso-formativo', icona: 'i-bi:mortarboard-fill' }
+    badgeIcon: 'i-bi:person-plus-fill',
+    title: 'Diventa Volontario',
+    description: 'Metti il tuo tempo, le tue competenze e il tuo cuore al servizio degli altri. Diventa parte della più grande organizzazione umanitaria al mondo.',
+    imageUrl: 'https://picsum.photos/id/1005/1200/800',
+    imageAlt: 'Volontari sorridenti Croce Rossa',
+    primaryCta: { label: 'Il Corso di Accesso', url: '/volontariato/corso-di-accesso', icon: 'i-bi:info-circle-fill' },
+    secondaryCta: { label: 'Percorso Formativo', url: '/volontariato/percorso-formativo', icon: 'i-bi:mortarboard-fill' }
   },
   '/volontariato/corso-di-accesso': {
     badge: 'Iscrizioni Aperte',
-    badgeIcona: 'i-bi:info-circle-fill',
-    titolo: 'Come funziona il Corso di Accesso',
-    descrizione: 'Scopri la durata, le materie trattate e le modalità d’iscrizione al corso base per diventare un Volontario della Croce Rossa Italiana.',
-    immagine: 'https://picsum.photos/id/1060/1200/800',
-    altImmagine: 'Aula corsi Croce Rossa',
-    ctaPrincipale: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icona: 'i-bi:person-plus-fill' },
-    ctaSecondaria: { label: 'FAQ Volontariato', url: '/faq/volontariato', icona: 'i-bi:question-circle-fill' }
+    badgeIcon: 'i-bi:info-circle-fill',
+    title: 'Come funziona il Corso di Accesso',
+    description: 'Scopri la durata, le materie trattate e le modalità d’iscrizione al corso base per diventare un Volontario della Croce Rossa Italiana.',
+    imageUrl: 'https://picsum.photos/id/1060/1200/800',
+    imageAlt: 'Aula corsi Croce Rossa',
+    primaryCta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icon: 'i-bi:person-plus-fill' },
+    secondaryCta: { label: 'FAQ Volontariato', url: '/faq/volontariato', icon: 'i-bi:question-circle-fill' }
   },
   '/volontariato/percorso-formativo': {
     badge: 'Crescita e Specializzazioni',
-    badgeIcona: 'i-bi:mortarboard-fill',
-    titolo: 'Percorso Formativo e Qualifiche',
-    descrizione: 'Dopo il corso base potrai specializzarti in soccorso in ambulanza, Protezione Civile, sociale, Diritto Umanitario e molto altro.',
-    immagine: 'https://picsum.photos/id/1062/1200/800',
-    altImmagine: 'Formazione continua volontari',
-    ctaPrincipale: { label: 'Gruppi di Lavoro', url: '/volontariato/attivita-e-gruppi', icona: 'i-bi:people-fill' }
+    badgeIcon: 'i-bi:mortarboard-fill',
+    title: 'Percorso Formativo e Qualifiche',
+    description: 'Dopo il corso base potrai specializzarti in soccorso in ambulanza, Protezione Civile, sociale, Diritto Umanitario e molto altro.',
+    imageUrl: 'https://picsum.photos/id/1062/1200/800',
+    imageAlt: 'Formazione continua volontari',
+    primaryCta: { label: 'Gruppi di Lavoro', url: '/volontariato/attivita-e-gruppi', icon: 'i-bi:people-fill' }
   },
   '/volontariato/attivita-e-gruppi': {
     badge: 'Aree Operative',
-    badgeIcona: 'i-bi:people-fill',
-    titolo: 'Attività e Gruppi di Lavoro',
-    descrizione: 'Dalle unità di soccorso ai gruppi giovani, fino al supporto sociale: scopri in quali aree operative puoi mettere in gioco il tuo talento.',
-    immagine: 'https://picsum.photos/id/1059/1200/800',
-    altImmagine: 'Gruppi operativi al lavoro',
-    ctaPrincipale: { label: 'Cosa Facciamo', url: '/cosa-facciamo/salute', icona: 'i-bi:heart-pulse-fill' }
+    badgeIcon: 'i-bi:people-fill',
+    title: 'Attività e Gruppi di Lavoro',
+    description: 'Dalle unità di soccorso ai gruppi giovani, fino al supporto sociale: scopri in quali aree operative puoi mettere in gioco il tuo talento.',
+    imageUrl: 'https://picsum.photos/id/1059/1200/800',
+    imageAlt: 'Gruppi operativi al lavoro',
+    primaryCta: { label: 'Cosa Facciamo', url: '/cosa-facciamo/salute', icon: 'i-bi:heart-pulse-fill' }
   },
 
   // ==========================================
@@ -339,30 +355,30 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/news/notizie': {
     badge: 'Comunicazione & Aggiornamenti',
-    badgeIcona: 'i-bi:newspaper',
-    titolo: 'Notizie ed Attività',
-    descrizione: 'Rimani aggiornato su progetti, traguardi raggiunti, comunicati ufficiali e vita associativa del Comitato di Rubiera.',
-    immagine: 'https://picsum.photos/id/1058/1200/800',
-    altImmagine: 'Notizie dal Comitato',
-    ctaPrincipale: { label: 'Eventi', url: '/news/eventi', icona: 'i-bi:calendar-event-fill' }
+    badgeIcon: 'i-bi:newspaper',
+    title: 'Notizie ed Attività',
+    description: 'Rimani aggiornato su progetti, traguardi raggiunti, comunicati ufficiali e vita associativa del Comitato di Rubiera.',
+    imageUrl: 'https://picsum.photos/id/1058/1200/800',
+    imageAlt: 'Notizie dal Comitato',
+    primaryCta: { label: 'Eventi', url: '/news/eventi', icon: 'i-bi:calendar-event-fill' }
   },
   '/news/eventi': {
     badge: 'Appuntamenti sul Territorio',
-    badgeIcona: 'i-bi:calendar-event-fill',
-    titolo: 'Eventi e Iniziative',
-    descrizione: 'Partecipa alle nostre giornate di prevenzione, eventi benefici, esercitazioni ed incontri aperti alla cittadinanza.',
-    immagine: 'https://picsum.photos/id/1048/1200/800',
-    altImmagine: 'Evento pubblico Croce Rossa',
-    ctaPrincipale: { label: 'Campagne', url: '/news/campagne', icona: 'i-bi:megaphone-fill' }
+    badgeIcon: 'i-bi:calendar-event-fill',
+    title: 'Eventi e Iniziative',
+    description: 'Partecipa alle nostre giornate di prevenzione, eventi benefici, esercitazioni ed incontri aperti alla cittadinanza.',
+    imageUrl: 'https://picsum.photos/id/1048/1200/800',
+    imageAlt: 'Evento pubblico Croce Rossa',
+    primaryCta: { label: 'Campagne', url: '/news/campagne', icon: 'i-bi:megaphone-fill' }
   },
   '/news/campagne': {
     badge: 'Sensibilizzazione',
-    badgeIcona: 'i-bi:megaphone-fill',
-    titolo: 'Campagne di Sensibilizzazione',
-    descrizione: 'Scopri le nostre campagne nazionali e locali per promuovere la donazione del sangue, la sicurezza stradale e l’inclusione.',
-    immagine: 'https://picsum.photos/id/1021/1200/800',
-    altImmagine: 'Campagne di sensibilizzazione',
-    ctaPrincipale: { label: 'Dona Ora', url: '/dona', icona: 'i-bi:heart-fill' }
+    badgeIcon: 'i-bi:megaphone-fill',
+    title: 'Campagne di Sensibilizzazione',
+    description: 'Scopri le nostre campagne nazionali e locali per promuovere la donazione del sangue, la sicurezza stradale e l’inclusione.',
+    imageUrl: 'https://picsum.photos/id/1021/1200/800',
+    imageAlt: 'Campagne di sensibilizzazione',
+    primaryCta: { label: 'Dona Ora', url: '/dona', icon: 'i-bi:heart-fill' }
   },
 
   // ==========================================
@@ -370,39 +386,39 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/faq/servizi-e-trasporti': {
     badge: 'Domande Frequenti',
-    badgeIcona: 'i-bi:truck-front-fill',
-    titolo: 'FAQ Trasporti e Servizi',
-    descrizione: 'Trova risposte rapide alle domande più comuni su prenotazione trasporti, costi, convenzioni e copertura dei servizi.',
-    immagine: 'https://picsum.photos/id/1039/1200/800',
-    altImmagine: 'Risposte FAQ Servizi',
-    ctaPrincipale: { label: 'Richiedi Trasporto', url: '/servizi/richiedi-trasporto', icona: 'i-bi:truck-front-fill' }
+    badgeIcon: 'i-bi:truck-front-fill',
+    title: 'FAQ Trasporti e Servizi',
+    description: 'Trova risposte rapide alle domande più comuni su prenotazione trasporti, costi, convenzioni e copertura dei servizi.',
+    imageUrl: 'https://picsum.photos/id/1039/1200/800',
+    imageAlt: 'Risposte FAQ Servizi',
+    primaryCta: { label: 'Richiedi Trasporto', url: '/servizi/richiedi-trasporto', icon: 'i-bi:truck-front-fill' }
   },
   '/faq/corsi-formazione': {
     badge: 'Domande Frequenti',
-    badgeIcona: 'i-bi:mortarboard-fill',
-    titolo: 'FAQ Corsi di Formazione',
-    descrizione: 'Risposte dettagliate su attestati rilasciati, modalità di svolgimento e iscrizioni per i corsi alla popolazione e aziendali.',
-    immagine: 'https://picsum.photos/id/1062/1200/800',
-    altImmagine: 'Risposte FAQ Corsi',
-    ctaPrincipale: { label: 'Corsi Popolazione', url: '/servizi/corsi-popolazione', icona: 'i-bi:mortarboard-fill' }
+    badgeIcon: 'i-bi:mortarboard-fill',
+    title: 'FAQ Corsi di Formazione',
+    description: 'Risposte dettagliate su attestati rilasciati, modalità di svolgimento e iscrizioni per i corsi alla popolazione e aziendali.',
+    imageUrl: 'https://picsum.photos/id/1062/1200/800',
+    imageAlt: 'Risposte FAQ Corsi',
+    primaryCta: { label: 'Corsi Popolazione', url: '/servizi/corsi-popolazione', icon: 'i-bi:mortarboard-fill' }
   },
   '/faq/volontariato': {
     badge: 'Domande Frequenti',
-    badgeIcona: 'i-bi:person-heart',
-    titolo: 'FAQ Diventare Volontario',
-    descrizione: 'Requisiti di età, impegno orario richiesto, e risposte ai dubbi più comuni prima di iscriversi al corso di accesso.',
-    immagine: 'https://picsum.photos/id/1013/1200/800',
-    altImmagine: 'Risposte FAQ Volontariato',
-    ctaPrincipale: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icona: 'i-bi:person-plus-fill' }
+    badgeIcon: 'i-bi:person-heart',
+    title: 'FAQ Diventare Volontario',
+    description: 'Requisiti di età, impegno orario richiesto, e risposte ai dubbi più comuni prima di iscriversi al corso di accesso.',
+    imageUrl: 'https://picsum.photos/id/1013/1200/800',
+    imageAlt: 'Risposte FAQ Volontariato',
+    primaryCta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario', icon: 'i-bi:person-plus-fill' }
   },
   '/faq/donazioni': {
     badge: 'Domande Frequenti',
-    badgeIcona: 'i-bi:piggy-bank-fill',
-    titolo: 'FAQ Donazioni e 5x1000',
-    descrizione: 'Come destinare il 5x1000, agevolazioni fiscali per privati e imprese, e come vengono impiegati i fondi raccolti.',
-    immagine: 'https://picsum.photos/id/1055/1200/800',
-    altImmagine: 'Risposte FAQ Donazioni',
-    ctaPrincipale: { label: 'Dona Ora', url: '/dona', icona: 'i-bi:heart-fill' }
+    badgeIcon: 'i-bi:piggy-bank-fill',
+    title: 'FAQ Donazioni e 5x1000',
+    description: 'Come destinare il 5x1000, agevolazioni fiscali per privati e imprese, e come vengono impiegati i fondi raccolti.',
+    imageUrl: 'https://picsum.photos/id/1055/1200/800',
+    imageAlt: 'Risposte FAQ Donazioni',
+    primaryCta: { label: 'Dona Ora', url: '/dona', icon: 'i-bi:heart-fill' }
   },
 
   // ==========================================
@@ -410,29 +426,29 @@ const contenutiPagine: Record<string, ContenutoPagina> = {
   // ==========================================
   '/dona': {
     badge: 'Sostieni la Croce Rossa',
-    badgeIcona: 'i-bi:heart-fill',
-    titolo: 'Sostieni il Comitato di Rubiera',
-    descrizione: 'Il tuo contributo ci permette di acquistare nuovi mezzi di soccorso, attrezzature mediche e aiutare le famiglie in difficoltà.',
-    immagine: 'https://picsum.photos/id/1055/1200/800',
-    altImmagine: 'Sostieni la Croce Rossa',
-    ctaPrincipale: { label: 'FAQ Donazioni', url: '/faq/donazioni', icona: 'i-bi:question-circle-fill' }
+    badgeIcon: 'i-bi:heart-fill',
+    title: 'Sostieni il Comitato di Rubiera',
+    description: 'Il tuo contributo ci permette di acquistare nuovi mezzi di soccorso, attrezzature mediche e aiutare le famiglie in difficoltà.',
+    imageUrl: 'https://picsum.photos/id/1055/1200/800',
+    imageAlt: 'Sostieni la Croce Rossa',
+    primaryCta: { label: 'FAQ Donazioni', url: '/faq/donazioni', icon: 'i-bi:question-circle-fill' }
   }
 }
 
 // Fallback per pagine non mappate o dinamiche
-const contenutoDefault: ContenutoPagina = {
+const defaultHeroContent: HeroContent = {
   badge: 'Croce Rossa Italiana',
-  badgeIcona: 'i-bi:heart-fill',
-  titolo: 'Comitato di Rubiera',
-  descrizione: 'Al servizio delle persone e della comunità attraverso assistenza, soccorso e prevenzione.',
-  immagine: 'https://picsum.photos/id/1040/1200/800',
-  altImmagine: 'Croce Rossa Italiana Rubiera',
-  ctaPrincipale: { label: 'Torna alla Home', url: '/', icona: 'i-bi:house-fill' }
+  badgeIcon: 'i-bi:heart-fill',
+  title: 'Comitato di Rubiera',
+  description: 'Al servizio delle persone e della comunità attraverso assistenza, soccorso e prevenzione.',
+  imageUrl: 'https://picsum.photos/id/1040/1200/800',
+  imageAlt: 'Croce Rossa Italiana Rubiera',
+  primaryCta: { label: 'Torna alla Home', url: '/', icon: 'i-bi:house-fill' }
 }
 
 // Calcola dinamicamente i dati Hero per la pagina attiva
-const contenutoCorrente = computed<ContenutoPagina>(() => {
-  return contenutiPagine[route.path] || contenutoDefault
+const currentContent = computed<HeroContent>(() => {
+  return heroContentByPath[route.path] || defaultHeroContent
 })
 </script>
 
@@ -440,8 +456,5 @@ const contenutoCorrente = computed<ContenutoPagina>(() => {
 .hero-wrapper {
   overflow: hidden;
 }
-
-.object-fit-cover {
-  object-fit: cover;
-}
+/* `.object-fit-cover` è già una utility di Bootstrap 5.3: niente duplicato. */
 </style>

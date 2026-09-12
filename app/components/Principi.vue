@@ -3,8 +3,8 @@
     <div class="row g-4">
 
       <div
-        v-for="(principio, index) in principi"
-        :key="principio.titolo"
+        v-for="(principle, index) in principles"
+        :key="principle.title"
         :class="[
           'col-12 col-md-6 col-lg-4 mt-5',
           index === 6 ? 'offset-lg-4' : ''
@@ -15,17 +15,17 @@
 
             <!-- Icona -->
             <div class="text-danger mb-3 principio-icon">
-              <Icon :name="principio.icona" class="fs-1" />
+              <Icon :name="principle.icon" class="fs-1" />
             </div>
 
             <!-- Titolo -->
             <h3 class="h5 fw-bold mb-3">
-              {{ principio.titolo }}
+              {{ principle.title }}
             </h3>
 
             <!-- Descrizione -->
             <p class="text-secondary mb-0">
-              {{ principio.descrizione }}
+              {{ principle.description }}
             </p>
 
           </div>
@@ -36,49 +36,49 @@
   </div>
 </template>
 
-<script setup>
-const principi = [
+<script setup lang="ts">
+const principles = [
   {
-    titolo: 'Umanità',
-    descrizione:
+    title: 'Umanità',
+    description:
       'Prevenire e alleviare le sofferenze umane ovunque si manifestino, proteggendo la vita e la salute e favorendo la comprensione e la pace tra i popoli.',
-    icona: 'i-bi:heart-pulse'
+    icon: 'i-bi:heart-pulse'
   },
   {
-    titolo: 'Imparzialità',
-    descrizione:
+    title: 'Imparzialità',
+    description:
       'Prestare soccorso senza alcuna discriminazione, dando priorità alle persone in base alla gravità e all’urgenza delle loro necessità.',
-    icona: 'i-bi:people'
+    icon: 'i-bi:people'
   },
   {
-    titolo: 'Neutralità',
-    descrizione:
+    title: 'Neutralità',
+    description:
       'Per mantenere la fiducia di tutti, il Movimento non prende parte alle ostilità né alle controversie di carattere politico, religioso o ideologico.',
-    icona: 'i-bi:shield-check'
+    icon: 'i-bi:shield-check'
   },
   {
-    titolo: 'Indipendenza',
-    descrizione:
+    title: 'Indipendenza',
+    description:
       'Il Movimento mantiene la propria autonomia e agisce secondo i propri principi, pur collaborando con le autorità pubbliche.',
-    icona: 'i-bi:compass'
+    icon: 'i-bi:compass'
   },
   {
-    titolo: 'Volontariato',
-    descrizione:
+    title: 'Volontariato',
+    description:
       'È un movimento di soccorso volontario e disinteressato, fondato sul desiderio di aiutare gli altri senza perseguire alcun vantaggio personale.',
-    icona: 'i-bi:hand-thumbs-up'
+    icon: 'i-bi:hand-thumbs-up'
   },
   {
-    titolo: 'Unità',
-    descrizione:
+    title: 'Unità',
+    description:
       'In ogni Paese può esistere una sola Società Nazionale della Croce Rossa o della Mezzaluna Rossa, aperta a tutti e attiva su tutto il territorio.',
-    icona: 'i-bi:house-heart'
+    icon: 'i-bi:house-heart'
   },
   {
-    titolo: 'Universalità',
-    descrizione:
+    title: 'Universalità',
+    description:
       'Il Movimento Internazionale è universale. Tutte le Società Nazionali hanno uguali diritti e il dovere di aiutarsi reciprocamente.',
-    icona: 'i-bi:globe2'
+    icon: 'i-bi:globe2'
   }
 ]
 </script>

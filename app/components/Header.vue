@@ -1,16 +1,22 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg bg-danger navbar-dark shadow-sm border-bottom border-dark border-opacity-75">
+    <nav
+      class="navbar navbar-expand-lg bg-danger navbar-dark shadow-sm border-bottom border-dark border-opacity-75"
+      aria-label="Navigazione principale"
+    >
       <div class="container py-2">
         <NuxtLink
           to="/"
           class="navbar-brand me-lg-4"
-          aria-label="Croce Rossa Italiana - Comitato di Rubiera"
+          :aria-label="header.brand.imageAlt"
         >
           <NuxtImg
-            :src="header.marchio.immagine"
-            :alt="header.marchio.alt"
+            :src="header.brand.imageUrl"
+            :alt="header.brand.imageAlt"
+            width="445"
+            height="449"
             loading="eager"
+            fetchpriority="high"
             class="img-fluid brand-logo rounded-3"
           />
         </NuxtLink>
@@ -22,7 +28,7 @@
           data-bs-target="#mainNavbar"
           aria-controls="mainNavbar"
           aria-expanded="false"
-          aria-label="Apri menu"
+          aria-label="Menu di navigazione"
         >
           <span class="navbar-toggler-icon" />
         </button>
@@ -30,59 +36,55 @@
         <div id="mainNavbar" class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto align-items-lg-center">
             <li
-              v-for="voce in header.collegamenti"
-              :key="voce.etichetta"
+              v-for="item in header.navItems"
+              :key="item.label"
               class="nav-item"
               :class="{
-                dropdown: haFigli(voce),
-                'voce-attiva': isVoceAttiva(voce),
+                dropdown: hasChildren(item),
+                'voce-attiva': isActiveItem(item),
               }"
             >
               <!-- MENU CON FIGLI -->
-              <template v-if="haFigli(voce)">
+              <template v-if="hasChildren(item)">
                 <button
                   type="button"
                   class="nav-link  dropdown-toggle text-white px-3 py-2 d-flex align-items-center gap-2 border-0 bg-transparent rounded"
                   :class="{
-                    'link-attivo': isVoceAttiva(voce),
+                    'link-attivo': isActiveItem(item),
                   }"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
-                  @click="attivaMenu(voce.etichetta)"
                 >
-                  <span>{{ voce.etichetta }}</span>
+                  <span>{{ item.label }}</span>
 
                   <Icon
                     name="i-bi:chevron-down"
                     class="ms-auto freccia-menu small"
-                    :class="{
-                      'rotate-180': menuAperti[voce.etichetta],
-                    }"
                     aria-hidden="true"
                   />
                 </button>
 
                 <ul class="dropdown-menu shadow border-0 rounded-3 p-2">
                   <li
-                    v-for="figlio in voce.figli"
-                    :key="figlio.etichetta"
+                    v-for="child in item.children"
+                    :key="child.label"
                   >
                     <!-- LINK ESTERNO -->
                     <a
-                      v-if="figlio.esterno"
-                      :href="figlio.url"
+                      v-if="child.external"
+                      :href="child.url"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="dropdown-item d-flex align-items-center gap-3 rounded-2 py-2"
                     >
                       <Icon
-                        v-if="figlio.icona"
-                        :name="figlio.icona"
+                        v-if="child.icon"
+                        :name="child.icon"
                         class="text-danger"
                         aria-hidden="true"
                       />
 
-                      <span>{{ figlio.etichetta }}</span>
+                      <span>{{ child.label }}</span>
 
                       <Icon
                         name="i-bi:box-arrow-up-right"
@@ -94,20 +96,20 @@
                     <!-- LINK INTERNO -->
                     <NuxtLink
                       v-else
-                      :to="figlio.url"
+                      :to="child.url"
                       class="dropdown-item d-flex align-items-center gap-3 rounded-2 py-2"
                       :class="{
-                        'dropdown-item-attivo': isLinkAttivo(figlio.url),
+                        'dropdown-item-attivo': isActiveLink(child.url),
                       }"
                     >
                       <Icon
-                        v-if="figlio.icona"
-                        :name="figlio.icona"
+                        v-if="child.icon"
+                        :name="child.icon"
                         class="text-danger"
                         aria-hidden="true"
                       />
 
-                      <span>{{ figlio.etichetta }}</span>
+                      <span>{{ child.label }}</span>
 
                       <Icon
                         name="i-bi:chevron-right"
@@ -123,13 +125,13 @@
               <template v-else>
                 <!-- LINK ESTERNO -->
                 <a
-                  v-if="voce.esterno"
-                  :href="voce.url"
+                  v-if="item.external"
+                  :href="item.url"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="nav-link nav-link-arrow text-white px-3 py-2 d-flex align-items-center gap-2"
                 >
-                  <span>{{ voce.etichetta }}</span>
+                  <span>{{ item.label }}</span>
 
                   <Icon
                     name="i-bi:box-arrow-up-right"
@@ -141,13 +143,13 @@
                 <!-- LINK INTERNO -->
                 <NuxtLink
                   v-else
-                  :to="voce.url"
+                  :to="item.url"
                   class="nav-link nav-link-arrow text-white px-3 py-2 d-flex align-items-center gap-2"
                   :class="{
-                    'link-attivo': isLinkAttivo(voce.url),
+                    'link-attivo': isActiveLink(item.url),
                   }"
                 >
-                  <span>{{ voce.etichetta }}</span>
+                  <span>{{ item.label }}</span>
 
                   <Icon
                     name="i-bi:chevron-right"
@@ -161,15 +163,15 @@
             <!-- PULSANTE AZIONE -->
             <li class="nav-item mt-3 mt-lg-0 ms-lg-3">
               <NuxtLink
-                :to="header.azione.url"
+                :to="header.action.url"
                 class="btn btn-light text-danger fw-semibold rounded-pill px-4 py-2 w-100 d-flex align-items-center justify-content-center gap-2 pulsante-azione"
               >
                 <Icon
-                  :name="header.azione.icona"
+                  :name="header.action.icon"
                   aria-hidden="true"
                 />
 
-                <span>{{ header.azione.etichetta }}</span>
+                <span>{{ header.action.label }}</span>
 
                 <Icon
                   name="i-bi:chevron-right"
@@ -186,31 +188,21 @@
 </template>
 
 <script setup lang="ts">
-type VoceNavigazione = {
-  etichetta: string;
-  url?: string;
-  icona?: string;
-  esterno?: boolean;
-  figli?: VoceNavigazione[];
-};
+import type { CtaLink, NavLink } from '~/types';
 
-type Header = {
-  marchio: {
-    immagine: string;
-    alt: string;
+export type HeaderData = {
+  brand: {
+    imageUrl: string;
+    imageAlt: string;
   };
 
-  collegamenti: VoceNavigazione[];
+  navItems: NavLink[];
 
-  azione: {
-    etichetta: string;
-    url: string;
-    icona: string;
-  };
+  action: CtaLink & { icon: string };
 };
 
 const props = defineProps<{
-  header: Header;
+  header: HeaderData;
 }>();
 
 const header = props.header;
@@ -226,7 +218,7 @@ const route = useRoute();
  *
  * In entrambi i casi /chi-siamo viene considerato attivo.
  */
-const isLinkAttivo = (url?: string) => {
+const isActiveLink = (url?: string) => {
   if (!url) {
     return false;
   }
@@ -244,9 +236,9 @@ const isLinkAttivo = (url?: string) => {
 /**
  * Verifica se una voce del menu ha una sottovoce attiva.
  */
-const haFiglioAttivo = (voce: VoceNavigazione) => {
+const hasActiveChild = (item: NavLink) => {
   return (
-    voce.figli?.some((figlio) => isLinkAttivo(figlio.url)) ??
+    item.children?.some((child) => isActiveLink(child.url)) ??
     false
   );
 };
@@ -255,27 +247,15 @@ const haFiglioAttivo = (voce: VoceNavigazione) => {
  * Verifica se la voce principale è attiva
  * oppure se contiene una sottovoce attiva.
  */
-const isVoceAttiva = (voce: VoceNavigazione) => {
+const isActiveItem = (item: NavLink) => {
   return (
-    isLinkAttivo(voce.url) ||
-    haFiglioAttivo(voce)
+    isActiveLink(item.url) ||
+    hasActiveChild(item)
   );
 };
 
-const haFigli = (voce: VoceNavigazione) => {
-  return Boolean(voce.figli?.length);
-};
-
-const menuAperti = reactive<Record<string, boolean>>({});
-
-const attivaMenu = (etichetta: string) => {
-  const statoAttuale = !!menuAperti[etichetta];
-
-  Object.keys(menuAperti).forEach((chiave) => {
-    menuAperti[chiave] = false;
-  });
-
-  menuAperti[etichetta] = !statoAttuale;
+const hasChildren = (item: NavLink) => {
+  return Boolean(item.children?.length);
 };
 </script>
 
@@ -307,8 +287,13 @@ const attivaMenu = (etichetta: string) => {
   color: #fff;
 }
 
-.dropdown-item:hover i,
-.dropdown-item:focus i {
+/*
+ * Su hover/focus il fondo diventa rosso: icona e freccia devono passare al
+ * bianco, altrimenti restano `text-danger`/`text-secondary` e spariscono.
+ * Il selettore agisce sugli elementi figli perché <Icon> non rende un <i>.
+ */
+.dropdown-item:hover > *,
+.dropdown-item:focus > * {
   color: #fff !important;
 }
 
@@ -323,7 +308,7 @@ const attivaMenu = (etichetta: string) => {
   font-weight: 600;
 }
 
-.dropdown-item-attivo i {
+.dropdown-item-attivo > * {
   color: #fff !important;
 }
 
@@ -449,7 +434,12 @@ const attivaMenu = (etichetta: string) => {
     transform 0.3s ease;
 }
 
-.rotate-180 {
+/*
+ * Lo stato aperto è quello che Bootstrap applica al toggle (.show):
+ * così la freccia resta allineata anche quando il menu viene chiuso
+ * da tastiera (Esc) o con un click esterno.
+ */
+.dropdown-toggle.show .freccia-menu {
   transform: rotate(180deg);
 }
 
@@ -492,6 +482,14 @@ const attivaMenu = (etichetta: string) => {
   .dropdown-menu {
     width: 100%;
     margin-top: 0;
+  }
+
+  /*
+   * Bootstrap imposta `white-space: nowrap` sulle voci: con le etichette
+   * lunghe del menu il dropdown a tutta larghezza sfondava lateralmente.
+   */
+  .dropdown-item {
+    white-space: normal;
   }
 
   .nav-link-arrow {

@@ -1,6 +1,6 @@
 <template>
   <div>
     <Hero />
-    <Principi />
+    <LazyPrincipi hydrate-on-visible />
   </div>
 </template>

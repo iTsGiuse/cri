@@ -1,34 +1,35 @@
-// Colori Bootstrap
-$danger: #B3221C;
-
-// Caricamento Bootstrap
-@import 'bootstrap/scss/bootstrap';
-
-// Custom Gradients & Utilities
-$danger-gradient: linear-gradient(
-  135deg,
-  #b91c1c 0%,
-  #d52b1e 50%,
-  #991b1b 100%
+// Caricamento Bootstrap con il colore "danger" del Comitato.
+// `@use ... with` sostituisce il vecchio `@import`, deprecato in Dart Sass
+// e in rimozione nella 3.0.
+@use 'bootstrap/scss/bootstrap' with (
+  $danger: #B3221C
 );
 
-.bg-danger-gradient {
-  background: $danger-gradient;
-}
+// =========================================================
+// FOCUS
+// =========================================================
+//
+// Il progetto non usa il ring a ombra di Bootstrap: lo manteniamo nascosto
+// per conservare la resa attuale, ma il focus da tastiera deve restare
+// sempre percepibile (WCAG 2.4.7). `currentColor` garantisce il contrasto
+// sia sui fondi chiari sia su quelli rossi.
 
-// Rimuove il focus ring
-button:focus,
-button:focus-visible,
-a:focus,
-a:focus-visible,
-input:focus,
-input:focus-visible,
-select:focus,
-select:focus-visible,
-textarea:focus,
-textarea:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
+button,
+a,
+input,
+select,
+textarea,
+summary,
+[tabindex] {
+  &:focus {
+    outline: none;
+    box-shadow: none !important;
+  }
+
+  &:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+  }
 }
 
 // Font globale (scaricato e servito automaticamente da @nuxt/fonts)

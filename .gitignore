@@ -2,6 +2,7 @@
 .nuxt/
 .output/
 .data/
+.claude
 
 # Dependencies and package-manager files generated locally
 node_modules/

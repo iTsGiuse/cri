@@ -7,14 +7,15 @@
           <div class="row g-3 align-items-center">
             <!-- Search Input -->
             <div class="col-12 col-lg-5">
-              <label class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Cerca documento</label>
+              <label for="ricerca-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Cerca documento</label>
               <div class="input-group">
                 <span class="input-group-text bg-light border-end-0 text-secondary rounded-start-3">
                   <Icon name="i-bi:search" class="" />
                 </span>
                 <input
-                  v-model="filtroRicerca"
-                  type="text"
+                  id="ricerca-documenti"
+                  v-model="searchQuery"
+                  type="search"
                   class="form-control bg-light border-start-0 shadow-none rounded-end-3 py-2 text-sm"
                   placeholder="Nome documento o parola chiave..."
                 />
@@ -23,22 +24,22 @@
 
             <!-- Category Select -->
             <div class="col-12 col-md-6 col-lg-4">
-              <label class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Categoria</label>
-              <select v-model="categoriaSelezionata" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
-                <option value="tutte">Tutte le Categorie</option>
-                <option v-for="cat in categorie" :key="cat.id" :value="cat.id">
-                  {{ cat.nome }}
+              <label for="categoria-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Categoria</label>
+              <select id="categoria-documenti" v-model="selectedCategory" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
+                <option :value="ALL_CATEGORIES">Tutte le Categorie</option>
+                <option v-for="category in categories" :key="category.id" :value="category.id">
+                  {{ category.name }}
                 </option>
               </select>
             </div>
 
             <!-- Year Select -->
             <div class="col-12 col-md-6 col-lg-3">
-              <label class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Anno</label>
-              <select v-model="annoSelezionato" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
-                <option value="tutti">Tutti gli Anni</option>
-                <option v-for="anno in anniDisponibiliCalcolati" :key="anno" :value="anno">
-                  Anno {{ anno }}
+              <label for="anno-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Anno</label>
+              <select id="anno-documenti" v-model="selectedYear" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
+                <option :value="ALL_YEARS">Tutti gli Anni</option>
+                <option v-for="year in resolvedYears" :key="year" :value="year">
+                  Anno {{ year }}
                 </option>
               </select>
             </div>
@@ -47,14 +48,15 @@
       </div>
 
       <!-- Counter & Reset Bar -->
-      <div class="d-flex justify-content-between align-items-center mb-4 px-1">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mb-4 px-1">
         <div class="d-flex align-items-center gap-2">
           <span class="fw-bold text-dark fs-5">Documenti trovati</span>
-          <span class="badge bg-danger rounded-pill px-3 py-1.5 fs-6">{{ documentiFiltrati.length }}</span>
+          <span class="badge bg-danger rounded-pill px-3 py-1.5 fs-6">{{ filteredDocuments.length }}</span>
         </div>
         <button
-          v-if="filtroRicerca || categoriaSelezionata !== 'tutte' || annoSelezionato !== 'tutti'"
-          @click="resetFiltri"
+          v-if="hasActiveFilters"
+          type="button"
+          @click="resetFilters"
           class="btn btn-link text-danger text-decoration-none p-0 fw-semibold text-sm d-flex align-items-center gap-1 hover-opacity"
         >
           <Icon name="i-bi:x-circle" class="" /> Ripristina filtri
@@ -62,9 +64,9 @@
       </div>
 
       <!-- Document Cards List -->
-      <div v-if="documentiFiltrati.length > 0" class="d-flex flex-column gap-3">
+      <div v-if="filteredDocuments.length > 0" class="d-flex flex-column gap-3">
         <div
-          v-for="doc in documentiFiltrati"
+          v-for="doc in filteredDocuments"
           :key="doc.id"
           class="card doc-card border-0 shadow-sm rounded-4 transition-all"
         >
@@ -75,38 +77,38 @@
               <div class="col-12 col-md-8 col-lg-9 d-flex align-items-center gap-3">
                 <!-- Icon Box -->
                 <div class="icon-box rounded-4 bg-danger-subtle text-danger d-flex align-items-center justify-content-center flex-shrink-0">
-                  <Icon :name="getIconaEstensione(doc.formato)" class="fs-2" />
+                  <Icon :name="getFormatIcon(doc.format)" class="fs-2" />
                 </div>
 
                 <!-- Text Content -->
                 <div class="w-100">
                   <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                     <span class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill fw-medium text-xs">
-                      {{ getNomeCategoria(doc.categoriaId) }}
+                      {{ getCategoryName(doc.categoryId) }}
                     </span>
                     <span class="badge bg-danger text-white px-2.5 py-1.5 rounded-pill fw-bold text-xs">
-                      {{ doc.anno }}
+                      {{ doc.year }}
                     </span>
                   </div>
-                  <h5 class="fw-bold text-dark mb-1 doc-title">
-                    {{ doc.titolo }}
-                  </h5>
+                  <h2 class="h5 fw-bold text-dark mb-1 doc-title">
+                    {{ doc.title }}
+                  </h2>
                   <p class="text-secondary small mb-3 leading-relaxed">
-                    {{ doc.descrizione }}
+                    {{ doc.description }}
                   </p>
                   
                   <!-- File Meta Info -->
                   <div class="d-flex align-items-center gap-2 gap-md-3 text-muted text-xs flex-wrap">
                     <span class="d-inline-flex align-items-center gap-1">
-                      <Icon name="i-bi:file-earmark-code" class=" text-danger" /> {{ doc.formato.toUpperCase() }}
+                      <Icon name="i-bi:file-earmark-code" class=" text-danger" /> {{ doc.format.toUpperCase() }}
                     </span>
                     <span class="dot-separator"></span>
                     <span class="d-inline-flex align-items-center gap-1">
-                      <Icon name="i-bi:hdd-network" class=" text-danger" /> {{ doc.dimensione }}
+                      <Icon name="i-bi:hdd-network" class=" text-danger" /> {{ doc.size }}
                     </span>
                     <span class="dot-separator"></span>
                     <span class="d-inline-flex align-items-center gap-1">
-                      <Icon name="i-bi:calendar-event" class=" text-danger" /> Pubblicato: {{ doc.dataPubblicazione }}
+                      <Icon name="i-bi:calendar-event" class=" text-danger" /> Pubblicato: {{ doc.publishedAt }}
                     </span>
                   </div>
                 </div>
@@ -115,8 +117,8 @@
               <!-- Download Button -->
               <div class="col-12 col-md-4 col-lg-3 text-md-end pt-2 pt-md-0 border-top border-md-0">
                 <a
-                  :href="doc.urlDownload"
-                  :download="doc.titolo"
+                  :href="doc.downloadUrl"
+                  :download="doc.title"
                   target="_blank"
                   rel="noopener noreferrer"
                   @click="onDownload(doc)"
@@ -137,13 +139,14 @@
           <div class="empty-icon-wrapper rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center mb-3">
             <Icon name="i-bi:folder-x" class=" fs-1" />
           </div>
-          <h4 class="fw-bold text-dark mb-2">Nessun documento trovato</h4>
+          <h2 class="h4 fw-bold text-dark mb-2">Nessun documento trovato</h2>
           <p class="text-secondary mx-auto max-w-md mb-4">
             Non ci sono documenti corrispondenti ai filtri applicati. Prova a modificare i termini di ricerca o l'anno selezionato.
           </p>
           <button
-            @click="resetFiltri"
-            class="btn btn-outline-danger btn-md rounded-3 px-4 fw-semibold"
+            type="button"
+            class="btn btn-outline-danger rounded-3 px-4 fw-semibold"
+            @click="resetFilters"
           >
             <Icon name="i-bi:arrow-counterclockwise" class=" me-1" /> Ripristina tutti i filtri
           </button>
@@ -151,26 +154,26 @@
       </div>
 
       <!-- Divisore Component -->
-      <Divisore />
+      <LazyDivisore />
 
       <!-- Card Call to Action Dinamica -->
       <div class="card bg-light border-0 rounded-4 p-4 p-md-5 text-center shadow-lg">
         <div class="card-body p-0">
           <div class="d-inline-flex align-items-center justify-content-center bg-danger text-white rounded-circle mb-3 p-3" style="width: 50px; height: 50px;">
-            <Icon :name="ctaInfoCalculated.icona" class="fs-4" />
+            <Icon :name="ctaContent.icon" class="fs-4" />
           </div>
           
-          <h4 class="fw-bold text-dark mb-2">{{ ctaInfoCalculated.titolo }}</h4>
+          <h2 class="h4 fw-bold text-dark mb-2">{{ ctaContent.title }}</h2>
           <p class="text-secondary mb-4 col-md-8 mx-auto">
-            {{ ctaInfoCalculated.descrizione }}
+            {{ ctaContent.description }}
           </p>
 
           <a
-            :href="`mailto:${ctaInfoCalculated.emailPec}`"
+            :href="`mailto:${ctaContent.email}`"
             class="btn btn-danger btn-lg rounded-pill px-4 py-2 text-white fw-semibold d-inline-flex align-items-center gap-2 shadow-sm"
           >
-            <span>{{ ctaInfoCalculated.testoPulsante }}</span>
-            <Icon :name="ctaInfoCalculated.iconaPulsante" aria-hidden="true" />
+            <span>{{ ctaContent.buttonLabel }}</span>
+            <Icon :name="ctaContent.buttonIcon" aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -180,119 +183,132 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { contactConfig } from '~/data/config'
 
-export interface Categoria {
+export interface DocumentCategory {
   id: string
-  nome: string
+  name: string
 }
 
-export interface Documento {
+export interface TransparencyDocument {
   id: string
-  titolo: string
-  descrizione: string
-  categoriaId: string
-  anno: number
-  formato: 'pdf' | 'zip' | 'xlsx' | string
-  dimensione: string
-  dataPubblicazione: string
-  urlDownload: string
+  title: string
+  description: string
+  categoryId: string
+  year: number
+  format: 'pdf' | 'zip' | 'xlsx' | string
+  /** Dimensione già formattata per la lettura (es. "2.4 MB"). */
+  size: string
+  /** Data di pubblicazione già formattata (gg/mm/aaaa). */
+  publishedAt: string
+  downloadUrl: string
 }
 
-export interface CtaConfig {
-  titolo?: string
-  descrizione?: string
-  emailPec?: string
-  testoPulsante?: string
-  icona?: string
-  iconaPulsante?: string
+export interface TransparencyCta {
+  title?: string
+  description?: string
+  /** Indirizzo PEC a cui inviare la richiesta di accesso agli atti. */
+  email?: string
+  buttonLabel?: string
+  icon?: string
+  buttonIcon?: string
 }
 
-// Props con defaults
+/** Valori sentinella dei filtri quando non è selezionata alcuna opzione. */
+const ALL_CATEGORIES = 'tutte'
+const ALL_YEARS = 'tutti'
+
 const props = withDefaults(
   defineProps<{
-    documenti?: Documento[]
-    categorie?: Categoria[]
-    anniDisponibili?: number[]
-    ctaInfo?: CtaConfig
+    documents?: TransparencyDocument[]
+    categories?: DocumentCategory[]
+    availableYears?: number[]
+    cta?: TransparencyCta
   }>(),
   {
-    documenti: () => [],
-    categorie: () => [
-      { id: 'bilanci', nome: 'Bilanci e Rendiconti Economici' },
-      { id: '5x1000', nome: 'Rendicontazione 5x1000' },
-      { id: 'contributi', nome: 'Contributi Pubblici (L. 124/2017)' },
-      { id: 'statuto', nome: 'Statuto e Regolamenti Associativi' },
-      { id: 'organi', nome: 'Organi Sociali e Incarichi' }
+    documents: () => [],
+    categories: () => [
+      { id: 'bilanci', name: 'Bilanci e Rendiconti Economici' },
+      { id: '5x1000', name: 'Rendicontazione 5x1000' },
+      { id: 'contributi', name: 'Contributi Pubblici (L. 124/2017)' },
+      { id: 'statuto', name: 'Statuto e Regolamenti Associativi' },
+      { id: 'organi', name: 'Organi Sociali e Incarichi' }
     ],
-    anniDisponibili: () => [],
-    ctaInfo: () => ({})
+    availableYears: () => [],
+    cta: () => ({})
   }
 )
 
 // Emits per eventuale tracciamento/gestione eventi dal genitore
 const emit = defineEmits<{
-  (e: 'download', documento: Documento): void
-  (e: 'reset-filtri'): void
+  (e: 'download', document: TransparencyDocument): void
+  (e: 'reset-filters'): void
 }>()
 
-// Gestione dei filtri di stato
-const filtroRicerca = ref('')
-const categoriaSelezionata = ref('tutte')
-const annoSelezionato = ref<string | number>('tutti')
+// Stato dei filtri
+const searchQuery = ref('')
+const selectedCategory = ref<string>(ALL_CATEGORIES)
+const selectedYear = ref<string | number>(ALL_YEARS)
+
+const hasActiveFilters = computed(
+  () =>
+    searchQuery.value !== '' ||
+    selectedCategory.value !== ALL_CATEGORIES ||
+    selectedYear.value !== ALL_YEARS
+)
 
 // Configurazione Call to Action dinamica con valori predefiniti
-const ctaInfoCalculated = computed<Required<CtaConfig>>(() => {
+const ctaContent = computed<Required<TransparencyCta>>(() => {
   return {
-    titolo: props.ctaInfo.titolo ?? 'Non trovi il documento che cerchi?',
-    descrizione:
-      props.ctaInfo.descrizione ??
+    title: props.cta.title ?? 'Non trovi il documento che cerchi?',
+    description:
+      props.cta.description ??
       'I soci ed i cittadini aventi diritto possono presentare una richiesta formale di accesso agli atti e verbali direttamente alla nostra segreteria amministrativa.',
-    emailPec: props.ctaInfo.emailPec ?? 'comitato.rubiera@cert.cri.it',
-    testoPulsante: props.ctaInfo.testoPulsante ?? 'Invia richiesta via PEC',
-    icona: props.ctaInfo.icona ?? 'i-bi:file-earmark-lock',
-    iconaPulsante: props.ctaInfo.iconaPulsante ?? 'i-bi:envelope-at'
+    email: props.cta.email ?? contactConfig.pec,
+    buttonLabel: props.cta.buttonLabel ?? 'Invia richiesta via PEC',
+    icon: props.cta.icon ?? 'i-bi:file-earmark-lock',
+    buttonIcon: props.cta.buttonIcon ?? 'i-bi:envelope-at'
   }
 })
 
 // Estrae automaticamente gli anni univoci dai documenti se non specificati espressamente
-const anniDisponibiliCalcolati = computed<number[]>(() => {
-  if (props.anniDisponibili && props.anniDisponibili.length > 0) {
-    return props.anniDisponibili
+const resolvedYears = computed<number[]>(() => {
+  if (props.availableYears && props.availableYears.length > 0) {
+    return props.availableYears
   }
-  const anniSet = new Set(props.documenti.map((doc) => doc.anno))
-  return Array.from(anniSet).sort((a, b) => b - a)
+  const years = new Set(props.documents.map((doc) => doc.year))
+  return Array.from(years).sort((a, b) => b - a)
 })
 
-// Filtraggio Reattivo dei Documenti
-const documentiFiltrati = computed(() => {
-  return props.documenti.filter((doc) => {
-    const matchCategoria =
-      categoriaSelezionata.value === 'tutte' ||
-      doc.categoriaId === categoriaSelezionata.value
+// Filtraggio reattivo dei documenti
+const filteredDocuments = computed(() => {
+  return props.documents.filter((doc) => {
+    const matchesCategory =
+      selectedCategory.value === ALL_CATEGORIES ||
+      doc.categoryId === selectedCategory.value
 
-    const matchAnno =
-      annoSelezionato.value === 'tutti' ||
-      doc.anno === Number(annoSelezionato.value)
+    const matchesYear =
+      selectedYear.value === ALL_YEARS ||
+      doc.year === Number(selectedYear.value)
 
-    const testo = filtroRicerca.value.toLowerCase().trim()
-    const matchTesto =
-      !testo ||
-      doc.titolo.toLowerCase().includes(testo) ||
-      doc.descrizione.toLowerCase().includes(testo) ||
-      doc.anno.toString().includes(testo)
+    const query = searchQuery.value.toLowerCase().trim()
+    const matchesQuery =
+      !query ||
+      doc.title.toLowerCase().includes(query) ||
+      doc.description.toLowerCase().includes(query) ||
+      doc.year.toString().includes(query)
 
-    return matchCategoria && matchAnno && matchTesto
+    return matchesCategory && matchesYear && matchesQuery
   })
 })
 
-const getNomeCategoria = (categoriaId: string): string => {
-  const cat = props.categorie.find((c) => c.id === categoriaId)
-  return cat ? cat.nome : 'Generale'
+const getCategoryName = (categoryId: string): string => {
+  const category = props.categories.find((item) => item.id === categoryId)
+  return category ? category.name : 'Generale'
 }
 
-const getIconaEstensione = (formato: string): string => {
-  switch (formato.toLowerCase()) {
+const getFormatIcon = (format: string): string => {
+  switch (format.toLowerCase()) {
     case 'pdf':
       return 'i-bi:file-earmark-pdf-fill'
     case 'zip':
@@ -310,14 +326,14 @@ const getIconaEstensione = (formato: string): string => {
   }
 }
 
-const resetFiltri = () => {
-  filtroRicerca.value = ''
-  categoriaSelezionata.value = 'tutte'
-  annoSelezionato.value = 'tutti'
-  emit('reset-filtri')
+const resetFilters = () => {
+  searchQuery.value = ''
+  selectedCategory.value = ALL_CATEGORIES
+  selectedYear.value = ALL_YEARS
+  emit('reset-filters')
 }
 
-const onDownload = (doc: Documento) => {
+const onDownload = (doc: TransparencyDocument) => {
   emit('download', doc)
 }
 </script>

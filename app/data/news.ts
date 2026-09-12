@@ -1,61 +1,63 @@
-export interface Categoria {
-    id: string
-    nome: string
-  }
+export interface NewsCategory {
+  id: string
+  name: string
+}
   
-  export interface Articolo {
-    id: string
-    slug: string
-    titolo: string
-    descrizione: string
-    categoriaId: string
-    dataPubblicazione: string
-    immagine: string
-    contenuto: string
-  }
+export interface NewsArticle {
+  id: string
+  slug: string
+  title: string
+  description: string
+  categoryId: string
+  /** Data di pubblicazione in formato ISO (YYYY-MM-DD). */
+  publishedAt: string
+  imageUrl: string
+  /** Corpo dell'articolo in HTML. */
+  content: string
+}
   
-  export const categorie: Categoria[] = [
+  export const newsCategories: NewsCategory[] = [
     {
       id: 'associazione',
-      nome: 'Associazione',
+      name: 'Associazione',
     },
     {
       id: 'attivita',
-      nome: 'Attività',
+      name: 'Attività',
     },
     {
       id: 'formazione',
-      nome: 'Formazione',
+      name: 'Formazione',
     },
     {
       id: 'eventi',
-      nome: 'Eventi',
+      name: 'Eventi',
     },
     {
       id: 'salute',
-      nome: 'Salute',
+      name: 'Salute',
     },
     {
       id: 'sociale',
-      nome: 'Sociale',
+      name: 'Sociale',
     },
     {
       id: 'emergenza',
-      nome: 'Emergenza',
+      name: 'Emergenza',
     },
   ]
   
-  export const articoli: Articolo[] = [
+  export const newsArticles: NewsArticle[] = [
     {
       id: '1',
       slug: 'corso-formazione-nuovi-volontari-2026',
-      titolo: 'Al via il nuovo corso per diventare volontari',
-      descrizione:
+      title: 'Al via il nuovo corso per diventare volontari',
+      description:
         'Sono aperte le iscrizioni al nuovo corso di formazione per chi desidera entrare a far parte della Croce Rossa Italiana.',
-      categoriaId: 'formazione',
-      dataPubblicazione: '2026-09-08',
-      immagine: '/images/news/formazione-volontari.jpg',
-      contenuto: `
+      categoryId: 'formazione',
+      publishedAt: '2026-09-08',
+      imageUrl: '/images/news/formazione-volontari.jpg',
+      content: `
         <p>
           Entrare a far parte della Croce Rossa Italiana significa scegliere
           di dedicare tempo ed energie alla propria comunità, mettendo a
@@ -102,13 +104,13 @@ export interface Categoria {
     {
       id: '2',
       slug: 'giornata-mondiale-primo-soccorso-2026',
-      titolo: 'Giornata Mondiale del Primo Soccorso',
-      descrizione:
+      title: 'Giornata Mondiale del Primo Soccorso',
+      description:
         'Una giornata dedicata alla diffusione della cultura del primo soccorso con dimostrazioni e attività aperte alla cittadinanza.',
-      categoriaId: 'salute',
-      dataPubblicazione: '2026-09-05',
-      immagine: '/images/news/primo-soccorso.jpg',
-      contenuto: `
+      categoryId: 'salute',
+      publishedAt: '2026-09-05',
+      imageUrl: '/images/news/primo-soccorso.jpg',
+      content: `
         <p>
           Conoscere alcune semplici manovre di primo soccorso può fare una
           grande differenza in una situazione di emergenza.
@@ -133,13 +135,13 @@ export interface Categoria {
     {
       id: '3',
       slug: 'festa-associazioni-rubiera-2026',
-      titolo: 'La Croce Rossa presente alla Festa delle Associazioni',
-      descrizione:
+      title: 'La Croce Rossa presente alla Festa delle Associazioni',
+      description:
         'I nostri volontari saranno presenti per incontrare cittadini e famiglie e raccontare le attività del Comitato.',
-      categoriaId: 'eventi',
-      dataPubblicazione: '2026-08-28',
-      immagine: '/images/news/festa-associazioni.jpg',
-      contenuto: `
+      categoryId: 'eventi',
+      publishedAt: '2026-08-28',
+      imageUrl: '/images/news/festa-associazioni.jpg',
+      content: `
         <p>
           Anche quest'anno il Comitato di Rubiera partecipa alla Festa delle
           Associazioni, un appuntamento dedicato alle realtà associative
@@ -159,13 +161,13 @@ export interface Categoria {
     {
       id: '4',
       slug: 'servizi-sanitari-estate-2026',
-      titolo: 'Servizi sanitari e assistenza durante l’estate',
-      descrizione:
+      title: 'Servizi sanitari e assistenza durante l’estate',
+      description:
         'Prosegue anche durante i mesi estivi l’impegno dei volontari nei servizi di assistenza sanitaria sul territorio.',
-      categoriaId: 'attivita',
-      dataPubblicazione: '2026-08-12',
-      immagine: '/images/news/servizi-sanitari.jpg',
-      contenuto: `
+      categoryId: 'attivita',
+      publishedAt: '2026-08-12',
+      imageUrl: '/images/news/servizi-sanitari.jpg',
+      content: `
         <p>
           L'estate rappresenta per il Comitato un periodo particolarmente
           intenso, con numerosi eventi e iniziative che richiedono la presenza
@@ -184,13 +186,13 @@ export interface Categoria {
     {
       id: '5',
       slug: 'raccolta-alimentare-solidale-2026',
-      titolo: 'Raccolta alimentare: insieme per aiutare chi ha bisogno',
-      descrizione:
+      title: 'Raccolta alimentare: insieme per aiutare chi ha bisogno',
+      description:
         'I volontari partecipano alla nuova raccolta alimentare destinata alle famiglie del territorio in situazione di difficoltà.',
-      categoriaId: 'sociale',
-      dataPubblicazione: '2026-07-25',
-      immagine: '/images/news/raccolta-alimentare.jpg',
-      contenuto: `
+      categoryId: 'sociale',
+      publishedAt: '2026-07-25',
+      imageUrl: '/images/news/raccolta-alimentare.jpg',
+      content: `
         <p>
           La solidarietà passa anche dai piccoli gesti. Il Comitato di Rubiera
           partecipa a una nuova raccolta di beni alimentari destinata alle
@@ -211,13 +213,13 @@ export interface Categoria {
     {
       id: '6',
       slug: 'esercitazione-emergenza-territoriale-2026',
-      titolo: 'Esercitazione di emergenza sul territorio',
-      descrizione:
+      title: 'Esercitazione di emergenza sul territorio',
+      description:
         'Una giornata di esercitazione dedicata alla gestione delle emergenze e al coordinamento delle squadre di volontari.',
-      categoriaId: 'emergenza',
-      dataPubblicazione: '2026-06-19',
-      immagine: '/images/news/esercitazione.jpg',
-      contenuto: `
+      categoryId: 'emergenza',
+      publishedAt: '2026-06-19',
+      imageUrl: '/images/news/esercitazione.jpg',
+      content: `
         <p>
           La preparazione è uno degli elementi fondamentali nella gestione
           delle emergenze. Per questo motivo i volontari partecipano
@@ -236,13 +238,13 @@ export interface Categoria {
     {
       id: '7',
       slug: 'nuovi-volontari-comitato-rubiera-2026',
-      titolo: 'Benvenuti ai nuovi volontari del Comitato',
-      descrizione:
+      title: 'Benvenuti ai nuovi volontari del Comitato',
+      description:
         'Un nuovo gruppo di volontari ha completato il percorso formativo ed è pronto a iniziare il proprio servizio.',
-      categoriaId: 'associazione',
-      dataPubblicazione: '2026-05-30',
-      immagine: '/images/news/nuovi-volontari.jpg',
-      contenuto: `
+      categoryId: 'associazione',
+      publishedAt: '2026-05-30',
+      imageUrl: '/images/news/nuovi-volontari.jpg',
+      content: `
         <p>
           Un nuovo gruppo di volontari ha completato il percorso formativo
           organizzato dal Comitato di Rubiera.
@@ -258,13 +260,13 @@ export interface Categoria {
     {
       id: '8',
       slug: 'manovre-salvavita-pediatriche-2026',
-      titolo: 'Manovre salvavita pediatriche: nuovo incontro formativo',
-      descrizione:
+      title: 'Manovre salvavita pediatriche: nuovo incontro formativo',
+      description:
         'Un appuntamento dedicato a genitori, educatori e cittadini per imparare come intervenire in caso di emergenza pediatrica.',
-      categoriaId: 'formazione',
-      dataPubblicazione: '2026-05-16',
-      immagine: '/images/news/manovre-pediatriche.jpg',
-      contenuto: `
+      categoryId: 'formazione',
+      publishedAt: '2026-05-16',
+      imageUrl: '/images/news/manovre-pediatriche.jpg',
+      content: `
         <p>
           Un incontro dedicato alla diffusione delle conoscenze sulle
           principali manovre salvavita pediatriche.
@@ -282,13 +284,13 @@ export interface Categoria {
     {
       id: '9',
       slug: 'giornata-prevenzione-salute-2026',
-      titolo: 'Una giornata dedicata alla prevenzione e alla salute',
-      descrizione:
+      title: 'Una giornata dedicata alla prevenzione e alla salute',
+      description:
         'Il Comitato organizza una giornata informativa dedicata alla prevenzione e ai corretti stili di vita.',
-      categoriaId: 'salute',
-      dataPubblicazione: '2026-04-18',
-      immagine: '/images/news/prevenzione.jpg',
-      contenuto: `
+      categoryId: 'salute',
+      publishedAt: '2026-04-18',
+      imageUrl: '/images/news/prevenzione.jpg',
+      content: `
         <p>
           Il Comitato organizza una giornata dedicata alla prevenzione,
           all'informazione e alla promozione della salute.
@@ -306,13 +308,13 @@ export interface Categoria {
     {
       id: '10',
       slug: 'assemblea-soci-2026',
-      titolo: 'Assemblea dei soci del Comitato di Rubiera',
-      descrizione:
+      title: 'Assemblea dei soci del Comitato di Rubiera',
+      description:
         'Si è svolta l’annuale assemblea dei soci della Croce Rossa Italiana – Comitato di Rubiera.',
-      categoriaId: 'associazione',
-      dataPubblicazione: '2026-03-28',
-      immagine: '/images/news/assemblea.jpg',
-      contenuto: `
+      categoryId: 'associazione',
+      publishedAt: '2026-03-28',
+      imageUrl: '/images/news/assemblea.jpg',
+      content: `
         <p>
           Si è svolta l'annuale assemblea dei soci della Croce Rossa Italiana –
           Comitato di Rubiera.
@@ -328,13 +330,13 @@ export interface Categoria {
     {
       id: '11',
       slug: 'corso-volontari-autunno-2025',
-      titolo: 'Aperte le iscrizioni al corso volontari autunnale',
-      descrizione:
+      title: 'Aperte le iscrizioni al corso volontari autunnale',
+      description:
         'Un nuovo percorso formativo per conoscere la Croce Rossa, i suoi principi e le attività svolte sul territorio.',
-      categoriaId: 'formazione',
-      dataPubblicazione: '2025-10-03',
-      immagine: '/images/news/corso-autunno.jpg',
-      contenuto: `
+      categoryId: 'formazione',
+      publishedAt: '2025-10-03',
+      imageUrl: '/images/news/corso-autunno.jpg',
+      content: `
         <p>
           Sono aperte le iscrizioni al nuovo corso per diventare volontari
           della Croce Rossa Italiana.
@@ -352,13 +354,13 @@ export interface Categoria {
     {
       id: '12',
       slug: 'raccolta-fondi-solidale-2025',
-      titolo: 'Una raccolta fondi per sostenere le nostre attività',
-      descrizione:
+      title: 'Una raccolta fondi per sostenere le nostre attività',
+      description:
         'Una nuova iniziativa solidale per sostenere i progetti del Comitato e le attività rivolte alla popolazione.',
-      categoriaId: 'sociale',
-      dataPubblicazione: '2025-09-20',
-      immagine: '/images/news/raccolta-fondi.jpg',
-      contenuto: `
+      categoryId: 'sociale',
+      publishedAt: '2025-09-20',
+      imageUrl: '/images/news/raccolta-fondi.jpg',
+      content: `
         <p>
           Una nuova iniziativa solidale nasce con l'obiettivo di sostenere
           i progetti e le attività del Comitato.
@@ -376,13 +378,13 @@ export interface Categoria {
     {
       id: '13',
       slug: 'festa-croce-rossa-rubiera-2025',
-      titolo: 'Una giornata insieme alla Croce Rossa',
-      descrizione:
+      title: 'Una giornata insieme alla Croce Rossa',
+      description:
         'Una giornata di festa, incontri e attività per conoscere da vicino il mondo della Croce Rossa Italiana.',
-      categoriaId: 'eventi',
-      dataPubblicazione: '2025-07-12',
-      immagine: '/images/news/festa-cri.jpg',
-      contenuto: `
+      categoryId: 'eventi',
+      publishedAt: '2025-07-12',
+      imageUrl: '/images/news/festa-cri.jpg',
+      content: `
         <p>
           Una giornata dedicata all'incontro con la cittadinanza e alla
           scoperta delle attività della Croce Rossa Italiana.
@@ -400,13 +402,13 @@ export interface Categoria {
     {
       id: '14',
       slug: 'assistenza-eventi-estate-2025',
-      titolo: 'Assistenza sanitaria agli eventi estivi',
-      descrizione:
+      title: 'Assistenza sanitaria agli eventi estivi',
+      description:
         'I nostri volontari hanno garantito il servizio di assistenza sanitaria durante numerosi eventi sul territorio.',
-      categoriaId: 'attivita',
-      dataPubblicazione: '2025-06-28',
-      immagine: '/images/news/assistenza-eventi.jpg',
-      contenuto: `
+      categoryId: 'attivita',
+      publishedAt: '2025-06-28',
+      imageUrl: '/images/news/assistenza-eventi.jpg',
+      content: `
         <p>
           Durante l'estate i volontari del Comitato hanno garantito la
           presenza sanitaria in occasione di numerosi eventi.
@@ -424,13 +426,13 @@ export interface Categoria {
     {
       id: '15',
       slug: 'formazione-primo-soccorso-aziende-2025',
-      titolo: 'Formazione sul primo soccorso per le aziende',
-      descrizione:
+      title: 'Formazione sul primo soccorso per le aziende',
+      description:
         'Continua l’attività di formazione rivolta alle aziende e ai lavoratori del territorio.',
-      categoriaId: 'formazione',
-      dataPubblicazione: '2025-05-14',
-      immagine: '/images/news/formazione-aziende.jpg',
-      contenuto: `
+      categoryId: 'formazione',
+      publishedAt: '2025-05-14',
+      imageUrl: '/images/news/formazione-aziende.jpg',
+      content: `
         <p>
           Continua l'attività di formazione sul primo soccorso rivolta alle
           aziende e ai lavoratori del territorio.
@@ -448,13 +450,13 @@ export interface Categoria {
     {
       id: '16',
       slug: 'emergenza-maltempo-2025',
-      titolo: 'Volontari impegnati nell’emergenza maltempo',
-      descrizione:
+      title: 'Volontari impegnati nell’emergenza maltempo',
+      description:
         'I volontari del Comitato sono stati impegnati nelle attività di supporto alla popolazione durante l’emergenza.',
-      categoriaId: 'emergenza',
-      dataPubblicazione: '2025-03-07',
-      immagine: '/images/news/maltempo.jpg',
-      contenuto: `
+      categoryId: 'emergenza',
+      publishedAt: '2025-03-07',
+      imageUrl: '/images/news/maltempo.jpg',
+      content: `
         <p>
           I volontari del Comitato sono stati impegnati nelle attività di
           supporto alla popolazione durante l'emergenza maltempo.
@@ -472,13 +474,13 @@ export interface Categoria {
     {
       id: '17',
       slug: 'nuovo-anno-nuove-attivita-2024',
-      titolo: 'Un nuovo anno ricco di attività e progetti',
-      descrizione:
+      title: 'Un nuovo anno ricco di attività e progetti',
+      description:
         'Il Comitato presenta il programma delle principali attività e iniziative previste per il nuovo anno.',
-      categoriaId: 'associazione',
-      dataPubblicazione: '2024-12-18',
-      immagine: '/images/news/nuovo-anno.jpg',
-      contenuto: `
+      categoryId: 'associazione',
+      publishedAt: '2024-12-18',
+      imageUrl: '/images/news/nuovo-anno.jpg',
+      content: `
         <p>
           Il Comitato presenta il programma delle principali attività e
           iniziative previste per il nuovo anno.
@@ -496,13 +498,13 @@ export interface Categoria {
     {
       id: '18',
       slug: 'giornata-primo-soccorso-2024',
-      titolo: 'Imparare il primo soccorso può fare la differenza',
-      descrizione:
+      title: 'Imparare il primo soccorso può fare la differenza',
+      description:
         'Volontari e cittadini insieme per una giornata dedicata alla prevenzione e alle tecniche di primo soccorso.',
-      categoriaId: 'salute',
-      dataPubblicazione: '2024-10-11',
-      immagine: '/images/news/primo-soccorso-2024.jpg',
-      contenuto: `
+      categoryId: 'salute',
+      publishedAt: '2024-10-11',
+      imageUrl: '/images/news/primo-soccorso-2024.jpg',
+      content: `
         <p>
           Volontari e cittadini insieme per una giornata dedicata alla
           prevenzione e alle tecniche di primo soccorso.
@@ -520,13 +522,13 @@ export interface Categoria {
     {
       id: '19',
       slug: 'raccolta-alimentare-natale-2024',
-      titolo: 'A Natale doniamo un aiuto concreto',
-      descrizione:
+      title: 'A Natale doniamo un aiuto concreto',
+      description:
         'Una raccolta di beni di prima necessità per sostenere le persone e le famiglie più fragili del territorio.',
-      categoriaId: 'sociale',
-      dataPubblicazione: '2024-12-07',
-      immagine: '/images/news/natale-solidale.jpg',
-      contenuto: `
+      categoryId: 'sociale',
+      publishedAt: '2024-12-07',
+      imageUrl: '/images/news/natale-solidale.jpg',
+      content: `
         <p>
           Una raccolta di beni di prima necessità per sostenere le persone
           e le famiglie più fragili del territorio.
@@ -544,13 +546,13 @@ export interface Categoria {
     {
       id: '20',
       slug: 'volontari-in-piazza-2024',
-      titolo: 'La Croce Rossa torna in piazza',
-      descrizione:
+      title: 'La Croce Rossa torna in piazza',
+      description:
         'Un’occasione per incontrare la cittadinanza, presentare le nostre attività e parlare dei principi della Croce Rossa.',
-      categoriaId: 'eventi',
-      dataPubblicazione: '2024-09-21',
-      immagine: '/images/news/volontari-piazza.jpg',
-      contenuto: `
+      categoryId: 'eventi',
+      publishedAt: '2024-09-21',
+      imageUrl: '/images/news/volontari-piazza.jpg',
+      content: `
         <p>
           La Croce Rossa torna in piazza per incontrare la cittadinanza e
           presentare le proprie attività.

@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-light">
+  <div class="bg-light">
 
     <!-- ================================================== -->
     <!-- INTRODUZIONE -->
@@ -11,22 +11,23 @@
         <div class="row justify-content-center">
           <div class="col-12 col-xl-10">
 
-            <div class="mb-4 mb-lg-5">
+            <div class="mb-4 mb-lg-5 text-center text-lg-start">
               <span class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 mb-3">
                 <Icon
-                  :name="pagina.badge.icona"
+                  :name="pageContent.badge.icon"
                   class="me-1"
                 />
 
-                {{ pagina.badge.testo }}
+                {{ pageContent.badge.label }}
               </span>
 
-              <h1 class="display-5 fw-bold text-dark mb-3">
-                {{ pagina.titolo }}
-              </h1>
+              <!-- L'h1 della pagina è quello dell'hero: qui si riparte da h2. -->
+              <h2 class="display-5 fw-bold text-dark mb-3">
+                {{ pageContent.title }}
+              </h2>
 
               <p class="lead text-secondary mb-0">
-                {{ pagina.introduzione }}
+                {{ pageContent.intro }}
               </p>
             </div>
 
@@ -47,8 +48,8 @@
         <div class="row g-4">
 
           <div
-            v-for="vantaggio in pagina.vantaggi"
-            :key="vantaggio.titolo"
+            v-for="benefit in pageContent.benefits"
+            :key="benefit.title"
             class="col-12 col-md-6 col-lg-4"
           >
             <div class="card h-100 border-0 shadow-sm rounded-4">
@@ -59,17 +60,17 @@
                   style="width: 52px; height: 52px;"
                 >
                   <Icon
-                    :name="vantaggio.icona"
+                    :name="benefit.icon"
                     class="fs-4"
                   />
                 </div>
 
                 <h2 class="h5 fw-bold text-dark mb-3">
-                  {{ vantaggio.titolo }}
+                  {{ benefit.title }}
                 </h2>
 
                 <p class="text-secondary mb-0">
-                  {{ vantaggio.descrizione }}
+                  {{ benefit.description }}
                 </p>
 
               </div>
@@ -96,8 +97,8 @@
 
             <div class="rounded-4 overflow-hidden shadow-sm">
               <NuxtImg
-                :src="pagina.requisiti.immagine"
-                :alt="pagina.requisiti.alt"
+                :src="pageContent.requirements.imageUrl"
+                :alt="pageContent.requirements.imageAlt"
                 width="1000"
                 height="750"
                 format="webp"
@@ -112,22 +113,22 @@
           <div class="col-12 col-lg-6">
 
             <span class="text-danger text-uppercase fw-bold small">
-              {{ pagina.requisiti.sovratitolo }}
+              {{ pageContent.requirements.eyebrow }}
             </span>
 
             <h2 class="display-6 fw-bold text-dark mt-2 mb-3">
-              {{ pagina.requisiti.titolo }}
+              {{ pageContent.requirements.title }}
             </h2>
 
             <p class="text-secondary mb-4">
-              {{ pagina.requisiti.descrizione }}
+              {{ pageContent.requirements.description }}
             </p>
 
             <div class="d-flex flex-column gap-3">
 
               <div
-                v-for="requisito in pagina.requisiti.elenco"
-                :key="requisito.titolo"
+                v-for="requirement in pageContent.requirements.items"
+                :key="requirement.title"
                 class="d-flex align-items-start gap-3"
               >
 
@@ -135,16 +136,16 @@
                   class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-danger-subtle text-danger"
                   style="width: 40px; height: 40px;"
                 >
-                  <Icon :name="requisito.icona" />
+                  <Icon :name="requirement.icon" />
                 </div>
 
                 <div>
                   <h3 class="h6 fw-bold text-dark mb-1">
-                    {{ requisito.titolo }}
+                    {{ requirement.title }}
                   </h3>
 
                   <p class="small text-secondary mb-0">
-                    {{ requisito.descrizione }}
+                    {{ requirement.description }}
                   </p>
                 </div>
 
@@ -171,15 +172,15 @@
           <div class="col-12 col-xl-8 text-center">
 
             <span class="text-danger text-uppercase fw-bold small">
-              {{ pagina.percorso.sovratitolo }}
+              {{ pageContent.path.eyebrow }}
             </span>
 
             <h2 class="display-6 fw-bold text-dark mt-2 mb-3">
-              {{ pagina.percorso.titolo }}
+              {{ pageContent.path.title }}
             </h2>
 
             <p class="text-secondary mb-0">
-              {{ pagina.percorso.descrizione }}
+              {{ pageContent.path.description }}
             </p>
 
           </div>
@@ -189,8 +190,8 @@
         <div class="row g-4">
 
           <div
-            v-for="(passo, indice) in pagina.percorso.passaggi"
-            :key="passo.titolo"
+            v-for="(step, index) in pageContent.path.steps"
+            :key="step.title"
             class="col-12 col-md-6 col-lg-3"
           >
 
@@ -201,15 +202,15 @@
                   class="d-flex align-items-center justify-content-center rounded-circle bg-danger text-white fw-bold mb-4"
                   style="width: 48px; height: 48px;"
                 >
-                  {{ indice + 1 }}
+                  {{ index + 1 }}
                 </div>
 
                 <h3 class="h5 fw-bold text-dark mb-3">
-                  {{ passo.titolo }}
+                  {{ step.title }}
                 </h3>
 
                 <p class="text-secondary small mb-0">
-                  {{ passo.descrizione }}
+                  {{ step.description }}
                 </p>
 
               </div>
@@ -234,15 +235,15 @@
           <div class="col-12 col-xl-8 text-center">
 
             <span class="text-danger text-uppercase fw-bold small">
-              {{ pagina.attivita.sovratitolo }}
+              {{ pageContent.activities.eyebrow }}
             </span>
 
             <h2 class="display-6 fw-bold text-dark mt-2 mb-3">
-              {{ pagina.attivita.titolo }}
+              {{ pageContent.activities.title }}
             </h2>
 
             <p class="text-secondary mb-0">
-              {{ pagina.attivita.descrizione }}
+              {{ pageContent.activities.description }}
             </p>
 
           </div>
@@ -252,8 +253,8 @@
         <div class="row g-3 g-lg-4">
 
           <div
-            v-for="attivita in pagina.attivita.elenco"
-            :key="attivita.titolo"
+            v-for="activity in pageContent.activities.items"
+            :key="activity.title"
             class="col-12 col-sm-6 col-lg-4"
           >
 
@@ -263,16 +264,16 @@
                 class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3 bg-danger text-white"
                 style="width: 44px; height: 44px;"
               >
-                <Icon :name="attivita.icona" />
+                <Icon :name="activity.icon" />
               </div>
 
               <div>
                 <h3 class="h6 fw-bold text-dark mb-1">
-                  {{ attivita.titolo }}
+                  {{ activity.title }}
                 </h3>
 
                 <p class="small text-secondary mb-0">
-                  {{ attivita.descrizione }}
+                  {{ activity.description }}
                 </p>
               </div>
 
@@ -300,11 +301,11 @@
             <div class="text-center mb-4 mb-lg-5">
 
               <span class="text-danger text-uppercase fw-bold small">
-                {{ pagina.faq.sovratitolo }}
+                {{ pageContent.faq.eyebrow }}
               </span>
 
               <h2 class="display-6 fw-bold text-dark mt-2 mb-0">
-                {{ pagina.faq.titolo }}
+                {{ pageContent.faq.title }}
               </h2>
 
             </div>
@@ -313,34 +314,34 @@
             <div class="accordion" id="faqVolontari">
 
               <div
-                v-for="(domanda, indice) in pagina.faq.domande"
-                :key="domanda.domanda"
+                v-for="(faqItem, index) in pageContent.faq.items"
+                :key="faqItem.question"
                 class="accordion-item border-0 shadow-sm rounded-3 mb-3 overflow-hidden"
               >
 
                 <h3
-                  :id="`faq-heading-${indice}`"
+                  :id="`faq-heading-${index}`"
                   class="accordion-header"
                 >
                   <button
                     class="accordion-button collapsed fw-semibold shadow-none"
                     type="button"
                     data-bs-toggle="collapse"
-                    :data-bs-target="`#faq-collapse-${indice}`"
-                    :aria-controls="`faq-collapse-${indice}`"
+                    :data-bs-target="`#faq-collapse-${index}`"
+                    :aria-controls="`faq-collapse-${index}`"
                   >
-                    {{ domanda.domanda }}
+                    {{ faqItem.question }}
                   </button>
                 </h3>
 
                 <div
-                  :id="`faq-collapse-${indice}`"
+                  :id="`faq-collapse-${index}`"
                   class="accordion-collapse collapse"
-                  :aria-labelledby="`faq-heading-${indice}`"
+                  :aria-labelledby="`faq-heading-${index}`"
                   data-bs-parent="#faqVolontari"
                 >
                   <div class="accordion-body text-secondary">
-                    {{ domanda.risposta }}
+                    {{ faqItem.answer }}
                   </div>
                 </div>
 
@@ -370,11 +371,11 @@
             <div class="col-12 col-lg-8">
 
               <h2 class="display-6 fw-bold text-white mb-3">
-                {{ pagina.cta.titolo }}
+                {{ pageContent.cta.title }}
               </h2>
 
               <p class="text-white text-opacity-75 mb-0">
-                {{ pagina.cta.descrizione }}
+                {{ pageContent.cta.description }}
               </p>
 
             </div>
@@ -384,23 +385,23 @@
               <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2">
 
                 <NuxtLink
-                  :to="pagina.cta.pulsante.url"
+                  :to="pageContent.cta.primary.url"
                   class="btn btn-light text-danger fw-semibold rounded-3 py-3 px-4 d-flex align-items-center justify-content-center gap-2"
                 >
-                  <Icon :name="pagina.cta.pulsante.icona" />
+                  <Icon :name="pageContent.cta.primary.icon" />
 
-                  {{ pagina.cta.pulsante.testo }}
+                  {{ pageContent.cta.primary.label }}
 
                   <Icon name="i-bi:arrow-right" />
                 </NuxtLink>
 
                 <NuxtLink
-                  :to="pagina.cta.secondario.url"
+                  :to="pageContent.cta.secondary.url"
                   class="btn btn-outline-light fw-semibold rounded-3 py-3 px-4 d-flex align-items-center justify-content-center gap-2"
                 >
-                  <Icon :name="pagina.cta.secondario.icona" />
+                  <Icon :name="pageContent.cta.secondary.icon" />
 
-                  {{ pagina.cta.secondario.testo }}
+                  {{ pageContent.cta.secondary.label }}
                 </NuxtLink>
 
               </div>
@@ -414,26 +415,27 @@
       </div>
     </section>
 
-  </main>
+  </div>
 </template>
 
 
 <script setup lang="ts">
+import { siteConfig } from '~/data/config'
 
 /* ================================================== */
 /* DATI PAGINA */
 /* ================================================== */
 
-const pagina = {
+const pageContent = {
 
   badge: {
-    testo: 'Croce Rossa Italiana',
-    icona: 'i-bi:heart-fill',
+    label: 'Croce Rossa Italiana',
+    icon: 'i-bi:heart-fill',
   },
 
-  titolo: 'Diventa volontario',
+  title: 'Diventa volontario',
   
-  introduzione:
+  intro:
     'Entra nella Croce Rossa Italiana e metti il tuo tempo, le tue capacità e la tua voglia di aiutare al servizio della comunità.',
 
 
@@ -441,27 +443,27 @@ const pagina = {
   /* VANTAGGI */
   /* ================================================== */
 
-  vantaggi: [
+  benefits: [
 
     {
-      titolo: 'Aiuta chi ha bisogno',
-      descrizione:
+      title: 'Aiuta chi ha bisogno',
+      description:
         'Contribuisci concretamente alle attività del Comitato e porta il tuo aiuto alle persone che ne hanno più bisogno.',
-      icona: 'i-bi:heart-pulse',
+      icon: 'i-bi:heart-pulse',
     },
 
     {
-      titolo: 'Impara nuove competenze',
-      descrizione:
+      title: 'Impara nuove competenze',
+      description:
         'Partecipa a corsi e attività formative che ti permettono di acquisire competenze utili nella vita di tutti i giorni.',
-      icona: 'i-bi:book',
+      icon: 'i-bi:book',
     },
 
     {
-      titolo: 'Fai parte di una squadra',
-      descrizione:
+      title: 'Fai parte di una squadra',
+      description:
         'Conosci nuove persone, condividi esperienze e collabora con altri volontari accomunati dagli stessi valori.',
-      icona: 'i-bi:people',
+      icon: 'i-bi:people',
     },
 
   ],
@@ -471,47 +473,47 @@ const pagina = {
   /* REQUISITI */
   /* ================================================== */
 
-  requisiti: {
+  requirements: {
 
-    sovratitolo: 'Prima di iniziare',
+    eyebrow: 'Prima di iniziare',
 
-    titolo: 'Chi può diventare volontario?',
+    title: 'Chi può diventare volontario?',
 
-    descrizione:
+    description:
       'Il volontariato in Croce Rossa è aperto a tutte le persone che desiderano impegnarsi per gli altri e condividere i nostri Principi Fondamentali.',
 
-    immagine: '/images/volontari.jpg',
+    imageUrl: '/images/volontari.jpg',
 
-    alt: 'Volontari della Croce Rossa Italiana',
+    imageAlt: 'Volontari della Croce Rossa Italiana',
 
-    elenco: [
+    items: [
 
       {
-        titolo: 'Avere almeno 14 anni',
-        descrizione:
+        title: 'Avere almeno 14 anni',
+        description:
           'È possibile iniziare il percorso di volontariato a partire dai 14 anni, secondo le modalità previste per la propria fascia di età.',
-        icona: 'i-bi:person-check',
+        icon: 'i-bi:person-check',
       },
 
       {
-        titolo: 'Condividere i nostri valori',
-        descrizione:
+        title: 'Condividere i nostri valori',
+        description:
           'È importante riconoscersi nei Principi Fondamentali della Croce Rossa e nel suo impegno a favore delle persone.',
-        icona: 'i-bi:heart',
+        icon: 'i-bi:heart',
       },
 
       {
-        titolo: 'Avere voglia di partecipare',
-        descrizione:
+        title: 'Avere voglia di partecipare',
+        description:
           'Non è necessario essere esperti: formazione e affiancamento ti accompagneranno durante il percorso.',
-        icona: 'i-bi:hand-thumbs-up',
+        icon: 'i-bi:hand-thumbs-up',
       },
 
       {
-        titolo: 'Mettere a disposizione il proprio tempo',
-        descrizione:
+        title: 'Mettere a disposizione il proprio tempo',
+        description:
           'Ogni volontario può contribuire compatibilmente con i propri impegni e con le proprie disponibilità.',
-        icona: 'i-bi:clock',
+        icon: 'i-bi:clock',
       },
 
     ],
@@ -523,38 +525,38 @@ const pagina = {
   /* PERCORSO */
 /* ================================================== */
 
-  percorso: {
+  path: {
 
-    sovratitolo: 'Come iniziare',
+    eyebrow: 'Come iniziare',
 
-    titolo: 'Il tuo percorso da volontario',
+    title: 'Il tuo percorso da volontario',
 
-    descrizione:
+    description:
       'Diventare volontario è un percorso semplice e graduale. Ti accompagneremo passo dopo passo.',
 
-    passaggi: [
+    steps: [
 
       {
-        titolo: 'Contattaci',
-        descrizione:
+        title: 'Contattaci',
+        description:
           'Mettiti in contatto con il Comitato per ricevere informazioni sulle attività e sulle modalità di partecipazione.',
       },
 
       {
-        titolo: 'Partecipa al corso',
-        descrizione:
+        title: 'Partecipa al corso',
+        description:
           'Segui il percorso formativo previsto per conoscere la Croce Rossa, i suoi valori e il ruolo dei volontari.',
       },
 
       {
-        titolo: 'Inizia l’attività',
-        descrizione:
+        title: 'Inizia l’attività',
+        description:
           'Dopo la formazione potrai iniziare a partecipare alle attività del Comitato in base alle tue disponibilità.',
       },
 
       {
-        titolo: 'Cresci con noi',
-        descrizione:
+        title: 'Cresci con noi',
+        description:
           'Continua a formarti, acquisisci nuove competenze e scopri le tante attività in cui puoi dare il tuo contributo.',
       },
 
@@ -567,57 +569,57 @@ const pagina = {
   /* ATTIVITÀ */
 /* ================================================== */
 
-  attivita: {
+  activities: {
 
-    sovratitolo: 'Il mondo della Croce Rossa',
+    eyebrow: 'Il mondo della Croce Rossa',
 
-    titolo: 'In cosa puoi impegnarti',
+    title: 'In cosa puoi impegnarti',
 
-    descrizione:
+    description:
       'Le attività sono numerose e diverse tra loro. Potrai trovare quella più vicina alle tue passioni e alle esigenze della comunità.',
 
-    elenco: [
+    items: [
 
       {
-        titolo: 'Assistenza e soccorso',
-        descrizione:
+        title: 'Assistenza e soccorso',
+        description:
           'Supporta le attività dedicate all’assistenza e al soccorso delle persone.',
-        icona: 'i-bi:activity',
+        icon: 'i-bi:activity',
       },
 
       {
-        titolo: 'Emergenze',
-        descrizione:
+        title: 'Emergenze',
+        description:
           'Contribuisci alle attività di preparazione e risposta alle emergenze.',
-        icona: 'i-bi:exclamation-triangle',
+        icon: 'i-bi:exclamation-triangle',
       },
 
       {
-        titolo: 'Inclusione sociale',
-        descrizione:
+        title: 'Inclusione sociale',
+        description:
           'Partecipa ai progetti rivolti alle persone più vulnerabili.',
-        icona: 'i-bi:people',
+        icon: 'i-bi:people',
       },
 
       {
-        titolo: 'Giovani',
-        descrizione:
+        title: 'Giovani',
+        description:
           'Collabora nelle attività dedicate ai giovani e alla loro crescita.',
-        icona: 'i-bi:person-hearts',
+        icon: 'i-bi:person-hearts',
       },
 
       {
-        titolo: 'Formazione',
-        descrizione:
+        title: 'Formazione',
+        description:
           'Aiuta a diffondere conoscenze e comportamenti utili alla comunità.',
-        icona: 'i-bi:mortarboard',
+        icon: 'i-bi:mortarboard',
       },
 
       {
-        titolo: 'Prevenzione',
-        descrizione:
+        title: 'Prevenzione',
+        description:
           'Partecipa alle iniziative di sensibilizzazione e prevenzione.',
-        icona: 'i-bi:shield-check',
+        icon: 'i-bi:shield-check',
       },
 
     ],
@@ -631,33 +633,33 @@ const pagina = {
 
   faq: {
 
-    sovratitolo: 'Domande frequenti',
+    eyebrow: 'Domande frequenti',
 
-    titolo: 'Hai qualche dubbio?',
+    title: 'Hai qualche dubbio?',
 
-    domande: [
+    items: [
 
       {
-        domanda: 'Devo avere esperienza per diventare volontario?',
-        risposta:
+        question: 'Devo avere esperienza per diventare volontario?',
+        answer:
           'No. Non è necessario avere esperienza precedente. La formazione e l’affiancamento ti permetteranno di acquisire gradualmente le competenze necessarie.',
       },
 
       {
-        domanda: 'Quanto tempo devo dedicare al volontariato?',
-        risposta:
+        question: 'Quanto tempo devo dedicare al volontariato?',
+        answer:
           'Non esiste un’unica disponibilità valida per tutti. Potrai concordare la tua partecipazione in base alle attività disponibili e al tempo che puoi mettere a disposizione.',
       },
 
       {
-        domanda: 'Posso scegliere le attività a cui partecipare?',
-        risposta:
+        question: 'Posso scegliere le attività a cui partecipare?',
+        answer:
           'Le attività a cui potrai partecipare dipendono dalla tua formazione, dalle esigenze del Comitato e dalle opportunità disponibili. Insieme potrai individuare quelle più adatte a te.',
       },
 
       {
-        domanda: 'Come posso avere maggiori informazioni?',
-        risposta:
+        question: 'Come posso avere maggiori informazioni?',
+        answer:
           'Puoi contattare direttamente il Comitato oppure utilizzare il pulsante di contatto presente in questa pagina per ricevere tutte le informazioni sul percorso.',
       },
 
@@ -672,21 +674,21 @@ const pagina = {
 
   cta: {
 
-    titolo: 'Vuoi metterti in gioco?',
+    title: 'Vuoi metterti in gioco?',
 
-    descrizione:
+    description:
       'Scopri come entrare nella nostra squadra e inizia il tuo percorso come volontario della Croce Rossa Italiana.',
 
-    pulsante: {
-      testo: 'Diventa volontario',
+    primary: {
+      label: 'Diventa volontario',
       url: '/contatti',
-      icona: 'i-bi:heart-fill',
+      icon: 'i-bi:heart-fill',
     },
 
-    secondario: {
-      testo: 'Contattaci',
+    secondary: {
+      label: 'Contattaci',
       url: '/contatti',
-      icona: 'i-bi:envelope',
+      icon: 'i-bi:envelope',
     },
 
   },
@@ -700,10 +702,10 @@ const pagina = {
 
 useSeoMeta({
 
-  title: 'Diventa volontario | Croce Rossa Rubiera',
+  title: `Diventa volontario | ${siteConfig.shortName}`,
 
   description:
-    'Scopri come diventare volontario della Croce Rossa Italiana - Comitato di Rubiera.',
+    `Scopri come diventare volontario della ${siteConfig.name}.`,
 
 })
 

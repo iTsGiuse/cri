@@ -5,71 +5,73 @@
         <!-- 1. MARCHIO E SOCIAL (Prima colonna della Prima Riga) -->
         <div class="col-12 col-md-6 col-xl-3 pe-xl-3">
           <NuxtLink
-            :to="footer.marchio.url"
-            :aria-label="footer.marchio.etichettaAria"
+            :to="footer.brand.url"
+            :aria-label="footer.brand.ariaLabel"
             class="d-inline-block mb-3 p-2 bg-white rounded-3 shadow-sm"
           >
             <NuxtImg
-              :src="footer.marchio.immagine"
-              :alt="footer.marchio.alt"
+              :src="footer.brand.imageUrl"
+              :alt="footer.brand.imageAlt"
+              width="445"
+              height="449"
               loading="lazy"
               class="img-fluid d-block brand-logo"
             />
           </NuxtLink>
 
           <p class="text-white small lh-lg mb-4">
-            {{ footer.marchio.descrizione }}
+            {{ footer.brand.description }}
           </p>
 
           <div class="d-flex gap-2">
             <a
-              v-for="social in footer.social"
-              :key="social.etichetta"
+              v-for="social in footer.socialLinks"
+              :key="social.name"
               :href="social.url"
-              :aria-label="social.etichetta"
+              :aria-label="social.name"
               target="_blank"
               rel="noopener noreferrer"
               class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center p-0"
               style="width: 38px; height: 38px"
             >
-              <Icon :name="social.icona" aria-hidden="true" />
+              <Icon :name="social.icon" aria-hidden="true" />
             </a>
           </div>
         </div>
 
         <!-- COLONNE LINK DINAMICHE -->
         <div
-          v-for="(colonna, index) in footer.colonne"
-          :key="colonna.titolo"
+          v-for="(column, index) in footer.columns"
+          :key="column.title"
           class="col-6 col-md-3 col-xl-3"
           :class="{ 'offset-xl-3': index > 0 && index % 3 === 0 }"
         >
           <h6 class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3">
-            {{ colonna.titolo }}
+            {{ column.title }}
           </h6>
 
           <ul class="list-unstyled mb-0">
             <li
-              v-for="collegamento in colonna.collegamenti"
-              :key="collegamento.etichetta"
+              v-for="link in column.links"
+              :key="link.label"
               class="mb-2"
             >
               <a
-                v-if="collegamento.esterno"
-                :href="collegamento.url"
+                v-if="link.external"
+                :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none small d-inline-block"
+                class="link-light text-decoration-none small d-inline-block"
               >
-                {{ collegamento.etichetta }}
+                {{ link.label }}
               </a>
 
               <NuxtLink
                 v-else
-                :to="collegamento.url"
-                class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none small d-inline-block"
+                :to="link.url"
+                class="link-light text-decoration-none small d-inline-block"
               >
-                {{ collegamento.etichetta }}
+                {{ link.label }}
               </NuxtLink>
             </li>
           </ul>
@@ -80,56 +82,56 @@
           class="col-12 col-md-6 col-xl-3"
           :class="{
             'offset-xl-3':
-              footer.colonne.length > 0 && footer.colonne.length % 3 === 0,
+              footer.columns.length > 0 && footer.columns.length % 3 === 0,
           }"
         >
           <h6 class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3">
-            {{ footer.contatti.titolo }}
+            {{ footer.contacts.title }}
           </h6>
 
           <ul class="list-unstyled mb-0 small">
             <li class="mb-3">
               <a
-                :href="footer.contatti.indirizzo.url"
+                :href="footer.contacts.address.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none d-flex gap-2 align-items-start"
+                class="link-light text-decoration-none d-flex gap-2 align-items-start"
               >
                 <Icon
-                  :name="footer.contatti.indirizzo.icona"
+                  :name="footer.contacts.address.icon"
                   class="mt-1 flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
-                <span>{{ footer.contatti.indirizzo.etichetta }}</span>
+                <span>{{ footer.contacts.address.label }}</span>
               </a>
             </li>
 
             <li class="mb-3">
               <a
-                :href="`tel:${footer.contatti.telefono.valore}`"
-                class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none d-flex gap-2 align-items-center"
+                :href="`tel:${footer.contacts.phone.value}`"
+                class="link-light text-decoration-none d-flex gap-2 align-items-center"
               >
                 <Icon
-                  :name="footer.contatti.telefono.icona"
+                  :name="footer.contacts.phone.icon"
                   class="flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
-                <span>{{ footer.contatti.telefono.etichetta }}</span>
+                <span>{{ footer.contacts.phone.label }}</span>
               </a>
             </li>
 
             <li>
               <a
-                :href="`mailto:${footer.contatti.email.valore}`"
-                class="link-light link-opacity-75 link-opacity-100-hover text-decoration-none d-flex gap-2 align-items-center"
+                :href="`mailto:${footer.contacts.email.value}`"
+                class="link-light text-decoration-none d-flex gap-2 align-items-center"
               >
                 <Icon
-                  :name="footer.contatti.email.icona"
+                  :name="footer.contacts.email.icon"
                   class="flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
                 <span class="text-break">
-                  {{ footer.contatti.email.etichetta }}
+                  {{ footer.contacts.email.label }}
                 </span>
               </a>
             </li>
@@ -141,29 +143,29 @@
       <div class="row mt-5">
         <div class="col-12">
           <div
-            class="bg-white shadow-lgtext-dark rounded-4 p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-4 shadow-lg border-start border-danger border-5"
+            class="bg-white text-dark rounded-4 p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-4 shadow-lg border-start border-danger border-5"
           >
             <div>
               <h3 class="text-danger fw-bold mb-1 fs-4 fs-lg-3">
-                {{ footer.chiamataAzione.titolo }}
+                {{ footer.cta.title }}
               </h3>
 
               <p class="text-muted small mb-0">
-                {{ footer.chiamataAzione.descrizione }}
+                {{ footer.cta.description }}
               </p>
             </div>
 
             <NuxtLink
-              :to="footer.chiamataAzione.url"
+              :to="footer.cta.url"
               class="btn btn-danger rounded-pill fw-semibold px-4 py-2 text-nowrap shadow-sm pulsante-azione"
             >
               <Icon
-                :name="footer.chiamataAzione.icona"
+                :name="footer.cta.icon"
                 class="me-2"
                 aria-hidden="true"
               />
 
-              {{ footer.chiamataAzione.etichetta }}
+              {{ footer.cta.label }}
 
               <Icon
                 name="i-bi:chevron-right"
@@ -184,8 +186,8 @@
         <div
           class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3"
         >
-          <p class="text-whitesmall mb-0 text-center text-lg-start">
-            {{ footer.fiscali }}
+          <p class="text-white mb-0 text-center text-lg-start">
+            {{ footer.legalInfo }}
           </p>
 
           <nav
@@ -193,25 +195,25 @@
             class="d-flex flex-wrap justify-content-center gap-3 gap-lg-4"
           >
             <template
-              v-for="collegamento in footer.collegamentiLegali"
-              :key="collegamento.etichetta"
+              v-for="link in footer.legalLinks"
+              :key="link.label"
             >
               <a
-                v-if="collegamento.esterno"
-                :href="collegamento.url"
+                v-if="link.external"
+                :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link-light small text-decoration-none"
               >
-                {{ collegamento.etichetta }}
+                {{ link.label }}
               </a>
 
               <NuxtLink
                 v-else
-                :to="collegamento.url"
+                :to="link.url"
                 class="link-light small text-decoration-none"
               >
-                {{ collegamento.etichetta }}
+                {{ link.label }}
               </NuxtLink>
             </template>
           </nav>
@@ -222,77 +224,67 @@
 </template>
 
 <script setup lang="ts">
-type CollegamentoFooter = {
-  etichetta: string;
+import type { CtaLink, SocialLink } from '~/types';
+
+type FooterLink = {
+  label: string;
   url: string;
-  esterno?: boolean;
+  external?: boolean;
 };
 
-type ColonnaFooter = {
-  titolo: string;
-  collegamenti: CollegamentoFooter[];
+type FooterColumn = {
+  title: string;
+  links: FooterLink[];
 };
 
-type SocialFooter = {
-  etichetta: string;
+/** Recapito cliccabile: `label` è il testo mostrato, `value` il dato grezzo. */
+type ContactEntry = {
+  label: string;
+  value: string;
+  icon: string;
+};
+
+type ContactLink = {
+  label: string;
   url: string;
-  icona: string;
+  icon: string;
 };
 
-type ContattoFooter = {
-  etichetta: string;
-  url: string;
-  icona: string;
-};
-
-type FooterData = {
-  marchio: {
+export type FooterData = {
+  brand: {
     url: string;
-    immagine: string;
-    alt: string;
-    etichettaAria: string;
-    larghezza?: number;
-    altezza?: number;
-    descrizione: string;
+    imageUrl: string;
+    imageAlt: string;
+    ariaLabel: string;
+    description: string;
   };
 
-  social: SocialFooter[];
+  socialLinks: SocialLink[];
 
-  colonne: ColonnaFooter[];
+  columns: FooterColumn[];
 
-  contatti: {
-    titolo: string;
-    indirizzo: ContattoFooter;
-    telefono: {
-      etichetta: string;
-      valore: string;
-      icona: string;
-    };
-    email: {
-      etichetta: string;
-      valore: string;
-      icona: string;
-    };
+  contacts: {
+    title: string;
+    address: ContactLink;
+    phone: ContactEntry;
+    email: ContactEntry;
   };
 
-  chiamataAzione: {
-    titolo: string;
-    descrizione: string;
-    etichetta: string;
-    url: string;
-    icona: string;
+  cta: CtaLink & {
+    title: string;
+    description: string;
+    icon: string;
   };
 
-  collegamentiLegali: CollegamentoFooter[];
+  legalLinks: FooterLink[];
 
-  fiscali: string;
+  /** Dicitura fiscale mostrata in fondo alla pagina. */
+  legalInfo: string;
 };
 
 defineProps<{
   footer: FooterData;
 }>();
-
-const annoCorrente = new Date().getFullYear();
 </script>
 
 <style scoped>

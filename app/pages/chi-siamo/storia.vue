@@ -1,6 +1,6 @@
 <template>
   <div>
     <Hero />
-    <Storia />
+    <LazyStoria />
   </div>
 </template>

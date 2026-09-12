@@ -17,28 +17,28 @@
         <!-- Social -->
         <div class="col-md-4 text-center my-2 my-md-0">
           <NuxtLink
-            v-for="social in info.social"
-            :key="social.nome"
+            v-for="social in info.socialLinks"
+            :key="social.name"
             :to="social.url"
             target="_blank"
             rel="noopener noreferrer"
-            :aria-label="social.nome"
+            :aria-label="social.name"
             class="text-white mx-2"
           >
-            <Icon :name="social.icona" size="22" />
+            <Icon :name="social.icon" size="22" />
           </NuxtLink>
         </div>
 
         <!-- Indirizzo -->
         <div class="col-md-4 text-center text-md-end">
           <NuxtLink
-            :to="info.indirizzo.url"
+            :to="info.address.url"
             target="_blank"
             rel="noopener noreferrer"
             class="text-white text-decoration-none d-inline-flex align-items-center gap-2"
           >
             <Icon name="lucide:map-pin" size="18" />
-            <span>{{ info.indirizzo.testo }}</span>
+            <span>{{ info.address.label }}</span>
           </NuxtLink>
         </div>
 
@@ -48,25 +48,20 @@
 </template>
 
 <script setup lang="ts">
-interface Social {
-  nome: string
-  url: string
-  icona: string
-}
+import type { SocialLink } from '~/types'
 
-interface Indirizzo {
-  testo: string
+interface AddressLink {
+  label: string
   url: string
 }
 
-interface Info {
+export interface TopBarInfo {
   email: string
-  social: Social[]
-  indirizzo: Indirizzo
+  socialLinks: SocialLink[]
+  address: AddressLink
 }
 
 defineProps<{
-  info: Info
+  info: TopBarInfo
 }>()
 </script>
-

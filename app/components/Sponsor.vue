@@ -8,37 +8,37 @@
           </span>
 
           <h2 class="display-6 fw-bold mt-2 mb-3">
-            {{ sponsor.titolo }}
+            {{ sponsor.title }}
           </h2>
 
           <p class="lead text-secondary mb-0">
-            {{ sponsor.descrizione }}
+            {{ sponsor.description }}
           </p>
         </div>
       </div>
 
       <div
-        v-if="sponsor.sponsors?.length"
+        v-if="sponsor.items?.length"
         class="sponsor-marquee"
         :style="{
-          '--marquee-duration': `${sponsor.velocita || 25}s`,
+          '--marquee-duration': `${sponsor.speed || 25}s`,
         }"
       >
         <div class="sponsor-track">
           <!-- Prima lista -->
           <div class="sponsor-list">
             <a
-              v-for="item in sponsor.sponsors"
+              v-for="item in sponsor.items"
               :key="`first-${item.id}`"
               :href="item.url"
               target="_blank"
               rel="noopener noreferrer"
               class="sponsor-link"
-              :aria-label="`Visita il sito di ${item.azienda}`"
+              :aria-label="`Visita il sito di ${item.name}`"
             >
               <NuxtImg
-                :src="item.logo"
-                :alt="item.alt"
+                :src="item.imageUrl"
+                :alt="item.imageAlt"
                 width="220"
                 height="100"
                 sizes="220px"
@@ -52,7 +52,7 @@
           <!-- Seconda lista -->
           <div class="sponsor-list" aria-hidden="true">
             <a
-              v-for="item in sponsor.sponsors"
+              v-for="item in sponsor.items"
               :key="`second-${item.id}`"
               :href="item.url"
               target="_blank"
@@ -61,8 +61,8 @@
               class="sponsor-link"
             >
               <NuxtImg
-                :src="item.logo"
-                :alt="item.alt"
+                :src="item.imageUrl"
+                :alt="item.imageAlt"
                 width="220"
                 height="100"
                 sizes="220px"
@@ -80,12 +80,12 @@
         class="row justify-content-center text-center mt-5"
       >
         <div class="col-12 col-lg-8">
-          <h3 class="h4 fw-bold mb-3">
-            {{ sponsor.cta.titolo }}
-          </h3>
+          <h2 class="h4 fw-bold mb-3">
+            {{ sponsor.cta.title }}
+          </h2>
 
           <p class="text-secondary mb-4">
-            {{ sponsor.cta.descrizione }}
+            {{ sponsor.cta.description }}
           </p>
 
           <NuxtLink :to="sponsor.cta.url" class="btn btn-danger btn-lg px-4">
@@ -98,32 +98,34 @@
 </template>
 
 <script setup lang="ts">
-interface SponsorItem {
+import type { CtaLink } from '~/types';
+
+export interface SponsorItem {
   id: number;
-  azienda: string;
-  logo: string;
-  alt: string;
+  /** Ragione sociale dell'azienda sostenitrice. */
+  name: string;
+  imageUrl: string;
+  imageAlt: string;
   url: string;
-  categoria?: string;
-  posizione?: string;
+  category?: string;
+  location?: string;
 }
 
-interface SponsorData {
+export interface SponsorSectionData {
   eyebrow: string;
-  titolo: string;
-  descrizione: string;
-  velocita?: number;
-  sponsors: SponsorItem[];
-  cta?: {
-    titolo: string;
-    descrizione: string;
-    label: string;
-    url: string;
+  title: string;
+  description: string;
+  /** Durata in secondi di un giro completo della barra scorrevole. */
+  speed?: number;
+  items: SponsorItem[];
+  cta?: CtaLink & {
+    title: string;
+    description: string;
   };
 }
 
 defineProps<{
-  sponsor: SponsorData;
+  sponsor: SponsorSectionData;
 }>();
 </script>
 

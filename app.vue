@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { organizationConfig } from '~/data/config'
+
+// I valori dinamici passano da runtimeConfig (sovrascrivibile via env);
+// il marchio è un dato statico e arriva da ~/data/config.
 const config = useRuntimeConfig()
 const siteName = config.public.siteShortName
 const siteUrl = config.public.siteUrl.replace(/\/$/, '')
@@ -10,7 +14,7 @@ useSeoMeta({
   description,
   ogSiteName: siteName,
   ogDescription: description,
-  ogImage: `${siteUrl}/images/logo.jpg`,
+  ogImage: `${siteUrl}${organizationConfig.logo.imageUrl}`,
   ogImageAlt: siteName,
   twitterCard: 'summary_large_image',
 })

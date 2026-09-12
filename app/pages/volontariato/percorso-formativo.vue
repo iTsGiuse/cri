@@ -1,642 +1,644 @@
 <template>
   <div>
     <Hero />
-    <LazyQualifiche :qualifiche="datiQualifiche" />
+    <LazyQualifiche hydrate-on-visible :categories="qualificationCategories" />
   </div>
 </template>
 
 <script setup lang="ts">
-const datiQualifiche = [
+import type { QualificationCategory } from '~/components/Qualifiche.vue'
+
+const qualificationCategories: QualificationCategory[] = [
   {
     id: 'salute',
-    titolo: 'Salute',
-    icona: 'i-bi:heart-pulse-fill',
-    ordine: 1,
+    title: 'Salute',
+    icon: 'i-bi:heart-pulse-fill',
+    order: 1,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'bls',
-        sigla: 'BLS',
-        titolo: 'Rianimazione cardiopolmonare di base',
-        descrizione:
+        code: 'BLS',
+        title: 'Rianimazione cardiopolmonare di base',
+        description:
           'Formazione sulle manovre di rianimazione cardiopolmonare di base in età adulta e/o pediatrica.',
-        icona: 'i-bi:heart-pulse',
-        ordine: 1,
+        icon: 'i-bi:heart-pulse',
+        order: 1,
       },
       {
         id: 'blsd',
-        sigla: 'BLSD',
-        titolo: 'Basic Life Support and Defibrillation',
-        descrizione:
+        code: 'BLSD',
+        title: 'Basic Life Support and Defibrillation',
+        description:
           'Percorso di formazione alle manovre di rianimazione cardiopolmonare e all’utilizzo del defibrillatore semiautomatico esterno.',
-        icona: 'i-bi:heart-pulse-fill',
-        ordine: 2,
+        icon: 'i-bi:heart-pulse-fill',
+        order: 2,
       },
       {
         id: 'pblsd',
-        sigla: 'PBLSD',
-        titolo: 'Pediatric Basic Life Support and Defibrillation',
-        descrizione:
+        code: 'PBLSD',
+        title: 'Pediatric Basic Life Support and Defibrillation',
+        description:
           'Formazione alle manovre salvavita e alla defibrillazione in età pediatrica.',
-        icona: 'i-bi:person-heart',
-        ordine: 3,
+        icon: 'i-bi:person-heart',
+        order: 3,
       },
       {
         id: 'tmsap',
-        sigla: 'TMSAP',
-        titolo: 'Trainer Manovre Salvavita Adulto e Pediatrico',
-        descrizione:
+        code: 'TMSAP',
+        title: 'Trainer Manovre Salvavita Adulto e Pediatrico',
+        description:
           'Percorso per la formazione dei trainer nell’ambito delle manovre salvavita adulto e pediatrico.',
-        icona: 'i-bi:person-video3',
-        ordine: 4,
+        icon: 'i-bi:person-video3',
+        order: 4,
       },
       {
         id: 'fsal',
-        sigla: 'FSAL',
-        titolo: 'Formatore Salute',
-        descrizione:
+        code: 'FSAL',
+        title: 'Formatore Salute',
+        description:
           'Percorso di formazione per i formatori dell’ambito Salute della Croce Rossa Italiana.',
-        icona: 'i-bi:mortarboard-fill',
-        ordine: 5,
+        icon: 'i-bi:mortarboard-fill',
+        order: 5,
       },
     ],
   },
 
   {
     id: 'trasporto-soccorso',
-    titolo: 'Trasporto sanitario e soccorso',
-    icona: 'i-bi:ambulance',
-    ordine: 2,
+    title: 'Trasporto sanitario e soccorso',
+    icon: 'i-bi:ambulance',
+    order: 2,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'ts',
-        sigla: 'TS',
-        titolo: 'Trasporto Sanitario',
-        descrizione:
+        code: 'TS',
+        title: 'Trasporto Sanitario',
+        description:
           'Percorso formativo per le attività di trasporto sanitario non in emergenza.',
-        icona: 'i-bi:truck-front-fill',
-        ordine: 1,
+        icon: 'i-bi:truck-front-fill',
+        order: 1,
       },
       {
         id: 'tssa',
-        sigla: 'TSSA',
-        titolo: 'Trasporto Sanitario e Soccorso in Ambulanza',
-        descrizione:
+        code: 'TSSA',
+        title: 'Trasporto Sanitario e Soccorso in Ambulanza',
+        description:
           'Percorso formativo dedicato ai volontari e dipendenti CRI che operano nel trasporto sanitario e nel soccorso in ambulanza.',
-        icona: 'i-bi:ambulance',
-        ordine: 2,
+        icon: 'i-bi:ambulance',
+        order: 2,
       },
       {
         id: 'ttssa',
-        sigla: 'TTSSA',
-        titolo: 'Trainer Trasporto Sanitario e Soccorso in Ambulanza',
-        descrizione:
+        code: 'TTSSA',
+        title: 'Trainer Trasporto Sanitario e Soccorso in Ambulanza',
+        description:
           'Percorso per la formazione dei trainer TSSA.',
-        icona: 'i-bi:person-video3',
-        ordine: 3,
+        icon: 'i-bi:person-video3',
+        order: 3,
       },
     ],
   },
 
   {
     id: 'emergenza',
-    titolo: 'Emergenza',
-    icona: 'i-bi:fire',
-    ordine: 3,
+    title: 'Emergenza',
+    icon: 'i-bi:fire',
+    order: 3,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'opem',
-        sigla: 'OPEM',
-        titolo: 'Operatore CRI di attività di Emergenza',
-        descrizione:
+        code: 'OPEM',
+        title: 'Operatore CRI di attività di Emergenza',
+        description:
           'Qualifica per operare nelle attività di emergenza della Croce Rossa Italiana.',
-        icona: 'i-bi:shield-fill-check',
-        ordine: 1,
+        icon: 'i-bi:shield-fill-check',
+        order: 1,
       },
       {
         id: 'opsa',
-        sigla: 'OPSA',
-        titolo: 'Operatore Polivalente Salvataggio in Acqua',
-        descrizione:
+        code: 'OPSA',
+        title: 'Operatore Polivalente Salvataggio in Acqua',
+        description:
           'Percorso specialistico per le attività di salvaguardia e salvataggio in acqua.',
-        icona: 'i-bi:water',
-        ordine: 2,
+        icon: 'i-bi:water',
+        order: 2,
       },
       {
         id: 'tlc1',
-        sigla: 'TLC1',
-        titolo: 'Operatore Telecomunicazioni',
-        descrizione:
+        code: 'TLC1',
+        title: 'Operatore Telecomunicazioni',
+        description:
           'Formazione per operare nell’ambito delle telecomunicazioni a supporto delle attività CRI.',
-        icona: 'i-bi:radio',
-        ordine: 3,
+        icon: 'i-bi:radio',
+        order: 3,
       },
       {
         id: 'uc-oc',
-        sigla: 'UC-OC',
-        titolo: 'Operatore Cinofilo',
-        descrizione:
+        code: 'UC-OC',
+        title: 'Operatore Cinofilo',
+        description:
           'Percorso per operatori cinofili della Croce Rossa Italiana.',
-        icona: 'i-bi:dog',
-        ordine: 4,
+        icon: 'i-bi:dog',
+        order: 4,
       },
       {
         id: 'smts',
-        sigla: 'SMTS',
-        titolo: 'Soccorso con Mezzi e Tecniche Speciali',
-        descrizione:
+        code: 'SMTS',
+        title: 'Soccorso con Mezzi e Tecniche Speciali',
+        description:
           'Percorso specialistico dedicato alle attività di ricerca e soccorso con mezzi e tecniche speciali.',
-        icona: 'i-bi:tools',
-        ordine: 5,
+        icon: 'i-bi:tools',
+        order: 5,
       },
     ],
   },
 
   {
     id: 'inclusione-sociale',
-    titolo: 'Inclusione sociale',
-    icona: 'i-bi:people-fill',
-    ordine: 4,
+    title: 'Inclusione sociale',
+    icon: 'i-bi:people-fill',
+    order: 4,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'os',
-        sigla: 'OS',
-        titolo: 'Operatore Sociale CRI',
-        descrizione:
+        code: 'OS',
+        title: 'Operatore Sociale CRI',
+        description:
           'Percorso per operatori impegnati nelle attività di inclusione e supporto sociale.',
-        icona: 'i-bi:people',
-        ordine: 1,
+        icon: 'i-bi:people',
+        order: 1,
       },
       {
         id: 'osg',
-        sigla: 'OSG',
-        titolo: 'Operatore Sociale Generico',
-        descrizione:
+        code: 'OSG',
+        title: 'Operatore Sociale Generico',
+        description:
           'Qualifica per attività di prevenzione, mitigazione e risposta alle situazioni di vulnerabilità sociale.',
-        icona: 'i-bi:person-heart',
-        ordine: 2,
+        icon: 'i-bi:person-heart',
+        order: 2,
       },
       {
         id: 'opsd',
-        sigla: 'OPSD',
-        titolo: 'Operatore CRI specializzato in persone Senza Dimora',
-        descrizione:
+        code: 'OPSD',
+        title: 'Operatore CRI specializzato in persone Senza Dimora',
+        description:
           'Specializzazione per le attività rivolte alle persone senza dimora.',
-        icona: 'i-bi:house',
-        ordine: 3,
+        icon: 'i-bi:house',
+        order: 3,
       },
       {
         id: 'opsp',
-        sigla: 'OPSP',
-        titolo: 'Operatore CRI specializzato in attività di Sportello sociale',
-        descrizione:
+        code: 'OPSP',
+        title: 'Operatore CRI specializzato in attività di Sportello sociale',
+        description:
           'Specializzazione per le attività di sportello sociale.',
-        icona: 'i-bi:shop-window',
-        ordine: 4,
+        icon: 'i-bi:shop-window',
+        order: 4,
       },
       {
         id: 'osd',
-        sigla: 'OSD',
-        titolo: 'Operatore Sociale CRI specializzato nelle Dipendenze',
-        descrizione:
+        code: 'OSD',
+        title: 'Operatore Sociale CRI specializzato nelle Dipendenze',
+        description:
           'Specializzazione per le attività sociali rivolte alle persone con problematiche legate alle dipendenze.',
-        icona: 'i-bi:person-exclamation',
-        ordine: 5,
+        icon: 'i-bi:person-exclamation',
+        order: 5,
       },
       {
         id: 'ops',
-        sigla: 'OPS',
-        titolo: 'Operatore CRI Psicosociale',
-        descrizione:
+        code: 'OPS',
+        title: 'Operatore CRI Psicosociale',
+        description:
           'Percorso specialistico nell’ambito delle attività psicosociali.',
-        icona: 'i-bi:chat-heart',
-        ordine: 6,
+        icon: 'i-bi:chat-heart',
+        order: 6,
       },
       {
         id: 'ods',
-        sigla: 'ODS',
-        titolo: 'Operatore del Sorriso',
-        descrizione:
+        code: 'ODS',
+        title: 'Operatore del Sorriso',
+        description:
           'Percorso per operatori impegnati nelle attività di supporto e animazione rivolte alle persone vulnerabili.',
-        icona: 'i-bi:emoji-smile',
-        ordine: 7,
+        icon: 'i-bi:emoji-smile',
+        order: 7,
       },
       {
         id: 'tas',
-        sigla: 'TAS',
-        titolo: 'Trainer di Attività Sociali',
-        descrizione:
+        code: 'TAS',
+        title: 'Trainer di Attività Sociali',
+        description:
           'Percorso per trainer nell’ambito delle attività sociali.',
-        icona: 'i-bi:person-video3',
-        ordine: 8,
+        icon: 'i-bi:person-video3',
+        order: 8,
       },
     ],
   },
 
   {
     id: 'migrazioni',
-    titolo: 'Migrazioni',
-    icona: 'i-bi:globe-europe-africa',
-    ordine: 5,
+    title: 'Migrazioni',
+    icon: 'i-bi:globe-europe-africa',
+    order: 5,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'migr',
-        sigla: 'MIGR',
-        titolo: 'Operatore CRI di attività rivolte a persone Migranti',
-        descrizione:
+        code: 'MIGR',
+        title: 'Operatore CRI di attività rivolte a persone Migranti',
+        description:
           'Percorso per operatori impegnati nelle attività rivolte alle persone migranti.',
-        icona: 'i-bi:globe',
-        ordine: 1,
+        icon: 'i-bi:globe',
+        order: 1,
       },
       {
         id: 'tapm',
-        sigla: 'TAPM',
-        titolo: 'Trainer Attività rivolte a Persone Migranti',
-        descrizione:
+        code: 'TAPM',
+        title: 'Trainer Attività rivolte a Persone Migranti',
+        description:
           'Percorso per trainer delle attività rivolte alle persone migranti.',
-        icona: 'i-bi:person-video3',
-        ordine: 2,
+        icon: 'i-bi:person-video3',
+        order: 2,
       },
     ],
   },
 
   {
     id: 'giovani',
-    titolo: 'Giovani',
-    icona: 'i-bi:people',
-    ordine: 6,
+    title: 'Giovani',
+    icon: 'i-bi:people',
+    order: 6,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'psg',
-        sigla: 'PSG',
-        titolo: 'Promozione e Sviluppo della Gioventù',
-        descrizione:
+        code: 'PSG',
+        title: 'Promozione e Sviluppo della Gioventù',
+        description:
           'Percorso per operatori impegnati nelle attività di promozione e sviluppo della gioventù.',
-        icona: 'i-bi:people-fill',
-        ordine: 1,
+        icon: 'i-bi:people-fill',
+        order: 1,
       },
       {
         id: 'tpsg',
-        sigla: 'TPSG',
-        titolo: 'Trainer per la Promozione e lo Sviluppo della Gioventù',
-        descrizione:
+        code: 'TPSG',
+        title: 'Trainer per la Promozione e lo Sviluppo della Gioventù',
+        description:
           'Percorso per trainer nell’ambito della Promozione e Sviluppo della Gioventù.',
-        icona: 'i-bi:person-video3',
-        ordine: 2,
+        icon: 'i-bi:person-video3',
+        order: 2,
       },
     ],
   },
 
   {
     id: 'principi-valori',
-    titolo: 'Principi e Valori',
-    icona: 'i-bi:heart-fill',
-    ordine: 7,
+    title: 'Principi e Valori',
+    icon: 'i-bi:heart-fill',
+    order: 7,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'eap',
-        sigla: 'EAP',
-        titolo: 'EducAzione alla Pace',
-        descrizione:
+        code: 'EAP',
+        title: 'EducAzione alla Pace',
+        description:
           'Percorso CRI dedicato alle attività di EducAzione alla Pace.',
-        icona: 'i-bi:peace',
-        ordine: 1,
+        icon: 'i-bi:peace',
+        order: 1,
       },
       {
         id: 'feap',
-        sigla: 'FEAP',
-        titolo: 'Facilitatore EducAzione alla Pace',
-        descrizione:
+        code: 'FEAP',
+        title: 'Facilitatore EducAzione alla Pace',
+        description:
           'Percorso per facilitatori delle attività di EducAzione alla Pace.',
-        icona: 'i-bi:person-video3',
-        ordine: 2,
+        icon: 'i-bi:person-video3',
+        order: 2,
       },
       {
         id: 'dsto',
-        sigla: 'DSTO',
-        titolo: 'Divulgatore Storia della Croce Rossa',
-        descrizione:
+        code: 'DSTO',
+        title: 'Divulgatore Storia della Croce Rossa',
+        description:
           'Percorso per la divulgazione della storia della Croce Rossa, della medicina e del Movimento Internazionale.',
-        icona: 'i-bi:book',
-        ordine: 3,
+        icon: 'i-bi:book',
+        order: 3,
       },
       {
         id: 'idiu',
-        sigla: 'IDIU',
-        titolo: 'Istruttore di Diritto Internazionale Umanitario',
-        descrizione:
+        code: 'IDIU',
+        title: 'Istruttore di Diritto Internazionale Umanitario',
+        description:
           'Percorso per istruttori di Diritto Internazionale Umanitario.',
-        icona: 'i-bi:journal-text',
-        ordine: 4,
+        icon: 'i-bi:journal-text',
+        order: 4,
       },
     ],
   },
 
   {
     id: 'cooperazione-internazionale',
-    titolo: 'Cooperazione internazionale',
-    icona: 'i-bi:globe2',
-    ordine: 8,
+    title: 'Cooperazione internazionale',
+    icon: 'i-bi:globe2',
+    order: 8,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'oaci',
-        sigla: 'OACI',
-        titolo: 'Operatore di Attività di Cooperazione Internazionale',
-        descrizione:
+        code: 'OACI',
+        title: 'Operatore di Attività di Cooperazione Internazionale',
+        description:
           'Percorso per operatori impegnati nelle attività di cooperazione internazionale.',
-        icona: 'i-bi:globe2',
-        ordine: 1,
+        icon: 'i-bi:globe2',
+        order: 1,
       },
       {
         id: 'taci',
-        sigla: 'TACI',
-        titolo: 'Trainer Attività di Cooperazione Internazionale',
-        descrizione:
+        code: 'TACI',
+        title: 'Trainer Attività di Cooperazione Internazionale',
+        description:
           'Percorso per trainer delle attività di cooperazione internazionale.',
-        icona: 'i-bi:person-video3',
-        ordine: 2,
+        icon: 'i-bi:person-video3',
+        order: 2,
       },
     ],
   },
 
   {
     id: 'simulazione',
-    titolo: 'Truccatori e Simulatori',
-    icona: 'i-bi:palette-fill',
-    ordine: 9,
+    title: 'Truccatori e Simulatori',
+    icon: 'i-bi:palette-fill',
+    order: 9,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'truccatore',
-        sigla: 'TRUCCATORE',
-        titolo: 'Truccatore CRI',
-        descrizione:
+        code: 'TRUCCATORE',
+        title: 'Truccatore CRI',
+        description:
           'Volontario formato all’utilizzo di tecniche di trucco per la simulazione realistica di eventi traumatici.',
-        icona: 'i-bi:palette',
-        ordine: 1,
+        icon: 'i-bi:palette',
+        order: 1,
       },
       {
         id: 'simulatore',
-        sigla: 'SIMULATORE',
-        titolo: 'Simulatore CRI',
-        descrizione:
+        code: 'SIMULATORE',
+        title: 'Simulatore CRI',
+        description:
           'Volontario formato alla simulazione e alla recitazione di scenari realistici per attività formative ed esercitazioni.',
-        icona: 'i-bi:person-bounding-box',
-        ordine: 2,
+        icon: 'i-bi:person-bounding-box',
+        order: 2,
       },
       {
         id: 'face-painting',
-        sigla: 'FP',
-        titolo: 'Face Painting',
-        descrizione:
+        code: 'FP',
+        title: 'Face Painting',
+        description:
           'Formazione specifica sulle tecniche di face painting.',
-        icona: 'i-bi:brush',
-        ordine: 3,
+        icon: 'i-bi:brush',
+        order: 3,
       },
     ],
   },
 
   {
     id: 'sicurezza',
-    titolo: 'Salute e sicurezza',
-    icona: 'i-bi:shield-check',
-    ordine: 10,
+    title: 'Salute e sicurezza',
+    icon: 'i-bi:shield-check',
+    order: 10,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'sic1',
-        sigla: 'SIC1',
-        titolo: 'Sicurezza di base',
-        descrizione:
+        code: 'SIC1',
+        title: 'Sicurezza di base',
+        description:
           'Formazione in materia di salute e sicurezza per i volontari CRI.',
-        icona: 'i-bi:shield-check',
-        ordine: 1,
+        icon: 'i-bi:shield-check',
+        order: 1,
       },
       {
         id: 'sic2',
-        sigla: 'SIC2',
-        titolo: 'Sicurezza avanzata',
-        descrizione:
+        code: 'SIC2',
+        title: 'Sicurezza avanzata',
+        description:
           'Formazione avanzata in materia di salute e sicurezza.',
-        icona: 'i-bi:shield-fill-check',
-        ordine: 2,
+        icon: 'i-bi:shield-fill-check',
+        order: 2,
       },
       {
         id: 'sicdir',
-        sigla: 'SICDIR',
-        titolo: 'Formazione per Dirigenti in materia di salute e sicurezza',
-        descrizione:
+        code: 'SICDIR',
+        title: 'Formazione per Dirigenti in materia di salute e sicurezza',
+        description:
           'Percorso formativo rivolto ai dirigenti in materia di salute e sicurezza.',
-        icona: 'i-bi:person-badge',
-        ordine: 3,
+        icon: 'i-bi:person-badge',
+        order: 3,
       },
     ],
   },
 
   {
     id: 'sviluppo-organizzativo',
-    titolo: 'Sviluppo organizzativo',
-    icona: 'i-bi:diagram-3-fill',
-    ordine: 11,
+    title: 'Sviluppo organizzativo',
+    icon: 'i-bi:diagram-3-fill',
+    order: 11,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'tcri',
-        sigla: 'TCRI',
-        titolo: 'Trainer CRI',
-        descrizione:
+        code: 'TCRI',
+        title: 'Trainer CRI',
+        description:
           'Percorso trasversale per la formazione dei trainer della Croce Rossa Italiana.',
-        icona: 'i-bi:person-video3',
-        ordine: 1,
+        icon: 'i-bi:person-video3',
+        order: 1,
       },
       {
         id: 'fcri',
-        sigla: 'FCRI',
-        titolo: 'Formatore CRI',
-        descrizione:
+        code: 'FCRI',
+        title: 'Formatore CRI',
+        description:
           'Percorso dedicato alla formazione dei formatori CRI.',
-        icona: 'i-bi:mortarboard-fill',
-        ordine: 2,
+        icon: 'i-bi:mortarboard-fill',
+        order: 2,
       },
       {
         id: 'cgova',
-        sigla: 'CGOVA',
-        titolo: 'Governance Associativa',
-        descrizione:
+        code: 'CGOVA',
+        title: 'Governance Associativa',
+        description:
           'Percorso formativo dedicato alla governance associativa.',
-        icona: 'i-bi:diagram-3',
-        ordine: 3,
+        icon: 'i-bi:diagram-3',
+        order: 3,
       },
       {
         id: 'gcts',
-        sigla: 'GCTS',
-        titolo: 'Gestione Comitati CRI e Terzo Settore',
-        descrizione:
+        code: 'GCTS',
+        title: 'Gestione Comitati CRI e Terzo Settore',
+        description:
           'Formazione dedicata alla gestione dei Comitati CRI e agli aspetti del Terzo Settore.',
-        icona: 'i-bi:building',
-        ordine: 4,
+        icon: 'i-bi:building',
+        order: 4,
       },
     ],
   },
 
   {
     id: 'specializzazioni-emergenza',
-    titolo: 'Specializzazioni di emergenza',
-    icona: 'i-bi:lightning-fill',
-    ordine: 12,
+    title: 'Specializzazioni di emergenza',
+    icon: 'i-bi:lightning-fill',
+    order: 12,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'wash-1',
-        sigla: 'CASP-I',
-        titolo: 'Specialista WASH 1',
-        descrizione:
+        code: 'CASP-I',
+        title: 'Specialista WASH 1',
+        description:
           'Alta specializzazione in pulizia, igiene e disinfezione in emergenza.',
-        icona: 'i-bi:droplet-fill',
-        ordine: 1,
+        icon: 'i-bi:droplet-fill',
+        order: 1,
       },
       {
         id: 'wash-2',
-        sigla: 'CASP-M',
-        titolo: 'Specialista WASH 2',
-        descrizione:
+        code: 'CASP-M',
+        title: 'Specialista WASH 2',
+        description:
           'Alta specializzazione nell’ambito dell’acqua potabile in emergenza.',
-        icona: 'i-bi:droplet',
-        ordine: 2,
+        icon: 'i-bi:droplet',
+        order: 2,
       },
       {
         id: 'csp-j',
-        sigla: 'CSP-J',
-        titolo: 'Operatore specializzato in Team Building',
-        descrizione:
+        code: 'CSP-J',
+        title: 'Operatore specializzato in Team Building',
+        description:
           'Specializzazione nell’ambito del team building per le attività di emergenza.',
-        icona: 'i-bi:people-fill',
-        ordine: 3,
+        icon: 'i-bi:people-fill',
+        order: 3,
       },
       {
         id: 'asoti',
-        sigla: 'ASOTI',
-        titolo: 'Operatore specializzato in soccorso su terreno innevato',
-        descrizione:
+        code: 'ASOTI',
+        title: 'Operatore specializzato in soccorso su terreno innevato',
+        description:
           'Specializzazione nelle attività di soccorso su terreno innevato.',
-        icona: 'i-bi:snow',
-        ordine: 4,
+        icon: 'i-bi:snow',
+        order: 4,
       },
       {
         id: 'assps',
-        sigla: 'ASSPS',
-        titolo: 'Operatore specializzato in soccorso su piste da sci e terreno innevato',
-        descrizione:
+        code: 'ASSPS',
+        title: 'Operatore specializzato in soccorso su piste da sci e terreno innevato',
+        description:
           'Specializzazione nelle attività di soccorso su piste da sci e terreno innevato.',
-        icona: 'i-bi:snow2',
-        ordine: 5,
+        icon: 'i-bi:snow2',
+        order: 5,
       },
       {
         id: 'ascms',
-        sigla: 'ASCMS',
-        titolo: 'Abilitazione alla conduzione di moto slitta',
-        descrizione:
+        code: 'ASCMS',
+        title: 'Abilitazione alla conduzione di moto slitta',
+        description:
           'Alta specializzazione abilitante alla conduzione di moto slitta.',
-        icona: 'i-bi:speedometer2',
-        ordine: 6,
+        icon: 'i-bi:speedometer2',
+        order: 6,
       },
       {
         id: 'cbrn',
-        sigla: 'ASCBRN',
-        titolo: 'Operatore CBRN CRI',
-        descrizione:
+        code: 'ASCBRN',
+        title: 'Operatore CBRN CRI',
+        description:
           'Alta specializzazione per operatori CRI nell’ambito del rischio chimico, biologico, radiologico e nucleare.',
-        icona: 'i-bi:shield-fill-exclamation',
-        ordine: 7,
+        icon: 'i-bi:shield-fill-exclamation',
+        order: 7,
       },
       {
         id: 'cbrn-logista',
-        sigla: 'ASCBRNL',
-        titolo: 'Operatore CBRN Logista',
-        descrizione:
+        code: 'ASCBRNL',
+        title: 'Operatore CBRN Logista',
+        description:
           'Alta specializzazione per operatori CBRN con competenze logistiche.',
-        icona: 'i-bi:boxes',
-        ordine: 8,
+        icon: 'i-bi:boxes',
+        order: 8,
       },
       {
         id: 'tlc2',
-        sigla: 'TLC2',
-        titolo: 'Specialista Telecomunicazioni',
-        descrizione:
+        code: 'TLC2',
+        title: 'Specialista Telecomunicazioni',
+        description:
           'Specializzazione avanzata nell’ambito delle telecomunicazioni.',
-        icona: 'i-bi:radio',
-        ordine: 9,
+        icon: 'i-bi:radio',
+        order: 9,
       },
       {
         id: 'uc-as',
-        sigla: 'UC-AS',
-        titolo: 'Unità Cinofila Specializzata in Attività Sociali',
-        descrizione:
+        code: 'UC-AS',
+        title: 'Unità Cinofila Specializzata in Attività Sociali',
+        description:
           'Specializzazione cinofila dedicata alle attività sociali.',
-        icona: 'i-bi:dog',
-        ordine: 10,
+        icon: 'i-bi:dog',
+        order: 10,
       },
       {
         id: 'rsp',
-        sigla: 'RSP',
-        titolo: 'Operatore di Biocontenimento del Reparto di Sanità Pubblica',
-        descrizione:
+        code: 'RSP',
+        title: 'Operatore di Biocontenimento del Reparto di Sanità Pubblica',
+        description:
           'Alta specializzazione nell’ambito del biocontenimento del Reparto di Sanità Pubblica.',
-        icona: 'i-bi:virus',
-        ordine: 11,
+        icon: 'i-bi:virus',
+        order: 11,
       },
     ],
   },
 
   {
     id: 'motorizzazione',
-    titolo: 'Motorizzazione',
-    icona: 'i-bi:car-front-fill',
-    ordine: 13,
+    title: 'Motorizzazione',
+    icon: 'i-bi:car-front-fill',
+    order: 13,
 
-    qualifiche: [
+    qualifications: [
       {
         id: 'tssg',
-        sigla: 'TSSG',
-        titolo: 'Trainer Specializzato di Scuola Guida',
-        descrizione:
+        code: 'TSSG',
+        title: 'Trainer Specializzato di Scuola Guida',
+        description:
           'Percorso specialistico della Motorizzazione CRI per la formazione nell’ambito della scuola guida.',
-        icona: 'i-bi:car-front',
-        ordine: 1,
+        icon: 'i-bi:car-front',
+        order: 1,
       },
       {
         id: 'tig',
-        sigla: 'TIG',
-        titolo: 'Trainer Istruttore di Guida',
-        descrizione:
+        code: 'TIG',
+        title: 'Trainer Istruttore di Guida',
+        description:
           'Percorso per trainer istruttori di guida CRI.',
-        icona: 'i-bi:steering-wheel',
-        ordine: 2,
+        icon: 'i-bi:steering-wheel',
+        order: 2,
       },
       {
         id: 'tsgeu',
-        sigla: 'TSGEU',
-        titolo: 'Trainer Specializzato Guida in Emergenza-Urgenza CRI',
-        descrizione:
+        code: 'TSGEU',
+        title: 'Trainer Specializzato Guida in Emergenza-Urgenza CRI',
+        description:
           'Percorso specialistico per la guida CRI in emergenza-urgenza.',
-        icona: 'i-bi:ambulance',
-        ordine: 3,
+        icon: 'i-bi:ambulance',
+        order: 3,
       },
       {
         id: 'mtag',
-        sigla: 'MTAG',
-        titolo: 'Abilitazione alla Guida per Patenti Superiori',
-        descrizione:
+        code: 'MTAG',
+        title: 'Abilitazione alla Guida per Patenti Superiori',
+        description:
           'Modulo trasversale della Motorizzazione per l’abilitazione alla guida con patenti superiori.',
-        icona: 'i-bi:truck-front',
-        ordine: 4,
+        icon: 'i-bi:truck-front',
+        order: 4,
       },
     ],
   },

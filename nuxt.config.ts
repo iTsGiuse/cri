@@ -1,3 +1,9 @@
+import { contactConfig, siteConfig, socialConfig } from './app/data/config'
+
+const socialUrlByName = Object.fromEntries(
+  socialConfig.map((link) => [link.name.toLowerCase(), link.url]),
+)
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
@@ -17,15 +23,27 @@ export default defineNuxtConfig({
     '@nuxt/a11y',
     '@nuxtjs/seo',
     '@nuxt/icon',
-    '@nuxt/scripts',
-    '@nuxt/devtools',
+
+    // DISATTIVATO — non per scelta stilistica ma per un difetto a monte.
+    // @nuxt/scripts 1.3.9 alias-a `#nuxt-scripts/network-dispatcher` sulla
+    // variante Node, che fa `import { Agent, fetch } from 'undici'`.
+    // In `nuxt dev` undici viene inlinato dalla pipeline SSR e il suo file
+    // CJS esplode con "Class extends value [object Module] is not a
+    // constructor": ogni pagina risponde 500. `nuxt build` invece funziona.
+    // Il modulo serve a app/plugins/02.analytics.client.ts (GA4 + consenso
+    // Iubenda), oggi inerte perché gli ID in runtimeConfig sono vuoti:
+    // riattivarlo insieme alla configurazione degli ID, verificando che il
+    // difetto a monte sia stato risolto.
+    // '@nuxt/scripts',
   ],
 
+  // I valori arrivano da app/data/config.ts: unica fonte per i dati
+  // istituzionali, condivisa con i componenti.
   site: {
-    url: 'https://rubiera.cri.it',
-    name: 'Croce Rossa Italiana – Comitato di Rubiera',
-    description: 'Croce Rossa Italiana – Comitato di Rubiera. Attività, volontariato, iniziative e informazioni sul Comitato.',
-    defaultLocale: 'it',
+    url: siteConfig.url,
+    name: siteConfig.name,
+    description: siteConfig.description,
+    defaultLocale: siteConfig.language,
     indexable: true,
   },
 
@@ -40,6 +58,13 @@ export default defineNuxtConfig({
   },
 
   security: {
+    // Con la pipeline rolldown/oxc di Nuxt 4 le opzioni esbuild vengono
+    // ignorate: `removeLoggers: true` non rimuoveva nulla e generava a ogni
+    // build il warning "Both esbuild and oxc options were set".
+    // Per rimuovere davvero i log in produzione usare la forma a oggetto
+    // (es. `{ consoleType: ['log', 'debug'] }`), che usa il plugin Vite.
+    removeLoggers: false,
+
     headers: {
       contentSecurityPolicy: {
         'img-src': ["'self'", 'data:', 'blob:', 'https:'],
@@ -51,29 +76,30 @@ export default defineNuxtConfig({
     },
   },
 
+  // Restano su runtimeConfig i valori che devono poter essere sovrascritti
+  // da variabili d'ambiente (NUXT_PUBLIC_*); i default vengono da config.ts.
   runtimeConfig: {
     public: {
-      siteName: 'Croce Rossa Italiana – Comitato di Rubiera',
-      siteShortName: 'Croce Rossa Rubiera',
-      siteDescription:
-        'Croce Rossa Italiana – Comitato di Rubiera. Attività, volontariato, iniziative e informazioni sul Comitato.',
-      siteUrl: 'https://rubiera.cri.it',
-      locale: 'it_IT',
-      language: 'it',
-      email: 'rubiera@cri.it',
-      phone: '0522 620956',
+      siteName: siteConfig.name,
+      siteShortName: siteConfig.shortName,
+      siteDescription: siteConfig.description,
+      siteUrl: siteConfig.url,
+      locale: siteConfig.locale,
+      language: siteConfig.language,
+      email: contactConfig.email,
+      phone: contactConfig.phone.label,
       address: {
-        street: 'Via Alcide De Gasperi 1/B',
-        postalCode: '42048',
-        city: 'Rubiera',
-        province: 'RE',
-        country: 'Italia',
+        street: contactConfig.address.street,
+        postalCode: contactConfig.address.postalCode,
+        city: contactConfig.address.city,
+        province: contactConfig.address.province,
+        country: contactConfig.address.country,
       },
       social: {
-        facebook: '',
-        instagram: '',
-        youtube: '',
-        linkedin: '',
+        facebook: socialUrlByName.facebook ?? '',
+        instagram: socialUrlByName.instagram ?? '',
+        youtube: socialUrlByName.youtube ?? '',
+        linkedin: socialUrlByName.linkedin ?? '',
       },
       iubenda: {
         siteId: '',
@@ -89,34 +115,20 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        lang: 'it',
+        lang: siteConfig.language,
       },
-      title: 'Croce Rossa Italiana – Comitato di Rubiera',
+      title: siteConfig.name,
+      // charset e viewport sono già impostati da Nuxt con gli stessi valori
+      // (segnalati come duplicati da nuxt-seo-utils all'avvio).
       meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#dc3545' },
         { name: 'color-scheme', content: 'light' },
       ],
+      // Sono dichiarate solo le icone realmente presenti in `public/`:
+      // i riferimenti a favicon-32x32.png, favicon-16x16.png e
+      // apple-touch-icon.png generavano un 404 su ogni pagina.
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '32x32',
-          href: '/favicon-32x32.png',
-        },
-        {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '16x16',
-          href: '/favicon-16x16.png',
-        },
-        {
-          rel: 'apple-touch-icon',
-          sizes: '180x180',
-          href: '/apple-touch-icon.png',
-        },
       ],
     },
   },
@@ -139,8 +151,27 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
 
-  experimental: {
-    payloadExtraction: true,
-    renderJsonPayloads: true,
+  // Bootstrap 5.3 è ancora scritto con la vecchia sintassi Sass: `quietDeps`
+  // silenzia le sue deprecation senza nascondere quelle del nostro codice.
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true,
+        },
+      },
+    },
+  },
+
+  // cssnano è attivo solo in produzione (default Nuxt). Disattiviamo il solo
+  // sotto-plugin svgo, che non riesce a leggere i data-URI SVG di Bootstrap
+  // e produceva "SvgoParserError" a ogni build.
+  postcss: {
+    plugins: {
+      cssnano:
+        process.env.NODE_ENV === 'production'
+          ? { preset: ['default', { svgo: false }] }
+          : false,
+    },
   },
 })

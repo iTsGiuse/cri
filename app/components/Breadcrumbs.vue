@@ -1,16 +1,16 @@
 <template>
   <nav
-    v-if="percorsiBreadcrumb.length > 0"
+    v-if="breadcrumbTrail.length > 0"
     aria-label="breadcrumb"
     class="bg-danger py-3 px-3"
   >
-    <div class="container d-flex justify-content-start mt-3">
-      <div class="d-inline-flex align-items-center bg-white bg-opacity-10 rounded-pill px-3 py-1 border border-white border-opacity-25 shadow-sm overflow-hidden">
-        <ul class="list-unstyled mb-0 small d-flex align-items-center flex-nowrap">
+    <div class="container d-flex justify-content-center justify-content-md-start mt-3 mw-100">
+      <div class="d-inline-flex mw-100 align-items-center bg-white bg-opacity-10 rounded-pill px-3 py-1 border border-white border-opacity-25 shadow-sm">
+        <ul class="list-unstyled mb-0 small d-flex align-items-center flex-nowrap overflow-x-auto scrollbar-nascosta">
           <li class="d-inline-flex align-items-center">
             <NuxtLink
               to="/"
-              class="text-white text-opacity-75 text-opacity-100-hover text-decoration-none d-inline-flex align-items-center"
+              class="text-white text-decoration-none d-inline-flex align-items-center"
             >
               <Icon name="i-bi:house-door-fill" class=" me-1" aria-hidden="true" />
               <span>Home</span>
@@ -18,29 +18,29 @@
           </li>
 
           <li
-            v-for="(voce, index) in percorsiBreadcrumb"
-            :key="voce.url"
+            v-for="(item, index) in breadcrumbTrail"
+            :key="item.url"
             class="d-inline-flex align-items-center"
           >
             <span class="text-white opacity-75 mx-2 user-select-none" aria-hidden="true">/</span>
 
             <span
-              v-if="index === percorsiBreadcrumb.length - 1 || !voce.cliccabile"
+              v-if="index === breadcrumbTrail.length - 1 || !item.clickable"
               class="fw-semibold text-white text-nowrap d-inline-flex align-items-center"
-              :class="{ 'opacity-75': !voce.cliccabile && index !== percorsiBreadcrumb.length - 1 }"
-              :aria-current="index === percorsiBreadcrumb.length - 1 ? 'page' : undefined"
+              :class="{ 'opacity-75': !item.clickable && index !== breadcrumbTrail.length - 1 }"
+              :aria-current="index === breadcrumbTrail.length - 1 ? 'page' : undefined"
             >
-              <Icon :name="voce.icona" class="me-1" aria-hidden="true" />
-              <span>{{ voce.etichetta }}</span>
+              <Icon :name="item.icon" class="me-1" aria-hidden="true" />
+              <span>{{ item.label }}</span>
             </span>
 
             <NuxtLink
               v-else
-              :to="voce.url"
-              class="text-white text-opacity-75 text-opacity-100-hover text-decoration-none text-nowrap d-inline-flex align-items-center"
+              :to="item.url"
+              class="text-white text-decoration-none text-nowrap d-inline-flex align-items-center"
             >
-              <Icon :name="voce.icona" class="me-1" aria-hidden="true" />
-              <span>{{ voce.etichetta }}</span>
+              <Icon :name="item.icon" class="me-1" aria-hidden="true" />
+              <span>{{ item.label }}</span>
             </NuxtLink>
           </li>
         </ul>
@@ -50,83 +50,83 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
 const route = useRoute()
 const requestUrl = useRequestURL()
 
-type DatiVoce = {
-  etichetta: string
-  icona: string
+/** Etichetta e icona associate a un segmento di percorso. */
+type BreadcrumbLabel = {
+  label: string
+  icon: string
 }
 
-const dizionarioEtichette: Record<string, DatiVoce> = {
-  'chi-siamo': { etichetta: 'Chi siamo', icona: 'i-bi:people-fill' },
-  'il-comitato': { etichetta: 'Il Comitato', icona: 'i-bi:building-fill' },
-  'storia': { etichetta: 'La nostra storia', icona: 'i-bi:clock-history' },
-  'organizzazione': { etichetta: 'Organizzazione e governance', icona: 'i-bi:diagram-3-fill' },
-  'principi-e-valori': { etichetta: 'Principi e valori', icona: 'i-bi:heart-fill' },
-  'trasparenza': { etichetta: 'Trasparenza e documenti', icona: 'i-bi:file-earmark-text-fill' },
-  'sede-e-contatti': { etichetta: 'Sede e contatti', icona: 'i-bi:geo-alt-fill' },
+const breadcrumbLabels: Record<string, BreadcrumbLabel> = {
+  'chi-siamo': { label: 'Chi siamo', icon: 'i-bi:people-fill' },
+  'il-comitato': { label: 'Il Comitato', icon: 'i-bi:building-fill' },
+  'storia': { label: 'La nostra storia', icon: 'i-bi:clock-history' },
+  'organizzazione': { label: 'Organizzazione e governance', icon: 'i-bi:diagram-3-fill' },
+  'principi-e-valori': { label: 'Principi e valori', icon: 'i-bi:heart-fill' },
+  'trasparenza': { label: 'Trasparenza e documenti', icon: 'i-bi:file-earmark-text-fill' },
+  'sede-e-contatti': { label: 'Sede e contatti', icon: 'i-bi:geo-alt-fill' },
 
-  'cosa-facciamo': { etichetta: 'Cosa facciamo', icona: 'i-bi:activity' },
-  'salute': { etichetta: 'Salute e Prevenzione', icona: 'i-bi:heart-pulse-fill' },
-  'sociale': { etichetta: 'Sociale e Inclusione', icona: 'i-bi:people-fill' },
-  'protezione-civile': { etichetta: 'Emergenza e Protezione Civile', icona: 'i-bi:shield-fill-check' },
-  'diritto-umanitario': { etichetta: 'Principi e Diritto Umanitario', icona: 'i-bi:book-fill' },
-  'giovani': { etichetta: 'Giovani', icona: 'i-bi:person-hearts' },
-  'sviluppo': { etichetta: 'Sviluppo e Comunicazione', icona: 'i-bi:graph-up-arrow' },
+  'cosa-facciamo': { label: 'Cosa facciamo', icon: 'i-bi:activity' },
+  'salute': { label: 'Salute e Prevenzione', icon: 'i-bi:heart-pulse-fill' },
+  'sociale': { label: 'Sociale e Inclusione', icon: 'i-bi:people-fill' },
+  'protezione-civile': { label: 'Emergenza e Protezione Civile', icon: 'i-bi:shield-fill-check' },
+  'diritto-umanitario': { label: 'Principi e Diritto Umanitario', icon: 'i-bi:book-fill' },
+  'giovani': { label: 'Giovani', icon: 'i-bi:person-hearts' },
+  'sviluppo': { label: 'Sviluppo e Comunicazione', icon: 'i-bi:graph-up-arrow' },
 
-  'servizi': { etichetta: 'Servizi', icona: 'i-bi:grid-fill' },
-  'emergenza-118': { etichetta: 'Emergenza e Soccorso 118 / 112', icona: 'i-bi:exclamation-triangle-fill' },
-  'richiedi-trasporto': { etichetta: 'Richiedi un trasporto sanitario', icona: 'i-bi:truck-front-fill' },
-  'assistenza-eventi': { etichetta: 'Assistenza sanitaria a manifestazioni', icona: 'i-bi:hospital-fill' },
-  'corsi-popolazione': { etichetta: 'Corsi per la popolazione', icona: 'i-bi:mortarboard-fill' },
-  'corsi-aziende': { etichetta: 'Corsi aziendali (D.Lgs 81/08)', icona: 'i-bi:briefcase-fill' },
-  'supporto-sociale': { etichetta: 'Supporto sociale e assistenza', icona: 'i-bi:house-heart-fill' },
-  'prenotazioni-e-informazioni': { etichetta: 'Prenotazioni e informazioni', icona: 'i-bi:calendar-check-fill' },
+  'servizi': { label: 'Servizi', icon: 'i-bi:grid-fill' },
+  'emergenza-118': { label: 'Emergenza e Soccorso 118 / 112', icon: 'i-bi:exclamation-triangle-fill' },
+  'richiedi-trasporto': { label: 'Richiedi un trasporto sanitario', icon: 'i-bi:truck-front-fill' },
+  'assistenza-eventi': { label: 'Assistenza sanitaria a manifestazioni', icon: 'i-bi:hospital-fill' },
+  'corsi-popolazione': { label: 'Corsi per la popolazione', icon: 'i-bi:mortarboard-fill' },
+  'corsi-aziende': { label: 'Corsi aziendali (D.Lgs 81/08)', icon: 'i-bi:briefcase-fill' },
+  'supporto-sociale': { label: 'Supporto sociale e assistenza', icon: 'i-bi:house-heart-fill' },
+  'prenotazioni-e-informazioni': { label: 'Prenotazioni e informazioni', icon: 'i-bi:calendar-check-fill' },
 
-  'volontariato': { etichetta: 'Volontariato', icona: 'i-bi:person-plus-fill' },
-  'diventa-volontario': { etichetta: 'Diventa volontario', icona: 'i-bi:person-plus-fill' },
-  'corso-di-accesso': { etichetta: 'Come funziona il corso di accesso', icona: 'i-bi:info-circle-fill' },
-  'percorso-formativo': { etichetta: 'Percorso formativo e qualifiche', icona: 'i-bi:mortarboard-fill' },
-  'attivita-e-gruppi': { etichetta: 'Attività e gruppi di lavoro', icona: 'i-bi:people-fill' },
+  'volontariato': { label: 'Volontariato', icon: 'i-bi:person-plus-fill' },
+  'diventa-volontario': { label: 'Diventa volontario', icon: 'i-bi:person-plus-fill' },
+  'corso-di-accesso': { label: 'Come funziona il corso di accesso', icon: 'i-bi:info-circle-fill' },
+  'percorso-formativo': { label: 'Percorso formativo e qualifiche', icon: 'i-bi:mortarboard-fill' },
+  'attivita-e-gruppi': { label: 'Attività e gruppi di lavoro', icon: 'i-bi:people-fill' },
 
-  'news': { etichetta: 'News & Eventi', icona: 'i-bi:newspaper' },
-  'notizie': { etichetta: 'Notizie', icona: 'i-bi:newspaper' },
-  'eventi': { etichetta: 'Eventi', icona: 'i-bi:calendar-event-fill' },
-  'campagne': { etichetta: 'Campagne di sensibilizzazione', icona: 'i-bi:megaphone-fill' },
+  'news': { label: 'News & Eventi', icon: 'i-bi:newspaper' },
+  'notizie': { label: 'Notizie', icon: 'i-bi:newspaper' },
+  'eventi': { label: 'Eventi', icon: 'i-bi:calendar-event-fill' },
+  'campagne': { label: 'Campagne di sensibilizzazione', icon: 'i-bi:megaphone-fill' },
 
-  'faq': { etichetta: 'FAQ', icona: 'i-bi:question-circle-fill' },
-  'servizi-e-trasporti': { etichetta: 'Trasporti e Servizi Sanitari', icona: 'i-bi:truck-front-fill' },
-  'corsi-formazione': { etichetta: 'Corsi di Formazione', icona: 'i-bi:mortarboard-fill' },
-  'donazioni': { etichetta: 'Donazioni e 5x1000', icona: 'i-bi:piggy-bank-fill' },
+  'faq': { label: 'FAQ', icon: 'i-bi:question-circle-fill' },
+  'servizi-e-trasporti': { label: 'Trasporti e Servizi Sanitari', icon: 'i-bi:truck-front-fill' },
+  'corsi-formazione': { label: 'Corsi di Formazione', icon: 'i-bi:mortarboard-fill' },
+  'donazioni': { label: 'Donazioni e 5x1000', icon: 'i-bi:piggy-bank-fill' },
 
-  'dona': { etichetta: 'Dona ora', icona: 'i-bi:heart-fill' },
-  'contatti': { etichetta: 'Contatti', icona: 'i-bi:envelope-fill' }
+  'dona': { label: 'Dona ora', icon: 'i-bi:heart-fill' },
+  'contatti': { label: 'Contatti', icon: 'i-bi:envelope-fill' }
 }
 
-const categorieNonCliccabili = ['chi-siamo', 'cosa-facciamo', 'servizi', 'volontariato', 'news', 'faq']
+/** Segmenti che raggruppano pagine figlie ma non hanno una pagina propria. */
+const nonClickableSegments = ['chi-siamo', 'cosa-facciamo', 'servizi', 'volontariato', 'news', 'faq']
 
-const percorsiBreadcrumb = computed(() => {
+const breadcrumbTrail = computed(() => {
   if (route.path === '/') return []
 
-  const segmenti = route.path.split('/').filter(Boolean)
-  let accumulatoreUrl = ''
+  const segments = route.path.split('/').filter(Boolean)
+  let currentPath = ''
 
-  return segmenti.map((segmento) => {
-    accumulatoreUrl += `/${segmento}`
-    
-    const configurazioneVoce = dizionarioEtichette[segmento]
-    const etichettaFormattata = segmento
+  return segments.map((segment) => {
+    currentPath += `/${segment}`
+
+    const known = breadcrumbLabels[segment]
+    const fallbackLabel = segment
       .replace(/-/g, ' ')
       .replace(/\b\w/g, (char) => char.toUpperCase())
 
     return {
-      etichetta: configurazioneVoce ? configurazioneVoce.etichetta : etichettaFormattata,
-      icona: configurazioneVoce ? configurazioneVoce.icona : 'i-bi:folder-fill',
-      url: accumulatoreUrl,
-      cliccabile: !categorieNonCliccabili.includes(segmento)
+      label: known ? known.label : fallbackLabel,
+      icon: known ? known.icon : 'i-bi:folder-fill',
+      url: currentPath,
+      clickable: !nonClickableSegments.includes(segment)
     }
   })
 })
@@ -136,7 +136,7 @@ useHead({
     {
       type: 'application/ld+json',
       children: computed(() => {
-        if (percorsiBreadcrumb.value.length === 0) return ''
+        if (breadcrumbTrail.value.length === 0) return ''
 
         const baseUrl = requestUrl.origin
 
@@ -147,11 +147,11 @@ useHead({
             name: 'Home',
             item: `${baseUrl}/`
           },
-          ...percorsiBreadcrumb.value.map((voce, index) => ({
+          ...breadcrumbTrail.value.map((item, index) => ({
             '@type': 'ListItem',
             position: index + 2,
-            name: voce.etichetta,
-            item: `${baseUrl}${voce.url}`
+            name: item.label,
+            item: `${baseUrl}${item.url}`
           }))
         ]
 
@@ -165,3 +165,19 @@ useHead({
   ]
 })
 </script>
+
+<style scoped>
+/*
+ * Su schermi stretti il percorso può superare la larghezza disponibile:
+ * prima veniva tagliato da `overflow-hidden`, ora scorre orizzontalmente
+ * dentro la pillola senza generare scroll di pagina.
+ */
+.scrollbar-nascosta {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-nascosta::-webkit-scrollbar {
+  display: none;
+}
+</style>

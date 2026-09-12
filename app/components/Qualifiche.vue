@@ -4,8 +4,8 @@
 
       <!-- CATEGORIE -->
       <template
-        v-for="categoria in categorieOrdinata"
-        :key="categoria.id"
+        v-for="category in sortedCategories"
+        :key="category.id"
       >
         <!-- HEADER CATEGORIA -->
         <div class="row align-items-center mb-4">
@@ -15,14 +15,14 @@
                 class="p-2 bg-danger text-white rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
               >
                 <Icon
-                  :name="categoria.icona || 'i-bi:award-fill'"
+                  :name="category.icon || 'i-bi:award-fill'"
                   size="20"
                   aria-hidden="true"
                 />
               </div>
 
               <h2 class="h3 fw-bold text-dark m-0">
-                {{ categoria.titolo }}
+                {{ category.title }}
               </h2>
             </div>
           </div>
@@ -35,8 +35,8 @@
         <!-- CARDS QUALIFICHE -->
         <div class="row g-4 mb-5">
           <div
-            v-for="qualifica in qualificheCategoria(categoria)"
-            :key="qualifica.id"
+            v-for="qualification in sortedQualifications(category)"
+            :key="qualification.id"
             class="col-12 col-md-6 col-xl-4"
           >
             <div
@@ -52,7 +52,7 @@
                     class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center p-3"
                   >
                     <Icon
-                      :name="qualifica.icona || 'i-bi:award'"
+                      :name="qualification.icon || 'i-bi:award'"
                       size="32"
                       aria-hidden="true"
                     />
@@ -61,27 +61,27 @@
 
                 <!-- SIGLA -->
                 <div
-                  v-if="qualifica.sigla"
+                  v-if="qualification.code"
                   class="mb-2"
                 >
                   <span
                     class="badge text-bg-danger rounded-pill px-3 py-2 fw-bold"
                   >
-                    {{ qualifica.sigla }}
+                    {{ qualification.code }}
                   </span>
                 </div>
 
                 <!-- TITOLO -->
                 <h3 class="h5 fw-bold text-dark mb-2">
-                  {{ qualifica.titolo }}
+                  {{ qualification.title }}
                 </h3>
 
                 <!-- DESCRIZIONE -->
                 <p
-                  v-if="qualifica.descrizione"
+                  v-if="qualification.description"
                   class="text-secondary mb-0 lh-lg"
                 >
-                  {{ qualifica.descrizione }}
+                  {{ qualification.description }}
                 </p>
 
               </div>
@@ -95,36 +95,38 @@
 </template>
 
 <script setup lang="ts">
-interface Qualifica {
+export interface Qualification {
   id: string | number
-  sigla?: string
-  titolo: string
-  descrizione?: string
-  icona?: string
-  ordine: number
+  /** Sigla ufficiale della qualifica (es. "OPEM"). */
+  code?: string
+  title: string
+  description?: string
+  icon?: string
+  /** Posizione nell'elenco: valori più bassi compaiono per primi. */
+  order: number
 }
 
-interface CategoriaQualifiche {
+export interface QualificationCategory {
   id: string | number
-  titolo: string
-  icona?: string
-  ordine: number
-  qualifiche: Qualifica[]
+  title: string
+  icon?: string
+  order: number
+  qualifications: Qualification[]
 }
 
 const props = defineProps<{
-  qualifiche: CategoriaQualifiche[]
+  categories: QualificationCategory[]
 }>()
 
-const categorieOrdinata = computed(() =>
-  [...props.qualifiche].sort((a, b) => a.ordine - b.ordine)
+const sortedCategories = computed(() =>
+  [...props.categories].sort((a, b) => a.order - b.order)
 )
 
-const qualificheCategoria = (
-  categoria: CategoriaQualifiche
+const sortedQualifications = (
+  category: QualificationCategory
 ) => {
-  return [...categoria.qualifiche].sort(
-    (a, b) => a.ordine - b.ordine
+  return [...category.qualifications].sort(
+    (a, b) => a.order - b.order
   )
 }
 </script>

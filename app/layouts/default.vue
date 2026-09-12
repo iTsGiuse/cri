@@ -1,390 +1,411 @@
 <template>
   <div>
-    <TopBar :info="datiInfo" />
+    <a class="visually-hidden-focusable skip-link" href="#contenuto-principale">
+      Vai al contenuto principale
+    </a>
 
-    <Header :header="datiHeader" />
+    <TopBar :info="topBarInfo" />
+
+    <Header :header="headerData" />
 
     <Breadcrumbs v-if="route.path !== '/'" />
 
-    <main>
+    <main id="contenuto-principale" tabindex="-1">
       <slot />
     </main>
 
-    <LazyDivisore v-if="!['/dona', '/chi-siamo/trasparenza', '/chi-siamo/storia', '/chi-siamo/principi-e-valori'].includes(route.path)" />
-    <LazyCta :cta="datiCta" v-if="!['/dona', '/chi-siamo/trasparenza', '/chi-siamo/storia', '/chi-siamo/principi-e-valori'].includes(route.path)" />
+    <LazyDivisore v-if="showCta" />
+    <LazyCta v-if="showCta" :cta="ctaData" />
 
-    <LazyFooter :footer="datiFooter" />
+    <LazyFooter :footer="footerData" />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { TopBarInfo } from '~/components/TopBar.vue'
+import type { HeaderData } from '~/components/Header.vue'
+import type { FooterData } from '~/components/Footer.vue'
+import type { CtaSectionData } from '~/components/Cta.vue'
+import {
+  activeSocialLinks,
+  contactConfig,
+  legalInfo,
+  organizationConfig,
+  siteConfig,
+} from '~/data/config'
 
 const route = useRoute()
 
-const datiInfo = {
-  email: 'info@crirubiera.it',
-  social: [
-    {
-      nome: 'Facebook',
-      url: 'https://facebook.com/...',
-      icona: 'mdi:facebook'
-    },
-    {
-      nome: 'Instagram',
-      url: 'https://instagram.com/...',
-      icona: 'mdi:instagram'
-    }
-  ],
-  indirizzo: {
-    testo: 'Via del Comitato di Rubiera',
-    url: 'https://maps.google.com/...'
-  }
+/** Pagine che hanno già una propria chiamata all'azione in fondo. */
+const pathsWithoutCta = [
+  '/dona',
+  '/chi-siamo/trasparenza',
+  '/chi-siamo/storia',
+  '/chi-siamo/principi-e-valori',
+]
+
+const showCta = computed(
+  () => !pathsWithoutCta.includes(route.path),
+)
+
+const topBarInfo: TopBarInfo = {
+  email: contactConfig.email,
+  socialLinks: activeSocialLinks,
+  address: {
+    label: contactConfig.address.label,
+    url: contactConfig.address.mapsUrl,
+  },
 }
 
-const datiHeader = {
-  marchio: {
-    immagine: '/images/logo.jpg',
-    alt: 'Croce Rossa Italiana - Comitato di Rubiera',
+const headerData: HeaderData = {
+  brand: {
+    imageUrl: organizationConfig.logo.imageUrl,
+    imageAlt: organizationConfig.logo.imageAlt,
   },
 
-  collegamenti: [
+  navItems: [
     {
-      etichetta: 'Chi siamo',
-      figli: [
+      label: 'Chi siamo',
+      children: [
         {
-          etichetta: 'Il Comitato',
+          label: 'Il Comitato',
           url: '/chi-siamo/il-comitato',
-          icona: 'i-bi:building-fill',
+          icon: 'i-bi:building-fill',
         },
         {
-          etichetta: 'La nostra storia',
+          label: 'La nostra storia',
           url: '/chi-siamo/storia',
-          icona: 'i-bi:clock-history',
+          icon: 'i-bi:clock-history',
         },
         {
-          etichetta: 'Organizzazione e governance',
+          label: 'Organizzazione e governance',
           url: '/chi-siamo/organizzazione',
-          icona: 'i-bi:diagram-3-fill',
+          icon: 'i-bi:diagram-3-fill',
         },
         {
-          etichetta: 'Principi e valori',
+          label: 'Principi e valori',
           url: '/chi-siamo/principi-e-valori',
-          icona: 'i-bi:heart-fill',
+          icon: 'i-bi:heart-fill',
         },
         {
-          etichetta: 'Trasparenza e documenti',
+          label: 'Trasparenza e documenti',
           url: '/chi-siamo/trasparenza',
-          icona: 'i-bi:file-earmark-text-fill',
+          icon: 'i-bi:file-earmark-text-fill',
         },
         {
-          etichetta: 'Sede e contatti',
+          label: 'Sede e contatti',
           url: '/chi-siamo/sede-e-contatti',
-          icona: 'i-bi:geo-alt-fill',
+          icon: 'i-bi:geo-alt-fill',
         },
       ],
     },
 
     {
-      etichetta: 'Cosa facciamo',
-      figli: [
+      label: 'Cosa facciamo',
+      children: [
         {
-          etichetta: 'Salute e Prevenzione',
+          label: 'Salute e Prevenzione',
           url: '/cosa-facciamo/salute',
-          icona: 'i-bi:heart-pulse-fill',
+          icon: 'i-bi:heart-pulse-fill',
         },
         {
-          etichetta: 'Sociale e Inclusione',
+          label: 'Sociale e Inclusione',
           url: '/cosa-facciamo/sociale',
-          icona: 'i-bi:people-fill',
+          icon: 'i-bi:people-fill',
         },
         {
-          etichetta: 'Emergenza e Protezione Civile',
+          label: 'Emergenza e Protezione Civile',
           url: '/cosa-facciamo/protezione-civile',
-          icona: 'i-bi:shield-fill-check',
+          icon: 'i-bi:shield-fill-check',
         },
         {
-          etichetta: 'Principi e Diritto Umanitario',
+          label: 'Principi e Diritto Umanitario',
           url: '/cosa-facciamo/diritto-umanitario',
-          icona: 'i-bi:book-fill',
+          icon: 'i-bi:book-fill',
         },
         {
-          etichetta: 'Giovani',
+          label: 'Giovani',
           url: '/cosa-facciamo/giovani',
-          icona: 'i-bi:person-hearts',
+          icon: 'i-bi:person-hearts',
         },
         {
-          etichetta: 'Sviluppo e Comunicazione',
+          label: 'Sviluppo e Comunicazione',
           url: '/cosa-facciamo/sviluppo',
-          icona: 'i-bi:graph-up-arrow',
+          icon: 'i-bi:graph-up-arrow',
         },
       ],
     },
 
     {
-      etichetta: 'Servizi',
-      figli: [
+      label: 'Servizi',
+      children: [
         {
-          etichetta: 'Emergenza e Soccorso 118 / 112',
+          label: 'Emergenza e Soccorso 118 / 112',
           url: '/servizi/emergenza-118',
-          icona: 'i-bi:exclamation-triangle-fill',
+          icon: 'i-bi:exclamation-triangle-fill',
         },
         {
-          etichetta: 'Richiedi un trasporto sanitario',
+          label: 'Richiedi un trasporto sanitario',
           url: '/servizi/richiedi-trasporto',
-          icona: 'i-bi:truck-front-fill',
+          icon: 'i-bi:truck-front-fill',
         },
         {
-          etichetta: 'Assistenza sanitaria a manifestazioni',
+          label: 'Assistenza sanitaria a manifestazioni',
           url: '/servizi/assistenza-eventi',
-          icona: 'i-bi:hospital-fill',
+          icon: 'i-bi:hospital-fill',
         },
         {
-          etichetta: 'Corsi per la popolazione',
+          label: 'Corsi per la popolazione',
           url: '/servizi/corsi-popolazione',
-          icona: 'i-bi:mortarboard-fill',
+          icon: 'i-bi:mortarboard-fill',
         },
         {
-          etichetta: 'Corsi aziendali (D.Lgs 81/08)',
+          label: 'Corsi aziendali (D.Lgs 81/08)',
           url: '/servizi/corsi-aziende',
-          icona: 'i-bi:briefcase-fill',
+          icon: 'i-bi:briefcase-fill',
         },
         {
-          etichetta: 'Supporto sociale e assistenza',
+          label: 'Supporto sociale e assistenza',
           url: '/servizi/supporto-sociale',
-          icona: 'i-bi:house-heart-fill',
+          icon: 'i-bi:house-heart-fill',
         },
         {
-          etichetta: 'Prenotazioni e informazioni',
+          label: 'Prenotazioni e informazioni',
           url: '/servizi/prenotazioni-e-informazioni',
-          icona: 'i-bi:calendar-check-fill',
+          icon: 'i-bi:calendar-check-fill',
         },
       ],
     },
 
     {
-      etichetta: 'Volontariato',
-      figli: [
+      label: 'Volontariato',
+      children: [
         {
-          etichetta: 'Diventa volontario',
+          label: 'Diventa volontario',
           url: '/volontariato/diventa-volontario',
-          icona: 'i-bi:person-plus-fill',
+          icon: 'i-bi:person-plus-fill',
         },
         {
-          etichetta: 'Come funziona il corso di accesso',
+          label: 'Come funziona il corso di accesso',
           url: '/volontariato/corso-di-accesso',
-          icona: 'i-bi:info-circle-fill',
+          icon: 'i-bi:info-circle-fill',
         },
         {
-          etichetta: 'Percorso formativo e qualifiche',
+          label: 'Percorso formativo e qualifiche',
           url: '/volontariato/percorso-formativo',
-          icona: 'i-bi:mortarboard-fill',
+          icon: 'i-bi:mortarboard-fill',
         },
         {
-          etichetta: 'Attività e gruppi di lavoro',
+          label: 'Attività e gruppi di lavoro',
           url: '/volontariato/attivita-e-gruppi',
-          icona: 'i-bi:people-fill',
+          icon: 'i-bi:people-fill',
         },
       ],
     },
 
     {
-      etichetta: 'Comunicazioni',
-      figli: [
+      label: 'Comunicazioni',
+      children: [
         {
-          etichetta: 'Notizie',
+          label: 'Notizie',
           url: '/news',
-          icona: 'i-bi:newspaper',
+          icon: 'i-bi:newspaper',
         },
         {
-          etichetta: 'Eventi',
+          label: 'Eventi',
           url: '/eventi',
-          icona: 'i-bi:calendar-event-fill',
+          icon: 'i-bi:calendar-event-fill',
         },
         {
-          etichetta: 'Campagne di sensibilizzazione',
+          label: 'Campagne di sensibilizzazione',
           url: '/campagne',
-          icona: 'i-bi:megaphone-fill',
+          icon: 'i-bi:megaphone-fill',
         },
       ],
     },
 
     {
-      etichetta: 'FAQ',
-      figli: [
+      label: 'FAQ',
+      children: [
         {
-          etichetta: 'Trasporti e Servizi Sanitari',
+          label: 'Trasporti e Servizi Sanitari',
           url: '/faq/servizi-e-trasporti',
-          icona: 'i-bi:truck-front-fill',
+          icon: 'i-bi:truck-front-fill',
         },
         {
-          etichetta: 'Corsi di Formazione',
+          label: 'Corsi di Formazione',
           url: '/faq/corsi-formazione',
-          icona: 'i-bi:mortarboard-fill',
+          icon: 'i-bi:mortarboard-fill',
         },
         {
-          etichetta: 'Diventare Volontario',
+          label: 'Diventare Volontario',
           url: '/faq/volontariato',
-          icona: 'i-bi:person-heart',
+          icon: 'i-bi:person-heart',
         },
         {
-          etichetta: 'Donazioni e 5x1000',
+          label: 'Donazioni e 5x1000',
           url: '/faq/donazioni',
-          icona: 'i-bi:piggy-bank-fill',
+          icon: 'i-bi:piggy-bank-fill',
         },
       ],
     },
   ],
 
-  azione: {
-    etichetta: 'Dona ora',
+  action: {
+    label: 'Dona ora',
     url: '/dona',
-    icona: 'i-bi:heart-fill',
+    icon: 'i-bi:heart-fill',
   },
 };
 
-const datiCta = {
-  titolo: 'Dona il tuo 5×1000',
-  sottotitolo: 'Sostieni la Croce Rossa di Rubiera',
-  testo:
+const ctaData: CtaSectionData = {
+  title: 'Dona il tuo 5×1000',
+  subtitle: 'Sostieni la Croce Rossa di Rubiera',
+  description:
     'Con il tuo 5×1000 puoi contribuire concretamente alle attività e ai progetti della Croce Rossa di Rubiera.',
-  pulsante: 'Scopri come donare',
-  link: '/dona',
-  immagine: 'https://picsum.photos/id/1018/1920/800',
-  altImmagine: 'Dona il 5×1000 alla Croce Rossa di Rubiera',
+  buttonLabel: 'Scopri come donare',
+  url: '/dona',
+  imageUrl: 'https://picsum.photos/id/1018/1920/800',
+  imageAlt: 'Dona il 5×1000 alla Croce Rossa di Rubiera',
 };
 
-const datiFooter = {
-  marchio: {
+const footerData: FooterData = {
+  brand: {
     url: '/',
-    immagine: '/images/logo.jpg',
-    alt: 'Croce Rossa Italiana - Comitato Locale',
-    etichettaAria: 'Vai alla home - Croce Rossa Italiana',
-    larghezza: 180,
-    altezza: 72,
-    descrizione:
-      'Croce Rossa Italiana - Comitato di Rubiera. Al servizio della comunità ogni giorno attraverso soccorso, assistenza sociale e volontariato.',
+    imageUrl: organizationConfig.logo.imageUrl,
+    imageAlt: organizationConfig.logo.imageAlt,
+    ariaLabel: `Vai alla home - ${organizationConfig.name}`,
+    description:
+      `${siteConfig.name}. Al servizio della comunità ogni giorno attraverso soccorso, assistenza sociale e volontariato.`,
   },
 
-  social: [
-    {
-      etichetta: 'Facebook',
-      url: '#',
-      icona: 'i-bi:facebook',
-    },
-    {
-      etichetta: 'Instagram',
-      url: '#',
-      icona: 'i-bi:instagram',
-    },
-    {
-      etichetta: 'YouTube',
-      url: '#',
-      icona: 'i-bi:youtube',
-    },
-  ],
+  socialLinks: activeSocialLinks,
 
-  colonne: [
+  columns: [
     {
-      titolo: 'Servizi',
-      collegamenti: [
+      title: 'Servizi',
+      links: [
         {
-          etichetta: 'Emergenza 118 / 112',
+          label: 'Emergenza 118 / 112',
           url: '/servizi/emergenza-118',
         },
         {
-          etichetta: 'Richiedi un trasporto',
+          label: 'Richiedi un trasporto',
           url: '/servizi/richiedi-trasporto',
         },
         {
-          etichetta: 'Assistenza manifestazioni',
+          label: 'Assistenza manifestazioni',
           url: '/servizi/assistenza-eventi',
         },
         {
-          etichetta: 'Corsi alla popolazione e aziende',
+          label: 'Corsi alla popolazione e aziende',
           url: '/servizi/corsi-popolazione',
         },
         {
-          etichetta: 'Supporto sociale',
+          label: 'Supporto sociale',
           url: '/servizi/supporto-sociale',
         },
       ],
     },
 
     {
-      titolo: 'Partecipa',
-      collegamenti: [
+      title: 'Partecipa',
+      links: [
         {
-          etichetta: 'Diventa volontario',
+          label: 'Diventa volontario',
           url: '/volontariato/diventa-volontario',
         },
         {
-          etichetta: 'Corso di accesso e formazione',
+          label: 'Corso di accesso e formazione',
           url: '/volontariato/corso-di-accesso',
         },
         {
-          etichetta: 'Dona ora',
+          label: 'Dona ora',
           url: '/dona',
         },
       ],
     },
   ],
 
-  contatti: {
-    titolo: 'Sede e Recapiti',
+  contacts: {
+    title: 'Sede e Recapiti',
 
-    indirizzo: {
-      etichetta: 'Via E. Fermi, 1 - 42048 Rubiera (RE)',
-      url:
-        'https://www.google.com/maps/search/?api=1&query=Croce+Rossa+Italiana+Comitato+di+Rubiera',
-      icona: 'i-bi:geo-alt-fill',
+    address: {
+      label: contactConfig.address.label,
+      url: contactConfig.address.mapsUrl,
+      icon: 'i-bi:geo-alt-fill',
     },
 
-    telefono: {
-      etichetta: '+39 0522 628 888',
-      valore: '+390522628888',
-      icona: 'i-bi:telephone-fill',
+    phone: {
+      label: contactConfig.phone.label,
+      value: contactConfig.phone.value,
+      icon: 'i-bi:telephone-fill',
     },
 
     email: {
-      etichetta: 'rubiera@cri.it',
-      valore: 'rubiera@cri.it',
-      icona: 'i-bi:envelope-fill',
+      label: contactConfig.email,
+      value: contactConfig.email,
+      icon: 'i-bi:envelope-fill',
     },
   },
 
-  chiamataAzione: {
-    titolo: 'Fai la differenza.',
-    descrizione:
-      'Sostieni la Croce Rossa Italiana o diventa volontario: il tuo contributo può fare la differenza nella nostra comunità.',
-    etichetta: 'Diventa volontario',
+  cta: {
+    title: 'Fai la differenza.',
+    description:
+      `Sostieni la ${organizationConfig.name} o diventa volontario: il tuo contributo può fare la differenza nella nostra comunità.`,
+    label: 'Diventa volontario',
     url: '/volontariato/diventa-volontario',
-    icona: 'i-bi:person-plus-fill',
+    icon: 'i-bi:person-plus-fill',
   },
 
-  collegamentiLegali: [
+  legalLinks: [
     {
-      etichetta: 'Trasparenza e Documenti',
+      label: 'Trasparenza e Documenti',
       url: '/chi-siamo/trasparenza',
     },
     {
-      etichetta: 'Privacy Policy',
+      label: 'Privacy Policy',
       url: '/privacy',
     },
     {
-      etichetta: 'Cookie Policy',
+      label: 'Cookie Policy',
       url: '/cookie-policy',
     },
     {
-      etichetta: 'Accessibilità',
+      label: 'Accessibilità',
       url: '/accessibilita',
     },
     {
-      etichetta: 'Note legali',
+      label: 'Note legali',
       url: '/note-legali',
     },
   ],
 
-  fiscali:
-    'C.F. e P.IVA 00000000000 | Codice SDI: 000000',
+  legalInfo,
 };
 </script>
+
+<style scoped>
+/*
+ * Il link di salto è invisibile finché non riceve il focus da tastiera;
+ * resta in overlay per non spostare il layout quando compare.
+ */
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1080;
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+  color: var(--bs-danger);
+  font-weight: 600;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+/* Il <main> è focalizzabile solo via skip-link: niente contorno permanente. */
+main:focus {
+  outline: none;
+}
+</style>

@@ -1,15 +1,17 @@
-<script setup>
+<script setup lang="ts">
+import { contactConfig, organizationConfig, siteConfig } from '~/data/config'
+
 const donationData = {
   fivePerMille: {
     number: 1,
     eyebrow: '5×1000',
     title: 'Dai una mano a chi aiuta.',
     description:
-      'Destina il tuo 5×1000 alla Croce Rossa Italiana – Comitato di Rubiera.',
+      `Destina il tuo 5×1000 alla ${siteConfig.name}.`,
 
     taxCode: {
       label: 'Codice fiscale',
-      value: '02605960356',
+      value: organizationConfig.taxCode,
       copyLabel: 'Copia',
       copiedLabel: 'Copiato',
     },
@@ -35,20 +37,20 @@ const donationData = {
       {
         id: 'beneficiary',
         label: 'Beneficiario',
-        value: 'Croce Rossa Italiana – Comitato di Rubiera',
-        copy: false,
+        value: siteConfig.name,
+        copyable: false,
       },
       {
         id: 'iban',
         label: 'IBAN',
         value: 'INSERIRE IBAN',
-        copy: true,
+        copyable: true,
       },
       {
         id: 'reason',
         label: 'Causale',
         value: 'Donazione',
-        copy: true,
+        copyable: true,
       },
     ],
 
@@ -57,7 +59,7 @@ const donationData = {
 
     contact: {
       text: 'Hai bisogno di verificare le coordinate?',
-      email: 'rubiera@cri.it',
+      email: contactConfig.email,
       label: 'Contattaci',
     },
   },
@@ -82,8 +84,8 @@ const donationData = {
 
     location: {
       label: 'Dove portarli',
-      street: 'Via Alcide De Gasperi 1/B',
-      city: '42048 Rubiera (RE)',
+      street: contactConfig.address.street,
+      city: `${contactConfig.address.postalCode} ${contactConfig.address.city} (${contactConfig.address.province})`,
     },
 
     note: {
@@ -92,42 +94,45 @@ const donationData = {
         'Contattaci per verificare che gli oggetti possano essere accettati e per concordare la consegna.',
     },
 
+    // `icon` contiene sempre il nome completo dell'icona, come nel resto
+    // del progetto: nessuna concatenazione lato template.
     contacts: [
       {
-        icon: 'bi-telephone',
-        label: '0522 620956',
-        href: 'tel:0522620956',
+        icon: 'i-bi:telephone',
+        label: contactConfig.phone.label,
+        href: `tel:${contactConfig.phone.value}`,
         variant: 'danger',
       },
       {
-        icon: 'bi-envelope',
+        icon: 'i-bi:envelope',
         label: 'Scrivi una email',
-        href: 'mailto:rubiera@cri.it',
+        href: `mailto:${contactConfig.email}`,
         variant: 'outline-danger',
       },
     ],
   },
 }
 
-const copied = ref(null)
+/** Chiave del campo appena copiato negli appunti, per il feedback visivo. */
+const copiedKey = ref<string | null>(null)
 
-const copyValue = async (value, key) => {
+const copyValue = async (value: string, key: string) => {
   try {
     await navigator.clipboard.writeText(value)
 
-    copied.value = key
+    copiedKey.value = key
 
     setTimeout(() => {
-      copied.value = null
+      copiedKey.value = null
     }, 2000)
   } catch {
-    copied.value = null
+    copiedKey.value = null
   }
 }
 </script>
 
 <template>
-  <main>
+  <div>
 
     <!-- =========================================================
          01 — 5×1000
@@ -138,7 +143,7 @@ const copyValue = async (value, key) => {
         <!-- NUMERO -->
         <div class="row">
           <div class="col-12">
-            <div class="d-flex align-items-center mb-4">
+            <div class="d-flex align-items-center mb-4 justify-content-center justify-content-lg-start">
               <span
                 class="display-5 fw-bold text-danger lh-1"
                 aria-hidden="true"
@@ -156,7 +161,7 @@ const copyValue = async (value, key) => {
         <div class="row g-5 pt-5">
 
           <!-- INFO -->
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-lg-5 text-center text-lg-start">
 
             <div class="pe-lg-5">
 
@@ -166,9 +171,10 @@ const copyValue = async (value, key) => {
                 {{ donationData.fivePerMille.eyebrow }}
               </div>
 
-              <h1 class="display-5 fw-bold lh-sm mb-4">
+              <!-- L'h1 della pagina è quello dell'hero: qui si riparte da h2. -->
+              <h2 class="display-5 fw-bold lh-sm mb-4">
                 {{ donationData.fivePerMille.title }}
-              </h1>
+              </h2>
 
               <p class="fs-5 text-secondary lh-base mb-0">
                 {{ donationData.fivePerMille.description }}
@@ -215,7 +221,7 @@ const copyValue = async (value, key) => {
                   >
                     <Icon
                       :name="
-                        copied === 'taxCode'
+                        copiedKey === 'taxCode'
                           ? 'i-bi:check-lg'
                           : 'i-bi:copy'
                       "
@@ -223,7 +229,7 @@ const copyValue = async (value, key) => {
                     ></Icon>
 
                     {{
-                      copied === 'taxCode'
+                      copiedKey === 'taxCode'
                         ? donationData.fivePerMille.taxCode.copiedLabel
                         : donationData.fivePerMille.taxCode.copyLabel
                     }}
@@ -283,7 +289,7 @@ const copyValue = async (value, key) => {
         <div class="row">
           <div class="col-12">
 
-            <div class="d-flex align-items-center mb-4">
+            <div class="d-flex align-items-center mb-4 justify-content-center justify-content-lg-start">
               <span
                 class="display-5 fw-bold text-danger lh-1"
                 aria-hidden="true"
@@ -302,7 +308,7 @@ const copyValue = async (value, key) => {
         <div class="row g-5 pt-5">
 
           <!-- INFO -->
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-lg-5 text-center text-lg-start">
 
             <div class="pe-lg-5">
 
@@ -358,14 +364,14 @@ const copyValue = async (value, key) => {
                   </span>
 
                   <button
-                    v-if="field.copy"
+                    v-if="field.copyable"
                     type="button"
                     class="btn btn-outline-danger btn-sm flex-shrink-0"
                     @click="copyValue(field.value, field.id)"
                   >
                     <Icon
                       :name="
-                        copied === field.id
+                        copiedKey === field.id
                           ? 'i-bi:check-lg'
                           : 'i-bi:copy'
                       "
@@ -373,7 +379,7 @@ const copyValue = async (value, key) => {
                     ></Icon>
 
                     {{
-                      copied === field.id
+                      copiedKey === field.id
                         ? donationData.bankTransfer.copiedLabel
                         : donationData.bankTransfer.copyLabel
                     }}
@@ -422,7 +428,7 @@ const copyValue = async (value, key) => {
         <div class="row">
           <div class="col-12">
 
-            <div class="d-flex align-items-center mb-4">
+            <div class="d-flex align-items-center mb-4 justify-content-center justify-content-lg-start">
               <span
                 class="display-5 fw-bold text-danger lh-1"
                 aria-hidden="true"
@@ -441,7 +447,7 @@ const copyValue = async (value, key) => {
         <div class="row g-5 pt-5">
 
           <!-- INFO -->
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-lg-5 text-center text-lg-start">
 
             <div class="pe-lg-5">
 
@@ -554,7 +560,7 @@ const copyValue = async (value, key) => {
               >
 
                 <Icon
-                  :name="`i-bi:${contact.icon}`"
+                  :name="contact.icon"
                   class="me-2"
                 ></Icon>
 
@@ -571,5 +577,5 @@ const copyValue = async (value, key) => {
       </div>
     </section>
 
-  </main>
+  </div>
 </template>

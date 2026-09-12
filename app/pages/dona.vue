@@ -1,6 +1,6 @@
 <template>
   <div>
     <Hero />
-    <Donazione />
+    <LazyDonazione hydrate-on-visible />
   </div>
 </template>

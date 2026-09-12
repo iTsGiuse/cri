@@ -1,5 +1,5 @@
 <template>
-  <main class="news-wrapper py-4 py-lg-5 bg-light-subtle">
+  <div class="news-wrapper py-4 py-lg-5 bg-light-subtle">
 
     <div class="container">
 
@@ -7,7 +7,7 @@
       <!-- HEADER -->
       <!-- ========================================== -->
 
-      <div class="mb-4 mb-lg-5">
+      <div class="mb-4 mb-lg-5 text-center text-lg-start">
 
         <span class="text-danger text-uppercase fw-bold small">
           Croce Rossa Italiana
@@ -53,18 +53,18 @@
 
                 <input
                   id="ricerca-news"
-                  v-model="filtroRicerca"
+                  v-model="searchQuery"
                   type="search"
                   class="form-control bg-light border-start-0 shadow-none py-2"
                   placeholder="Cerca una notizia o una parola chiave..."
                 />
 
                 <button
-                  v-if="filtroRicerca"
+                  v-if="searchQuery"
                   type="button"
                   class="btn bg-light border-0 text-secondary"
                   aria-label="Cancella ricerca"
-                  @click="filtroRicerca = ''"
+                  @click="searchQuery = ''"
                 >
                   <Icon name="i-bi:x-circle-fill" />
                 </button>
@@ -85,20 +85,20 @@
 
               <select
                 id="categoria-news"
-                v-model="categoriaSelezionata"
+                v-model="selectedCategory"
                 class="form-select bg-light border-0 shadow-none py-2 rounded-3"
               >
 
-                <option value="tutte">
+                <option :value="ALL_CATEGORIES">
                   Tutte le categorie
                 </option>
 
                 <option
-                  v-for="categoria in categorie"
-                  :key="categoria.id"
-                  :value="categoria.id"
+                  v-for="category in newsCategories"
+                  :key="category.id"
+                  :value="category.id"
                 >
-                  {{ categoria.nome }}
+                  {{ category.name }}
                 </option>
 
               </select>
@@ -117,20 +117,20 @@
 
               <select
                 id="anno-news"
-                v-model="annoSelezionato"
+                v-model="selectedYear"
                 class="form-select bg-light border-0 shadow-none py-2 rounded-3"
               >
 
-                <option value="tutti">
+                <option :value="ALL_YEARS">
                   Tutti gli anni
                 </option>
 
                 <option
-                  v-for="anno in anniDisponibili"
-                  :key="anno"
-                  :value="anno"
+                  v-for="year in availableYears"
+                  :key="year"
+                  :value="year"
                 >
-                  {{ anno }}
+                  {{ year }}
                 </option>
 
               </select>
@@ -141,7 +141,7 @@
 
           <!-- Filtri attivi -->
           <div
-            v-if="filtriAttivi"
+            v-if="hasActiveFilters"
             class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-3 border-top"
           >
 
@@ -150,7 +150,7 @@
             </span>
 
             <span
-              v-if="filtroRicerca"
+              v-if="searchQuery"
               class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2"
             >
               <Icon
@@ -158,11 +158,11 @@
                 class="me-1"
               />
 
-              {{ filtroRicerca }}
+              {{ searchQuery }}
             </span>
 
             <span
-              v-if="categoriaSelezionata !== 'tutte'"
+              v-if="selectedCategory !== ALL_CATEGORIES"
               class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2"
             >
               <Icon
@@ -170,11 +170,11 @@
                 class="me-1"
               />
 
-              {{ getNomeCategoria(categoriaSelezionata) }}
+              {{ getCategoryName(selectedCategory) }}
             </span>
 
             <span
-              v-if="annoSelezionato !== 'tutti'"
+              v-if="selectedYear !== ALL_YEARS"
               class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2"
             >
               <Icon
@@ -182,7 +182,7 @@
                 class="me-1"
               />
 
-              {{ annoSelezionato }}
+              {{ selectedYear }}
             </span>
 
           </div>
@@ -206,16 +206,16 @@
           </span>
 
           <span class="badge bg-danger rounded-pill px-3 py-2">
-            {{ articoliFiltrati.length }}
+            {{ filteredArticles.length }}
           </span>
 
         </div>
 
         <button
-          v-if="filtriAttivi"
+          v-if="hasActiveFilters"
           type="button"
           class="btn btn-link text-danger text-decoration-none p-0 fw-semibold d-inline-flex align-items-center gap-1"
-          @click="resetFiltri"
+          @click="resetFilters"
         >
           <Icon name="i-bi:arrow-counterclockwise" />
 
@@ -229,13 +229,13 @@
       <!-- ========================================== -->
 
       <div
-        v-if="articoliFiltrati.length"
+        v-if="filteredArticles.length"
         class="row g-4"
       >
 
         <div
-          v-for="articolo in articoliFiltrati"
-          :key="articolo.id"
+          v-for="article in filteredArticles"
+          :key="article.id"
           class="col-12 col-md-6 col-xl-4"
         >
 
@@ -245,15 +245,15 @@
 
             <!-- Immagine -->
             <NuxtLink
-              :to="`/news/${articolo.slug}`"
+              :to="`/news/${article.slug}`"
               class="text-decoration-none"
             >
 
               <div class="ratio ratio-16x9 bg-light overflow-hidden">
 
                 <NuxtImg
-                  :src="articolo.immagine"
-                  :alt="articolo.titolo"
+                  :src="article.imageUrl"
+                  :alt="article.title"
                   width="800"
                   height="450"
                   format="webp"
@@ -274,7 +274,7 @@
                 <span
                   class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2"
                 >
-                  {{ getNomeCategoria(articolo.categoriaId) }}
+                  {{ getCategoryName(article.categoryId) }}
                 </span>
 
                 <small class="text-secondary">
@@ -284,7 +284,7 @@
                     class="me-1"
                   />
 
-                  {{ formattaData(articolo.dataPubblicazione) }}
+                  {{ formatDate(article.publishedAt) }}
 
                 </small>
 
@@ -294,24 +294,24 @@
               <h2 class="h5 fw-bold text-dark mb-3">
 
                 <NuxtLink
-                  :to="`/news/${articolo.slug}`"
+                  :to="`/news/${article.slug}`"
                   class="text-dark text-decoration-none"
                 >
-                  {{ articolo.titolo }}
+                  {{ article.title }}
                 </NuxtLink>
 
               </h2>
 
               <!-- Descrizione -->
               <p class="text-secondary small mb-4">
-                {{ articolo.descrizione }}
+                {{ article.description }}
               </p>
 
               <!-- Link -->
               <div class="mt-auto">
 
                 <NuxtLink
-                  :to="`/news/${articolo.slug}`"
+                  :to="`/news/${article.slug}`"
                   class="btn btn-link text-danger text-decoration-none fw-semibold p-0 d-inline-flex align-items-center gap-2"
                 >
                   Leggi la news
@@ -361,7 +361,7 @@
           <button
             type="button"
             class="btn btn-outline-danger rounded-3 px-4 fw-semibold"
-            @click="resetFiltri"
+            @click="resetFilters"
           >
             <Icon
               name="i-bi:arrow-counterclockwise"
@@ -377,42 +377,45 @@
 
     </div>
 
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
 
+import { siteConfig } from '~/data/config'
 import {
-  articoli,
-  categorie,
+  newsArticles,
+  newsCategories,
 } from '~/data/news'
 
 /* ========================================== */
 /* FILTRI */
 /* ========================================== */
 
-const filtroRicerca = ref('')
+/** Valori sentinella dei filtri quando non è selezionata alcuna opzione. */
+const ALL_CATEGORIES = 'tutte'
+const ALL_YEARS = 'tutti'
 
-const categoriaSelezionata = ref('tutte')
+const searchQuery = ref('')
 
-const annoSelezionato = ref<string | number>('tutti')
+const selectedCategory = ref<string>(ALL_CATEGORIES)
+
+const selectedYear = ref<string | number>(ALL_YEARS)
 
 /* ========================================== */
 /* ANNI */
 /* ========================================== */
 
-const anniDisponibili = computed(() => {
+const availableYears = computed(() => {
 
-  const anni = new Set(
-    articoli.map((articolo) =>
-      new Date(
-        articolo.dataPubblicazione,
-      ).getFullYear(),
+  const years = new Set(
+    newsArticles.map((article) =>
+      new Date(article.publishedAt).getFullYear(),
     ),
   )
 
-  return Array.from(anni).sort(
-    (primo, secondo) => secondo - primo,
+  return Array.from(years).sort(
+    (first, second) => second - first,
   )
 })
 
@@ -420,12 +423,12 @@ const anniDisponibili = computed(() => {
 /* FILTRI ATTIVI */
 /* ========================================== */
 
-const filtriAttivi = computed(() => {
+const hasActiveFilters = computed(() => {
 
   return (
-    filtroRicerca.value.trim() !== '' ||
-    categoriaSelezionata.value !== 'tutte' ||
-    annoSelezionato.value !== 'tutti'
+    searchQuery.value.trim() !== '' ||
+    selectedCategory.value !== ALL_CATEGORIES ||
+    selectedYear.value !== ALL_YEARS
   )
 })
 
@@ -433,68 +436,67 @@ const filtriAttivi = computed(() => {
 /* CATEGORIA */
 /* ========================================== */
 
-const getNomeCategoria = (
-  categoriaId: string,
+const getCategoryName = (
+  categoryId: string,
 ): string => {
 
-  const categoria = categorie.find(
-    (categoria) =>
-      categoria.id === categoriaId,
+  const category = newsCategories.find(
+    (item) => item.id === categoryId,
   )
 
-  return categoria?.nome ?? 'Generale'
+  return category?.name ?? 'Generale'
 }
 
 /* ========================================== */
 /* ARTICOLI FILTRATI */
 /* ========================================== */
 
-const articoliFiltrati = computed(() => {
+const filteredArticles = computed(() => {
 
-  const ricerca = filtroRicerca.value
+  const query = searchQuery.value
     .toLowerCase()
     .trim()
 
-  return articoli
-    .filter((articolo) => {
+  return newsArticles
+    .filter((article) => {
 
-      const categoriaValida =
-        categoriaSelezionata.value === 'tutte' ||
-        articolo.categoriaId === categoriaSelezionata.value
+      const matchesCategory =
+        selectedCategory.value === ALL_CATEGORIES ||
+        article.categoryId === selectedCategory.value
 
-      const annoValido =
-        annoSelezionato.value === 'tutti' ||
+      const matchesYear =
+        selectedYear.value === ALL_YEARS ||
         new Date(
-          articolo.dataPubblicazione,
+          article.publishedAt,
         ).getFullYear() === Number(
-          annoSelezionato.value,
+          selectedYear.value,
         )
 
-      const testoRicerca = [
-        articolo.titolo,
-        articolo.descrizione,
-        getNomeCategoria(articolo.categoriaId),
+      const searchableText = [
+        article.title,
+        article.description,
+        getCategoryName(article.categoryId),
       ]
         .join(' ')
         .toLowerCase()
 
-      const ricercaValida =
-        !ricerca ||
-        testoRicerca.includes(ricerca)
+      const matchesQuery =
+        !query ||
+        searchableText.includes(query)
 
       return (
-        categoriaValida &&
-        annoValido &&
-        ricercaValida
+        matchesCategory &&
+        matchesYear &&
+        matchesQuery
       )
     })
     .sort(
-      (primo, secondo) =>
+      (first, second) =>
         new Date(
-          secondo.dataPubblicazione,
+          second.publishedAt,
         ).getTime() -
         new Date(
-          primo.dataPubblicazione,
+          first.publishedAt,
         ).getTime(),
     )
 })
@@ -503,8 +505,8 @@ const articoliFiltrati = computed(() => {
 /* DATA */
 /* ========================================== */
 
-const formattaData = (
-  data: string,
+const formatDate = (
+  date: string,
 ): string => {
 
   return new Intl.DateTimeFormat(
@@ -514,20 +516,20 @@ const formattaData = (
       month: 'long',
       year: 'numeric',
     },
-  ).format(new Date(data))
+  ).format(new Date(date))
 }
 
 /* ========================================== */
 /* RESET */
 /* ========================================== */
 
-const resetFiltri = () => {
+const resetFilters = () => {
 
-  filtroRicerca.value = ''
+  searchQuery.value = ''
 
-  categoriaSelezionata.value = 'tutte'
+  selectedCategory.value = ALL_CATEGORIES
 
-  annoSelezionato.value = 'tutti'
+  selectedYear.value = ALL_YEARS
 }
 
 /* ========================================== */
@@ -535,10 +537,10 @@ const resetFiltri = () => {
 /* ========================================== */
 
 useSeoMeta({
-  title: 'News | Croce Rossa Rubiera',
+  title: `News | ${siteConfig.shortName}`,
 
   description:
-    'Tutte le news, le attività e le iniziative della Croce Rossa Italiana - Comitato di Rubiera.',
+    `Tutte le news, le attività e le iniziative della ${siteConfig.name}.`,
 })
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-light">
+  <div class="bg-light">
 
     <!-- ========================================== -->
     <!-- HEADER ARTICOLO -->
@@ -37,14 +37,14 @@
               class="breadcrumb-item active text-truncate"
               aria-current="page"
             >
-              {{ articolo.titolo }}
+              {{ article.title }}
             </li>
 
           </ol>
         </nav>
 
         <div class="row">
-          <div class="col-12 col-xl-9">
+          <div class="col-12 col-xl-9 text-center text-lg-start">
 
             <!-- Categoria -->
             <div class="mb-3">
@@ -56,22 +56,22 @@
                   class="me-1"
                 />
 
-                {{ getNomeCategoria(articolo.categoriaId) }}
+                {{ getCategoryName(article.categoryId) }}
               </span>
             </div>
 
             <!-- Titolo -->
             <h1 class="display-4 fw-bold text-dark mb-4 articolo-titolo">
-              {{ articolo.titolo }}
+              {{ article.title }}
             </h1>
 
             <!-- Descrizione -->
             <p class="lead text-secondary mb-4 articolo-introduzione">
-              {{ articolo.descrizione }}
+              {{ article.description }}
             </p>
 
             <!-- Data -->
-            <div class="d-flex align-items-center gap-2 text-secondary">
+            <div class="d-flex align-items-center gap-2 text-secondary justify-content-center justify-content-lg-start">
 
               <Icon
                 name="i-bi:calendar3"
@@ -81,7 +81,7 @@
               <span>
                 Pubblicato il
                 <strong class="text-dark">
-                  {{ formattaData(articolo.dataPubblicazione) }}
+                  {{ formatDate(article.publishedAt) }}
                 </strong>
               </span>
 
@@ -103,8 +103,8 @@
         <div class="articolo-immagine rounded-4 overflow-hidden shadow-lg">
 
           <NuxtImg
-            :src="articolo.immagine"
-            :alt="articolo.titolo"
+            :src="article.imageUrl"
+            :alt="article.title"
             width="1400"
             height="788"
             format="webp"
@@ -135,7 +135,7 @@
 
                 <div
                   class="contenuto-articolo"
-                  v-html="articolo.contenuto"
+                  v-html="article.content"
                 />
 
               </div>
@@ -173,7 +173,7 @@
                       </small>
 
                       <span class="fw-semibold text-dark">
-                        {{ getNomeCategoria(articolo.categoriaId) }}
+                        {{ getCategoryName(article.categoryId) }}
                       </span>
                     </div>
 
@@ -194,7 +194,7 @@
                       </small>
 
                       <span class="fw-semibold text-dark">
-                        {{ formattaData(articolo.dataPubblicazione) }}
+                        {{ formatDate(article.publishedAt) }}
                       </span>
                     </div>
 
@@ -227,7 +227,7 @@
     <!-- ========================================== -->
 
     <section
-      v-if="articoliCorrelati.length"
+      v-if="relatedArticles.length"
       class="bg-white py-5"
     >
       <div class="container">
@@ -266,8 +266,8 @@
         <div class="row g-4">
 
           <div
-            v-for="articoloCorrelato in articoliCorrelati"
-            :key="articoloCorrelato.id"
+            v-for="related in relatedArticles"
+            :key="related.id"
             class="col-12 col-md-6 col-lg-4"
           >
             <article
@@ -276,14 +276,14 @@
 
               <!-- Immagine -->
               <NuxtLink
-                :to="`/news/${articoloCorrelato.slug}`"
+                :to="`/news/${related.slug}`"
                 class="text-decoration-none"
               >
                 <div class="ratio ratio-16x9 bg-light overflow-hidden">
 
                   <NuxtImg
-                    :src="articoloCorrelato.immagine"
-                    :alt="articoloCorrelato.titolo"
+                    :src="related.imageUrl"
+                    :alt="related.title"
                     width="800"
                     height="450"
                     format="webp"
@@ -302,7 +302,7 @@
                   <span
                     class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2"
                   >
-                    {{ getNomeCategoria(articoloCorrelato.categoriaId) }}
+                    {{ getCategoryName(related.categoryId) }}
                   </span>
 
                   <small class="text-secondary">
@@ -312,7 +312,7 @@
                       class="me-1"
                     />
 
-                    {{ formattaData(articoloCorrelato.dataPubblicazione) }}
+                    {{ formatDate(related.publishedAt) }}
 
                   </small>
 
@@ -321,22 +321,22 @@
                 <h3 class="h5 fw-bold text-dark mb-3">
 
                   <NuxtLink
-                    :to="`/news/${articoloCorrelato.slug}`"
+                    :to="`/news/${related.slug}`"
                     class="text-dark text-decoration-none"
                   >
-                    {{ articoloCorrelato.titolo }}
+                    {{ related.title }}
                   </NuxtLink>
 
                 </h3>
 
                 <p class="text-secondary small mb-4">
-                  {{ articoloCorrelato.descrizione }}
+                  {{ related.description }}
                 </p>
 
                 <div class="mt-auto">
 
                   <NuxtLink
-                    :to="`/news/${articoloCorrelato.slug}`"
+                    :to="`/news/${related.slug}`"
                     class="text-danger fw-semibold text-decoration-none d-inline-flex align-items-center gap-2"
                   >
                     Leggi la news
@@ -356,14 +356,15 @@
       </div>
     </section>
 
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
 
+import { siteConfig } from '~/data/config'
 import {
-  articoli,
-  categorie,
+  newsArticles,
+  newsCategories,
 } from '~/data/news'
 
 /* ========================================== */
@@ -380,44 +381,43 @@ const slug = computed(() => {
 /* ARTICOLO */
 /* ========================================== */
 
-const articolo = computed(() => {
+const article = computed(() => {
 
-  const articoloTrovato = articoli.find(
-    (articolo) =>
-      articolo.slug === slug.value,
+  const found = newsArticles.find(
+    (item) => item.slug === slug.value,
   )
 
-  if (!articoloTrovato) {
+  if (!found) {
     throw createError({
       statusCode: 404,
       statusMessage: 'News non trovata',
     })
   }
 
-  return articoloTrovato
+  return found
 })
 
 /* ========================================== */
 /* ARTICOLI CORRELATI */
 /* ========================================== */
 
-const articoliCorrelati = computed(() => {
+const relatedArticles = computed(() => {
 
-  return articoli
-    .filter((articoloCorrelato) => {
+  return newsArticles
+    .filter((item) => {
 
       return (
-        articoloCorrelato.id !== articolo.value.id &&
-        articoloCorrelato.categoriaId === articolo.value.categoriaId
+        item.id !== article.value.id &&
+        item.categoryId === article.value.categoryId
       )
     })
     .sort(
-      (primo, secondo) =>
+      (first, second) =>
         new Date(
-          secondo.dataPubblicazione,
+          second.publishedAt,
         ).getTime() -
         new Date(
-          primo.dataPubblicazione,
+          first.publishedAt,
         ).getTime(),
     )
     .slice(0, 3)
@@ -427,24 +427,23 @@ const articoliCorrelati = computed(() => {
 /* CATEGORIA */
 /* ========================================== */
 
-const getNomeCategoria = (
-  categoriaId: string,
+const getCategoryName = (
+  categoryId: string,
 ): string => {
 
-  const categoria = categorie.find(
-    (categoria) =>
-      categoria.id === categoriaId,
+  const category = newsCategories.find(
+    (item) => item.id === categoryId,
   )
 
-  return categoria?.nome ?? 'Generale'
+  return category?.name ?? 'Generale'
 }
 
 /* ========================================== */
 /* DATA */
 /* ========================================== */
 
-const formattaData = (
-  data: string,
+const formatDate = (
+  date: string,
 ): string => {
 
   return new Intl.DateTimeFormat(
@@ -454,7 +453,7 @@ const formattaData = (
       month: 'long',
       year: 'numeric',
     },
-  ).format(new Date(data))
+  ).format(new Date(date))
 }
 
 /* ========================================== */
@@ -463,19 +462,19 @@ const formattaData = (
 
 useSeoMeta({
   title: () =>
-    `${articolo.value.titolo} | Croce Rossa Rubiera`,
+    `${article.value.title} | ${siteConfig.shortName}`,
 
   description: () =>
-    articolo.value.descrizione,
+    article.value.description,
 
   ogTitle: () =>
-    articolo.value.titolo,
+    article.value.title,
 
   ogDescription: () =>
-    articolo.value.descrizione,
+    article.value.description,
 
   ogImage: () =>
-    articolo.value.immagine,
+    article.value.imageUrl,
 
   twitterCard: 'summary_large_image',
 })

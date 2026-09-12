@@ -4,12 +4,14 @@
     class="carousel slide carousel-fade"
     data-bs-ride="carousel"
     data-bs-interval="5000"
+    aria-roledescription="carosello"
+    aria-label="Presentazione del Comitato"
   >
     <!-- Indicatori -->
     <div class="carousel-indicators mb-2 mb-md-3">
       <button
-        v-for="(slide, index) in carosello"
-        :key="slide.titolo + index"
+        v-for="(slide, index) in slides"
+        :key="slide.title + index"
         type="button"
         data-bs-target="#mainCarousel"
         :data-bs-slide-to="index"
@@ -22,21 +24,25 @@
     <!-- Slides -->
     <div class="carousel-inner">
       <div
-        v-for="(slide, index) in carosello"
-        :key="slide.titolo + index"
+        v-for="(slide, index) in slides"
+        :key="slide.title + index"
         class="carousel-item"
         :class="{ active: index === 0 }"
+        role="group"
+        aria-roledescription="slide"
+        :aria-label="`Slide ${index + 1} di ${slides.length}`"
       >
         <!-- Container Immagine con altezza responsive -->
         <div class="carousel-img-wrapper position-relative w-100 overflow-hidden">
           <NuxtImg
-            :src="slide.immagine"
-            :alt="slide.titolo"
+            :src="slide.imageUrl"
+            :alt="slide.title"
             width="1920"
             height="800"
             sizes="100vw"
             format="webp"
             :loading="index === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="index === 0 ? 'high' : 'auto'"
             class="d-block w-100 h-100 object-fit-cover"
           />
 
@@ -53,18 +59,28 @@
           <div class="container px-4 px-md-5">
             <div class="row">
               <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <h1 class="fs-2 fs-md-1 fs-lg-display-5 fw-bold text-white mb-2 mb-md-3 text-break">
-                  {{ slide.titolo }}
-                </h1>
+                <!--
+                  Solo la prima slide è l'h1 della pagina: le altre sono h2,
+                  con le stesse classi tipografiche, per non avere più h1.
+                  Rimosse inoltre le classi inesistenti in Bootstrap
+                  (fs-md-1, fs-lg-display-5, fs-md-5, lh-md-base, btn-md-lg),
+                  che non producevano alcuno stile.
+                -->
+                <component
+                  :is="index === 0 ? 'h1' : 'h2'"
+                  class="fs-2 fw-bold text-white mb-2 mb-md-3 text-break"
+                >
+                  {{ slide.title }}
+                </component>
 
-                <p class="fs-6 fs-md-5 fw-normal text-white-50 mb-3 mb-md-4 text-break lh-sm lh-md-base">
-                  {{ slide.descrizione }}
+                <p class="fs-6 fw-normal text-white-50 mb-3 mb-md-4 text-break lh-sm">
+                  {{ slide.description }}
                 </p>
 
                 <NuxtLink
                   v-if="slide.cta"
                   :to="slide.cta.url"
-                  class="btn btn-danger btn-md btn-md-lg fw-semibold"
+                  class="btn btn-danger fw-semibold"
                 >
                   {{ slide.cta.label }}
                 </NuxtLink>
@@ -101,18 +117,17 @@
 </template>
 
 <script setup lang="ts">
-interface Slide {
-  titolo: string
-  descrizione: string
-  immagine: string
-  cta?: {
-    label: string
-    url: string
-  }
+import type { CtaLink } from '~/types'
+
+export interface CarouselSlide {
+  title: string
+  description: string
+  imageUrl: string
+  cta?: CtaLink
 }
 
 defineProps<{
-  carosello: Slide[]
+  slides: CarouselSlide[]
 }>()
 </script>
 
