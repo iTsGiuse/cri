@@ -3,10 +3,6 @@
 
     <div class="container">
 
-      <!-- ========================================== -->
-      <!-- HEADER -->
-      <!-- ========================================== -->
-
       <div class="mb-4 mb-lg-5 text-center text-lg-start">
 
         <span class="text-danger text-uppercase fw-bold small">
@@ -23,17 +19,12 @@
 
       </div>
 
-      <!-- ========================================== -->
-      <!-- FILTRI -->
-      <!-- ========================================== -->
-
       <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4">
 
         <div class="card-body p-3 p-md-4 bg-white">
 
           <div class="row g-3 align-items-end">
 
-            <!-- Ricerca -->
             <div class="col-12 col-lg-5">
 
               <label
@@ -73,7 +64,6 @@
 
             </div>
 
-            <!-- Categoria -->
             <div class="col-12 col-md-6 col-lg-4">
 
               <label
@@ -105,7 +95,6 @@
 
             </div>
 
-            <!-- Anno -->
             <div class="col-12 col-md-6 col-lg-3">
 
               <label
@@ -139,7 +128,6 @@
 
           </div>
 
-          <!-- Filtri attivi -->
           <div
             v-if="hasActiveFilters"
             class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-3 border-top"
@@ -191,10 +179,6 @@
 
       </div>
 
-      <!-- ========================================== -->
-      <!-- RISULTATI -->
-      <!-- ========================================== -->
-
       <div
         class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 px-1"
       >
@@ -224,10 +208,6 @@
 
       </div>
 
-      <!-- ========================================== -->
-      <!-- ARTICOLI -->
-      <!-- ========================================== -->
-
       <div
         v-if="filteredArticles.length"
         class="row g-4"
@@ -243,7 +223,6 @@
             class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden news-card"
           >
 
-            <!-- Immagine -->
             <NuxtLink
               :to="`/news/${article.slug}`"
               class="text-decoration-none"
@@ -265,10 +244,8 @@
 
             </NuxtLink>
 
-            <!-- Contenuto -->
             <div class="card-body p-4 d-flex flex-column">
 
-              <!-- Meta -->
               <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
 
                 <span
@@ -290,7 +267,6 @@
 
               </div>
 
-              <!-- Titolo -->
               <h2 class="h5 fw-bold text-dark mb-3">
 
                 <NuxtLink
@@ -302,12 +278,10 @@
 
               </h2>
 
-              <!-- Descrizione -->
               <p class="text-secondary small mb-4">
                 {{ article.description }}
               </p>
 
-              <!-- Link -->
               <div class="mt-auto">
 
                 <NuxtLink
@@ -328,10 +302,6 @@
         </div>
 
       </div>
-
-      <!-- ========================================== -->
-      <!-- NESSUN RISULTATO -->
-      <!-- ========================================== -->
 
       <div
         v-else
@@ -388,11 +358,6 @@ import {
   newsCategories,
 } from '~/data/news'
 
-/* ========================================== */
-/* FILTRI */
-/* ========================================== */
-
-/** Valori sentinella dei filtri quando non è selezionata alcuna opzione. */
 const ALL_CATEGORIES = 'tutte'
 const ALL_YEARS = 'tutti'
 
@@ -401,10 +366,6 @@ const searchQuery = ref('')
 const selectedCategory = ref<string>(ALL_CATEGORIES)
 
 const selectedYear = ref<string | number>(ALL_YEARS)
-
-/* ========================================== */
-/* ANNI */
-/* ========================================== */
 
 const availableYears = computed(() => {
 
@@ -419,10 +380,6 @@ const availableYears = computed(() => {
   )
 })
 
-/* ========================================== */
-/* FILTRI ATTIVI */
-/* ========================================== */
-
 const hasActiveFilters = computed(() => {
 
   return (
@@ -431,10 +388,6 @@ const hasActiveFilters = computed(() => {
     selectedYear.value !== ALL_YEARS
   )
 })
-
-/* ========================================== */
-/* CATEGORIA */
-/* ========================================== */
 
 const getCategoryName = (
   categoryId: string,
@@ -446,10 +399,6 @@ const getCategoryName = (
 
   return category?.name ?? 'Generale'
 }
-
-/* ========================================== */
-/* ARTICOLI FILTRATI */
-/* ========================================== */
 
 const filteredArticles = computed(() => {
 
@@ -501,10 +450,6 @@ const filteredArticles = computed(() => {
     )
 })
 
-/* ========================================== */
-/* DATA */
-/* ========================================== */
-
 const formatDate = (
   date: string,
 ): string => {
@@ -519,10 +464,6 @@ const formatDate = (
   ).format(new Date(date))
 }
 
-/* ========================================== */
-/* RESET */
-/* ========================================== */
-
 const resetFilters = () => {
 
   searchQuery.value = ''
@@ -531,10 +472,6 @@ const resetFilters = () => {
 
   selectedYear.value = ALL_YEARS
 }
-
-/* ========================================== */
-/* SEO */
-/* ========================================== */
 
 useSeoMeta({
   title: `News | ${siteConfig.shortName}`,

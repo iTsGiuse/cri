@@ -1,9 +1,10 @@
+```vue
 <template>
   <footer class="bg-danger text-white">
     <div class="container py-5">
-      <div class="row gy-4 gy-xl-5">
-        <!-- 1. MARCHIO E SOCIAL (Prima colonna della Prima Riga) -->
-        <div class="col-12 col-md-6 col-xl-3 pe-xl-3">
+      <div class="row gy-4 gy-xl-5 justify-content-center">
+
+        <div class="col-12 col-md-6 col-xl-3 pe-xl-3 text-center text-xl-start">
           <NuxtLink
             :to="footer.brand.url"
             :aria-label="footer.brand.ariaLabel"
@@ -23,7 +24,7 @@
             {{ footer.brand.description }}
           </p>
 
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 justify-content-center justify-content-xl-start">
             <a
               v-for="social in footer.socialLinks"
               :key="social.name"
@@ -39,14 +40,15 @@
           </div>
         </div>
 
-        <!-- COLONNE LINK DINAMICHE -->
         <div
           v-for="(column, index) in footer.columns"
           :key="column.title"
-          class="col-6 col-md-3 col-xl-3"
+          class="col-12 col-md-3 col-xl-3 text-center text-xl-start"
           :class="{ 'offset-xl-3': index > 0 && index % 3 === 0 }"
         >
-          <h6 class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3">
+          <h6
+            class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
+          >
             {{ column.title }}
           </h6>
 
@@ -77,15 +79,16 @@
           </ul>
         </div>
 
-        <!-- CONTATTI -->
         <div
-          class="col-12 col-md-6 col-xl-3"
+          class="col-12 col-md-6 col-xl-3 text-center text-xl-start"
           :class="{
             'offset-xl-3':
               footer.columns.length > 0 && footer.columns.length % 3 === 0,
           }"
         >
-          <h6 class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3">
+          <h6
+            class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
+          >
             {{ footer.contacts.title }}
           </h6>
 
@@ -95,13 +98,14 @@
                 :href="footer.contacts.address.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="link-light text-decoration-none d-flex gap-2 align-items-start"
+                class="link-light text-decoration-none d-flex gap-2 align-items-start justify-content-center justify-content-xl-start"
               >
                 <Icon
                   :name="footer.contacts.address.icon"
                   class="mt-1 flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
+
                 <span>{{ footer.contacts.address.label }}</span>
               </a>
             </li>
@@ -109,13 +113,14 @@
             <li class="mb-3">
               <a
                 :href="`tel:${footer.contacts.phone.value}`"
-                class="link-light text-decoration-none d-flex gap-2 align-items-center"
+                class="link-light text-decoration-none d-flex gap-2 align-items-center justify-content-center justify-content-xl-start"
               >
                 <Icon
                   :name="footer.contacts.phone.icon"
                   class="flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
+
                 <span>{{ footer.contacts.phone.label }}</span>
               </a>
             </li>
@@ -123,13 +128,14 @@
             <li>
               <a
                 :href="`mailto:${footer.contacts.email.value}`"
-                class="link-light text-decoration-none d-flex gap-2 align-items-center"
+                class="link-light text-decoration-none d-flex gap-2 align-items-center justify-content-center justify-content-xl-start"
               >
                 <Icon
                   :name="footer.contacts.email.icon"
                   class="flex-shrink-0 opacity-75"
                   aria-hidden="true"
                 />
+
                 <span class="text-break">
                   {{ footer.contacts.email.label }}
                 </span>
@@ -139,11 +145,10 @@
         </div>
       </div>
 
-      <!-- CTA CARD -->
-      <div class="row mt-5">
+      <div class="row mt-5 justify-content-center">
         <div class="col-12">
           <div
-            class="bg-white text-dark rounded-4 p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-4 shadow-lg border-start border-danger border-5"
+            class="bg-white text-dark rounded-4 p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-between text-center text-lg-start gap-4 shadow-lg border-start border-danger border-5"
           >
             <div>
               <h3 class="text-danger fw-bold mb-1 fs-4 fs-lg-3">
@@ -173,20 +178,19 @@
                 aria-hidden="true"
               />
             </NuxtLink>
-
-
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PARTE INFERIORE -->
-    <div class="bg-danger bg-opacity-20 border-top border-white border-2 border-opacity-75">
+    <div
+      class="bg-danger bg-opacity-20 border-top border-white border-2 border-opacity-75"
+    >
       <div class="container py-3">
         <div
-          class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3"
+          class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 text-center text-lg-start"
         >
-          <p class="text-white mb-0 text-center text-lg-start">
+          <p class="text-white mb-0">
             {{ footer.legalInfo }}
           </p>
 
@@ -237,7 +241,6 @@ type FooterColumn = {
   links: FooterLink[];
 };
 
-/** Recapito cliccabile: `label` è il testo mostrato, `value` il dato grezzo. */
 type ContactEntry = {
   label: string;
   value: string;
@@ -278,7 +281,6 @@ export type FooterData = {
 
   legalLinks: FooterLink[];
 
-  /** Dicitura fiscale mostrata in fondo alla pagina. */
   legalInfo: string;
 };
 
@@ -294,7 +296,6 @@ defineProps<{
   object-fit: contain;
 }
 
-
 .pulsante-azione .freccia-azione {
   display: inline-block;
   transition: transform 0.3s cubic-bezier(
@@ -309,5 +310,4 @@ defineProps<{
 .pulsante-azione:focus-visible .freccia-azione {
   transform: translateX(8px);
 }
-
 </style>

@@ -46,7 +46,7 @@ export interface CtaSectionData {
   title: string;
   subtitle: string;
   description: string;
-  /** Testo del pulsante. */
+
   buttonLabel: string;
   url: string;
   imageUrl: string;

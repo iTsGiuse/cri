@@ -25,7 +25,7 @@
         }"
       >
         <div class="sponsor-track">
-          <!-- Prima lista -->
+
           <div class="sponsor-list">
             <a
               v-for="item in sponsor.items"
@@ -49,7 +49,6 @@
             </a>
           </div>
 
-          <!-- Seconda lista -->
           <div class="sponsor-list" aria-hidden="true">
             <a
               v-for="item in sponsor.items"
@@ -102,7 +101,7 @@ import type { CtaLink } from '~/types';
 
 export interface SponsorItem {
   id: number;
-  /** Ragione sociale dell'azienda sostenitrice. */
+
   name: string;
   imageUrl: string;
   imageAlt: string;
@@ -115,7 +114,7 @@ export interface SponsorSectionData {
   eyebrow: string;
   title: string;
   description: string;
-  /** Durata in secondi di un giro completo della barra scorrevole. */
+
   speed?: number;
   items: SponsorItem[];
   cta?: CtaLink & {

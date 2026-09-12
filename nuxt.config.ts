@@ -24,21 +24,8 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/icon',
 
-    // DISATTIVATO — non per scelta stilistica ma per un difetto a monte.
-    // @nuxt/scripts 1.3.9 alias-a `#nuxt-scripts/network-dispatcher` sulla
-    // variante Node, che fa `import { Agent, fetch } from 'undici'`.
-    // In `nuxt dev` undici viene inlinato dalla pipeline SSR e il suo file
-    // CJS esplode con "Class extends value [object Module] is not a
-    // constructor": ogni pagina risponde 500. `nuxt build` invece funziona.
-    // Il modulo serve a app/plugins/02.analytics.client.ts (GA4 + consenso
-    // Iubenda), oggi inerte perché gli ID in runtimeConfig sono vuoti:
-    // riattivarlo insieme alla configurazione degli ID, verificando che il
-    // difetto a monte sia stato risolto.
-    // '@nuxt/scripts',
   ],
 
-  // I valori arrivano da app/data/config.ts: unica fonte per i dati
-  // istituzionali, condivisa con i componenti.
   site: {
     url: siteConfig.url,
     name: siteConfig.name,
@@ -58,11 +45,7 @@ export default defineNuxtConfig({
   },
 
   security: {
-    // Con la pipeline rolldown/oxc di Nuxt 4 le opzioni esbuild vengono
-    // ignorate: `removeLoggers: true` non rimuoveva nulla e generava a ogni
-    // build il warning "Both esbuild and oxc options were set".
-    // Per rimuovere davvero i log in produzione usare la forma a oggetto
-    // (es. `{ consoleType: ['log', 'debug'] }`), che usa il plugin Vite.
+
     removeLoggers: false,
 
     headers: {
@@ -76,8 +59,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // Restano su runtimeConfig i valori che devono poter essere sovrascritti
-  // da variabili d'ambiente (NUXT_PUBLIC_*); i default vengono da config.ts.
   runtimeConfig: {
     public: {
       siteName: siteConfig.name,
@@ -118,15 +99,12 @@ export default defineNuxtConfig({
         lang: siteConfig.language,
       },
       title: siteConfig.name,
-      // charset e viewport sono già impostati da Nuxt con gli stessi valori
-      // (segnalati come duplicati da nuxt-seo-utils all'avvio).
+
       meta: [
         { name: 'theme-color', content: '#dc3545' },
         { name: 'color-scheme', content: 'light' },
       ],
-      // Sono dichiarate solo le icone realmente presenti in `public/`:
-      // i riferimenti a favicon-32x32.png, favicon-16x16.png e
-      // apple-touch-icon.png generavano un 404 su ogni pagina.
+
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
@@ -151,8 +129,6 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
 
-  // Bootstrap 5.3 è ancora scritto con la vecchia sintassi Sass: `quietDeps`
-  // silenzia le sue deprecation senza nascondere quelle del nostro codice.
   vite: {
     css: {
       preprocessorOptions: {
@@ -163,9 +139,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // cssnano è attivo solo in produzione (default Nuxt). Disattiviamo il solo
-  // sotto-plugin svgo, che non riesce a leggere i data-URI SVG di Bootstrap
-  // e produceva "SvgoParserError" a ogni build.
   postcss: {
     plugins: {
       cssnano:

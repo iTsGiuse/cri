@@ -36,7 +36,6 @@ import {
 
 const route = useRoute()
 
-/** Pagine che hanno già una propria chiamata all'azione in fondo. */
 const pathsWithoutCta = [
   '/dona',
   '/chi-siamo/trasparenza',
@@ -386,10 +385,7 @@ const footerData: FooterData = {
 </script>
 
 <style scoped>
-/*
- * Il link di salto è invisibile finché non riceve il focus da tastiera;
- * resta in overlay per non spostare il layout quando compare.
- */
+
 .skip-link:focus,
 .skip-link:focus-visible {
   position: fixed;
@@ -404,7 +400,6 @@ const footerData: FooterData = {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
 }
 
-/* Il <main> è focalizzabile solo via skip-link: niente contorno permanente. */
 main:focus {
   outline: none;
 }

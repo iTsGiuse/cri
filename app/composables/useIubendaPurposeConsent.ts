@@ -1,10 +1,4 @@
-/**
- * Bridges an Iubenda purpose to Nuxt Scripts' consent trigger.
- * Use it for every non-essential third-party script.
- *
- * Nuxt non applica il suffisso `.client` ai composables: i listener vanno
- * quindi registrati solo quando esiste davvero un `window`.
- */
+
 export const useIubendaPurposeConsent = (purpose: number) => {
   const trigger = useScriptTriggerConsent()
 

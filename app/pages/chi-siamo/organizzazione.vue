@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Hero sopra la piega (caricamento immediato) -->
+
     <Hero />
 
     <LazyGovernance

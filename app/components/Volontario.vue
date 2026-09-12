@@ -1,10 +1,6 @@
 <template>
   <div class="bg-light">
 
-    <!-- ================================================== -->
-    <!-- INTRODUZIONE -->
-    <!-- ================================================== -->
-
     <section class="py-4 py-lg-5">
       <div class="container">
 
@@ -21,7 +17,6 @@
                 {{ pageContent.badge.label }}
               </span>
 
-              <!-- L'h1 della pagina è quello dell'hero: qui si riparte da h2. -->
               <h2 class="display-5 fw-bold text-dark mb-3">
                 {{ pageContent.title }}
               </h2>
@@ -36,11 +31,6 @@
 
       </div>
     </section>
-
-
-    <!-- ================================================== -->
-    <!-- PERCHÉ DIVENTARE VOLONTARIO -->
-    <!-- ================================================== -->
 
     <section class="pb-4 pb-lg-5">
       <div class="container">
@@ -82,17 +72,11 @@
       </div>
     </section>
 
-
-    <!-- ================================================== -->
-    <!-- CHI PUÒ DIVENTARE VOLONTARIO -->
-    <!-- ================================================== -->
-
     <section class="py-4 py-lg-5 bg-white">
       <div class="container">
 
         <div class="row align-items-center g-4 g-lg-5">
 
-          <!-- Immagine -->
           <div class="col-12 col-lg-6">
 
             <div class="rounded-4 overflow-hidden shadow-sm">
@@ -109,7 +93,6 @@
 
           </div>
 
-          <!-- Testo -->
           <div class="col-12 col-lg-6">
 
             <span class="text-danger text-uppercase fw-bold small">
@@ -160,11 +143,6 @@
       </div>
     </section>
 
-
-    <!-- ================================================== -->
-    <!-- COME DIVENTARE VOLONTARIO -->
-    <!-- ================================================== -->
-
     <section class="py-4 py-lg-5">
       <div class="container">
 
@@ -185,7 +163,6 @@
 
           </div>
         </div>
-
 
         <div class="row g-4">
 
@@ -223,11 +200,6 @@
       </div>
     </section>
 
-
-    <!-- ================================================== -->
-    <!-- COSA PUOI FARE -->
-    <!-- ================================================== -->
-
     <section class="py-4 py-lg-5 bg-white">
       <div class="container">
 
@@ -248,7 +220,6 @@
 
           </div>
         </div>
-
 
         <div class="row g-3 g-lg-4">
 
@@ -286,11 +257,6 @@
       </div>
     </section>
 
-
-    <!-- ================================================== -->
-    <!-- FAQ -->
-    <!-- ================================================== -->
-
     <section class="py-4 py-lg-5">
       <div class="container">
 
@@ -309,7 +275,6 @@
               </h2>
 
             </div>
-
 
             <div class="accordion" id="faqVolontari">
 
@@ -355,11 +320,6 @@
 
       </div>
     </section>
-
-
-    <!-- ================================================== -->
-    <!-- CTA -->
-    <!-- ================================================== -->
 
     <section class="pb-5">
       <div class="container">
@@ -418,13 +378,8 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { siteConfig } from '~/data/config'
-
-/* ================================================== */
-/* DATI PAGINA */
-/* ================================================== */
 
 const pageContent = {
 
@@ -434,14 +389,9 @@ const pageContent = {
   },
 
   title: 'Diventa volontario',
-  
+
   intro:
     'Entra nella Croce Rossa Italiana e metti il tuo tempo, le tue capacità e la tua voglia di aiutare al servizio della comunità.',
-
-
-  /* ================================================== */
-  /* VANTAGGI */
-  /* ================================================== */
 
   benefits: [
 
@@ -467,11 +417,6 @@ const pageContent = {
     },
 
   ],
-
-
-  /* ================================================== */
-  /* REQUISITI */
-  /* ================================================== */
 
   requirements: {
 
@@ -520,11 +465,6 @@ const pageContent = {
 
   },
 
-
-  /* ================================================== */
-  /* PERCORSO */
-/* ================================================== */
-
   path: {
 
     eyebrow: 'Come iniziare',
@@ -563,11 +503,6 @@ const pageContent = {
     ],
 
   },
-
-
-  /* ================================================== */
-  /* ATTIVITÀ */
-/* ================================================== */
 
   activities: {
 
@@ -626,11 +561,6 @@ const pageContent = {
 
   },
 
-
-  /* ================================================== */
-  /* FAQ */
-/* ================================================== */
-
   faq: {
 
     eyebrow: 'Domande frequenti',
@@ -667,11 +597,6 @@ const pageContent = {
 
   },
 
-
-  /* ================================================== */
-  /* CTA */
-/* ================================================== */
-
   cta: {
 
     title: 'Vuoi metterti in gioco?',
@@ -694,11 +619,6 @@ const pageContent = {
   },
 
 }
-
-
-/* ================================================== */
-/* SEO */
-/* ================================================== */
 
 useSeoMeta({
 

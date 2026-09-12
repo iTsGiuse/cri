@@ -7,7 +7,7 @@
     aria-roledescription="carosello"
     aria-label="Presentazione del Comitato"
   >
-    <!-- Indicatori -->
+
     <div class="carousel-indicators mb-2 mb-md-3">
       <button
         v-for="(slide, index) in slides"
@@ -21,7 +21,6 @@
       />
     </div>
 
-    <!-- Slides -->
     <div class="carousel-inner">
       <div
         v-for="(slide, index) in slides"
@@ -32,7 +31,7 @@
         aria-roledescription="slide"
         :aria-label="`Slide ${index + 1} di ${slides.length}`"
       >
-        <!-- Container Immagine con altezza responsive -->
+
         <div class="carousel-img-wrapper position-relative w-100 overflow-hidden">
           <NuxtImg
             :src="slide.imageUrl"
@@ -46,26 +45,18 @@
             class="d-block w-100 h-100 object-fit-cover"
           />
 
-          <!-- Overlay per leggibilità -->
           <div
             class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
           />
         </div>
 
-        <!-- Didascalia/Contenuto sopra l'immagine -->
         <div
           class="carousel-caption position-absolute top-50 start-0 translate-middle-y text-start p-0 w-100"
         >
           <div class="container px-4 px-md-5">
             <div class="row">
               <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <!--
-                  Solo la prima slide è l'h1 della pagina: le altre sono h2,
-                  con le stesse classi tipografiche, per non avere più h1.
-                  Rimosse inoltre le classi inesistenti in Bootstrap
-                  (fs-md-1, fs-lg-display-5, fs-md-5, lh-md-base, btn-md-lg),
-                  che non producevano alcuno stile.
-                -->
+
                 <component
                   :is="index === 0 ? 'h1' : 'h2'"
                   class="fs-2 fw-bold text-white mb-2 mb-md-3 text-break"
@@ -91,7 +82,6 @@
       </div>
     </div>
 
-    <!-- Controlli di Navigazione -->
     <button
       class="carousel-control-prev"
       type="button"
@@ -132,7 +122,7 @@ defineProps<{
 </script>
 
 <style scoped>
-/* Gestione responsive dell'altezza del carosello */
+
 .carousel-img-wrapper {
   height: clamp(380px, 55vh, 800px);
 }
@@ -143,7 +133,6 @@ defineProps<{
   }
 }
 
-/* Protezione frecce su schermi piccoli */
 .carousel-control-prev,
 .carousel-control-next {
   width: 10%;

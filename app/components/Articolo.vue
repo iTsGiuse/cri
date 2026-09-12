@@ -1,14 +1,9 @@
 <template>
   <div class="bg-light">
 
-    <!-- ========================================== -->
-    <!-- HEADER ARTICOLO -->
-    <!-- ========================================== -->
-
     <section class="bg-white border-bottom">
       <div class="container py-4 py-lg-5">
 
-        <!-- Breadcrumb -->
         <nav
           aria-label="breadcrumb"
           class="mb-4"
@@ -46,7 +41,6 @@
         <div class="row">
           <div class="col-12 col-xl-9 text-center text-lg-start">
 
-            <!-- Categoria -->
             <div class="mb-3">
               <span
                 class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 fw-semibold"
@@ -60,17 +54,14 @@
               </span>
             </div>
 
-            <!-- Titolo -->
             <h1 class="display-4 fw-bold text-dark mb-4 articolo-titolo">
               {{ article.title }}
             </h1>
 
-            <!-- Descrizione -->
             <p class="lead text-secondary mb-4 articolo-introduzione">
               {{ article.description }}
             </p>
 
-            <!-- Data -->
             <div class="d-flex align-items-center gap-2 text-secondary justify-content-center justify-content-lg-start">
 
               <Icon
@@ -93,10 +84,6 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- IMMAGINE -->
-    <!-- ========================================== -->
-
     <section class="bg-white pb-4 pb-lg-5">
       <div class="container">
 
@@ -117,16 +104,11 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- CONTENUTO -->
-    <!-- ========================================== -->
-
     <section class="py-4 py-lg-5">
       <div class="container">
 
         <div class="row justify-content-center">
 
-          <!-- Contenuto -->
           <div class="col-12 col-lg-8 col-xl-8">
 
             <article class="card border-0 shadow-sm rounded-4">
@@ -144,12 +126,10 @@
 
           </div>
 
-          <!-- Sidebar -->
           <div class="col-12 col-lg-4 col-xl-3 mt-4 mt-lg-0">
 
             <aside class="sticky-lg-top sidebar-articolo">
 
-              <!-- Informazioni -->
               <div class="card border-0 shadow-sm rounded-4 mb-4">
 
                 <div class="card-body p-4">
@@ -158,7 +138,6 @@
                     Informazioni
                   </h2>
 
-                  <!-- Categoria -->
                   <div class="d-flex align-items-center gap-3 mb-4">
 
                     <div
@@ -179,7 +158,6 @@
 
                   </div>
 
-                  <!-- Data -->
                   <div class="d-flex align-items-center gap-3">
 
                     <div
@@ -203,7 +181,6 @@
                 </div>
               </div>
 
-              <!-- Torna alle news -->
               <NuxtLink
                 to="/news"
                 class="btn btn-danger w-100 rounded-3 py-3 fw-semibold d-flex align-items-center justify-content-center gap-2"
@@ -222,17 +199,12 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- ARTICOLI CORRELATI -->
-    <!-- ========================================== -->
-
     <section
       v-if="relatedArticles.length"
       class="bg-white py-5"
     >
       <div class="container">
 
-        <!-- Header -->
         <div class="row align-items-end mb-4">
 
           <div class="col">
@@ -262,7 +234,6 @@
 
         </div>
 
-        <!-- Cards -->
         <div class="row g-4">
 
           <div
@@ -274,7 +245,6 @@
               class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden news-card"
             >
 
-              <!-- Immagine -->
               <NuxtLink
                 :to="`/news/${related.slug}`"
                 class="text-decoration-none"
@@ -294,7 +264,6 @@
                 </div>
               </NuxtLink>
 
-              <!-- Contenuto -->
               <div class="card-body p-4 d-flex flex-column">
 
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
@@ -367,19 +336,11 @@ import {
   newsCategories,
 } from '~/data/news'
 
-/* ========================================== */
-/* ROUTE */
-/* ========================================== */
-
 const route = useRoute()
 
 const slug = computed(() => {
   return String(route.params.slug)
 })
-
-/* ========================================== */
-/* ARTICOLO */
-/* ========================================== */
 
 const article = computed(() => {
 
@@ -396,10 +357,6 @@ const article = computed(() => {
 
   return found
 })
-
-/* ========================================== */
-/* ARTICOLI CORRELATI */
-/* ========================================== */
 
 const relatedArticles = computed(() => {
 
@@ -423,10 +380,6 @@ const relatedArticles = computed(() => {
     .slice(0, 3)
 })
 
-/* ========================================== */
-/* CATEGORIA */
-/* ========================================== */
-
 const getCategoryName = (
   categoryId: string,
 ): string => {
@@ -437,10 +390,6 @@ const getCategoryName = (
 
   return category?.name ?? 'Generale'
 }
-
-/* ========================================== */
-/* DATA */
-/* ========================================== */
 
 const formatDate = (
   date: string,
@@ -455,10 +404,6 @@ const formatDate = (
     },
   ).format(new Date(date))
 }
-
-/* ========================================== */
-/* SEO */
-/* ========================================== */
 
 useSeoMeta({
   title: () =>

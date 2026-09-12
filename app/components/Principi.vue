@@ -13,17 +13,14 @@
         <div class="card h-100 border-0 shadow-sm rounded-5 principio-card">
           <div class="card-body text-center p-4">
 
-            <!-- Icona -->
             <div class="text-danger mb-3 principio-icon">
               <Icon :name="principle.icon" class="fs-1" />
             </div>
 
-            <!-- Titolo -->
             <h3 class="h5 fw-bold mb-3">
               {{ principle.title }}
             </h3>
 
-            <!-- Descrizione -->
             <p class="text-secondary mb-0">
               {{ principle.description }}
             </p>

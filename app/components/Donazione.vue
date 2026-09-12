@@ -134,13 +134,9 @@ const copyValue = async (value: string, key: string) => {
 <template>
   <div>
 
-    <!-- =========================================================
-         01 — 5×1000
-    ========================================================== -->
     <section class="py-5">
       <div class="container">
 
-        <!-- NUMERO -->
         <div class="row">
           <div class="col-12">
             <div class="d-flex align-items-center mb-4 justify-content-center justify-content-lg-start">
@@ -156,11 +152,8 @@ const copyValue = async (value: string, key: string) => {
           </div>
         </div>
 
-
-        <!-- DUE COLONNE -->
         <div class="row g-5 pt-5">
 
-          <!-- INFO -->
           <div class="col-12 col-lg-5 text-center text-lg-start">
 
             <div class="pe-lg-5">
@@ -171,7 +164,6 @@ const copyValue = async (value: string, key: string) => {
                 {{ donationData.fivePerMille.eyebrow }}
               </div>
 
-              <!-- L'h1 della pagina è quello dell'hero: qui si riparte da h2. -->
               <h2 class="display-5 fw-bold lh-sm mb-4">
                 {{ donationData.fivePerMille.title }}
               </h2>
@@ -184,13 +176,10 @@ const copyValue = async (value: string, key: string) => {
 
           </div>
 
-
-          <!-- DATI -->
           <div class="col-12 col-lg-7">
 
             <div class="border-top border-bottom">
 
-              <!-- CODICE FISCALE -->
               <div class="py-4">
 
                 <div
@@ -239,8 +228,6 @@ const copyValue = async (value: string, key: string) => {
 
               </div>
 
-
-              <!-- COME FARE -->
               <div class="border-top py-4">
 
                 <div
@@ -278,14 +265,9 @@ const copyValue = async (value: string, key: string) => {
       </div>
     </section>
 
-
-    <!-- =========================================================
-         02 — BONIFICO
-    ========================================================== -->
     <section class="py-5 bg-light">
       <div class="container">
 
-        <!-- NUMERO -->
         <div class="row">
           <div class="col-12">
 
@@ -303,11 +285,8 @@ const copyValue = async (value: string, key: string) => {
           </div>
         </div>
 
-
-        <!-- DUE COLONNE -->
         <div class="row g-5 pt-5">
 
-          <!-- INFO -->
           <div class="col-12 col-lg-5 text-center text-lg-start">
 
             <div class="pe-lg-5">
@@ -330,8 +309,6 @@ const copyValue = async (value: string, key: string) => {
 
           </div>
 
-
-          <!-- DATI -->
           <div class="col-12 col-lg-7">
 
             <div class="border-top">
@@ -391,8 +368,6 @@ const copyValue = async (value: string, key: string) => {
 
             </div>
 
-
-            <!-- CONTATTO -->
             <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 pt-4">
 
               <span class="small text-secondary">
@@ -417,14 +392,9 @@ const copyValue = async (value: string, key: string) => {
       </div>
     </section>
 
-
-    <!-- =========================================================
-         03 — BENI
-    ========================================================== -->
     <section class="py-5">
       <div class="container">
 
-        <!-- NUMERO -->
         <div class="row">
           <div class="col-12">
 
@@ -442,11 +412,8 @@ const copyValue = async (value: string, key: string) => {
           </div>
         </div>
 
-
-        <!-- DUE COLONNE -->
         <div class="row g-5 pt-5">
 
-          <!-- INFO -->
           <div class="col-12 col-lg-5 text-center text-lg-start">
 
             <div class="pe-lg-5">
@@ -465,8 +432,6 @@ const copyValue = async (value: string, key: string) => {
                 {{ donationData.goods.description }}
               </p>
 
-
-              <!-- DOVE -->
               <div class="border-start border-danger border-3 ps-4">
 
                 <div
@@ -489,8 +454,6 @@ const copyValue = async (value: string, key: string) => {
 
           </div>
 
-
-          <!-- DATI -->
           <div class="col-12 col-lg-7">
 
             <div
@@ -522,8 +485,6 @@ const copyValue = async (value: string, key: string) => {
 
             </div>
 
-
-            <!-- NOTA -->
             <div class="bg-light p-4 mt-4">
 
               <div class="d-flex align-items-start gap-3">
@@ -547,8 +508,6 @@ const copyValue = async (value: string, key: string) => {
 
             </div>
 
-
-            <!-- CONTATTI -->
             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
 
               <a

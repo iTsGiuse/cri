@@ -1,6 +1,6 @@
 <template>
   <div class="min-vh-100 d-flex flex-column bg-danger text-white">
-    <!-- Header -->
+
     <header class="container py-4 text-center">
       <NuxtLink
         to="/"
@@ -24,11 +24,9 @@
       </NuxtLink>
     </header>
 
-    <!-- Main Content -->
     <main class="container flex-grow-1 d-flex align-items-center py-4 py-lg-5">
       <div class="row align-items-center g-4 g-lg-5 w-100 mx-auto">
 
-        <!-- Sezione Sinistra -->
         <div class="col-12 col-lg-7 text-center text-lg-start">
           <button
             type="button"
@@ -46,7 +44,7 @@
           </button>
 
           <div class="pe-lg-4">
-            <!-- Dicitura errore -->
+
             <div class="mb-2">
               <span
                 class="text-uppercase tracking-wider fw-semibold text-white-75 fs-5"
@@ -55,12 +53,10 @@
               </span>
             </div>
 
-            <!-- Motivo errore -->
             <h1 class="display-5 fw-bold mb-4 mb-lg-5">
               {{ errorContent.message }}
             </h1>
 
-            <!-- Social -->
             <div
               v-if="activeSocialLinks.length"
               class="border-top border-white border-opacity-25 pt-4"
@@ -93,11 +89,9 @@
           </div>
         </div>
 
-        <!-- Sezione Destra -->
         <div class="col-12 col-lg-5">
           <div class="bg-white text-dark rounded-4 shadow-lg p-4 p-md-5">
 
-            <!-- Titolo box -->
             <div class="d-flex align-items-center gap-3 mb-4">
               <div
                 class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
@@ -125,7 +119,6 @@
 
             <div class="d-flex flex-column gap-3">
 
-              <!-- Emergenza -->
               <a
                 :href="`tel:${errorPage.contacts.emergency.value}`"
                 class="text-decoration-none text-dark d-block"
@@ -171,7 +164,6 @@
                 </div>
               </a>
 
-              <!-- Indirizzo -->
               <a
                 :href="errorPage.contacts.address.mapsUrl"
                 target="_blank"
@@ -219,7 +211,6 @@
                 </div>
               </a>
 
-              <!-- Telefono uffici -->
               <a
                 :href="`tel:${errorPage.contacts.phone.value}`"
                 class="text-decoration-none text-dark d-block"
@@ -272,7 +263,6 @@
       </div>
     </main>
 
-    <!-- Footer -->
     <footer class="container py-3 py-md-4">
       <div class="border-top border-white border-opacity-25 pt-3">
         <div
@@ -310,10 +300,6 @@ const props = defineProps<{
 
 const currentYear = new Date().getFullYear()
 
-/**
- * Testi e impostazioni visive della pagina di errore.
- * I dati istituzionali arrivano da `~/data/config`.
- */
 const errorPage = {
   motto: 'Uniti per l’Umanità',
 
@@ -376,7 +362,6 @@ const errorPage = {
     },
   },
 
-  /** Messaggio mostrato per ciascun codice di stato gestito. */
   messagesByStatus: {
     403: {
       message:

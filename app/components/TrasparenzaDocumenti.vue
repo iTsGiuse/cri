@@ -1,11 +1,11 @@
 <template>
   <div class="trasparenza-wrapper py-4 py-lg-5 bg-light-subtle">
     <div class="container">
-      <!-- Filter Bar -->
+
       <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4">
         <div class="card-body p-3 p-md-4 bg-white">
           <div class="row g-3 align-items-center">
-            <!-- Search Input -->
+
             <div class="col-12 col-lg-5">
               <label for="ricerca-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Cerca documento</label>
               <div class="input-group">
@@ -22,7 +22,6 @@
               </div>
             </div>
 
-            <!-- Category Select -->
             <div class="col-12 col-md-6 col-lg-4">
               <label for="categoria-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Categoria</label>
               <select id="categoria-documenti" v-model="selectedCategory" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
@@ -33,7 +32,6 @@
               </select>
             </div>
 
-            <!-- Year Select -->
             <div class="col-12 col-md-6 col-lg-3">
               <label for="anno-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Anno</label>
               <select id="anno-documenti" v-model="selectedYear" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
@@ -47,7 +45,6 @@
         </div>
       </div>
 
-      <!-- Counter & Reset Bar -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mb-4 px-1">
         <div class="d-flex align-items-center gap-2">
           <span class="fw-bold text-dark fs-5">Documenti trovati</span>
@@ -63,7 +60,6 @@
         </button>
       </div>
 
-      <!-- Document Cards List -->
       <div v-if="filteredDocuments.length > 0" class="d-flex flex-column gap-3">
         <div
           v-for="doc in filteredDocuments"
@@ -72,15 +68,13 @@
         >
           <div class="card-body p-3 p-md-4">
             <div class="row align-items-center g-3">
-              <!-- Document Details -->
-              <!-- CAMBIATO: align-items-center allinea l'icona al centro verticale del blocco di testo -->
+
               <div class="col-12 col-md-8 col-lg-9 d-flex align-items-center gap-3">
-                <!-- Icon Box -->
+
                 <div class="icon-box rounded-4 bg-danger-subtle text-danger d-flex align-items-center justify-content-center flex-shrink-0">
                   <Icon :name="getFormatIcon(doc.format)" class="fs-2" />
                 </div>
 
-                <!-- Text Content -->
                 <div class="w-100">
                   <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                     <span class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill fw-medium text-xs">
@@ -96,8 +90,7 @@
                   <p class="text-secondary small mb-3 leading-relaxed">
                     {{ doc.description }}
                   </p>
-                  
-                  <!-- File Meta Info -->
+
                   <div class="d-flex align-items-center gap-2 gap-md-3 text-muted text-xs flex-wrap">
                     <span class="d-inline-flex align-items-center gap-1">
                       <Icon name="i-bi:file-earmark-code" class=" text-danger" /> {{ doc.format.toUpperCase() }}
@@ -114,7 +107,6 @@
                 </div>
               </div>
 
-              <!-- Download Button -->
               <div class="col-12 col-md-4 col-lg-3 text-md-end pt-2 pt-md-0 border-top border-md-0">
                 <a
                   :href="doc.downloadUrl"
@@ -133,7 +125,6 @@
         </div>
       </div>
 
-      <!-- Empty State -->
       <div v-else class="card border-0 shadow-sm rounded-4 text-center py-5 px-3 bg-white">
         <div class="card-body">
           <div class="empty-icon-wrapper rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center mb-3">
@@ -153,16 +144,14 @@
         </div>
       </div>
 
-      <!-- Divisore Component -->
       <LazyDivisore />
 
-      <!-- Card Call to Action Dinamica -->
       <div class="card bg-light border-0 rounded-4 p-4 p-md-5 text-center shadow-lg">
         <div class="card-body p-0">
           <div class="d-inline-flex align-items-center justify-content-center bg-danger text-white rounded-circle mb-3 p-3" style="width: 50px; height: 50px;">
             <Icon :name="ctaContent.icon" class="fs-4" />
           </div>
-          
+
           <h2 class="h4 fw-bold text-dark mb-2">{{ ctaContent.title }}</h2>
           <p class="text-secondary mb-4 col-md-8 mx-auto">
             {{ ctaContent.description }}
@@ -197,9 +186,9 @@ export interface TransparencyDocument {
   categoryId: string
   year: number
   format: 'pdf' | 'zip' | 'xlsx' | string
-  /** Dimensione già formattata per la lettura (es. "2.4 MB"). */
+
   size: string
-  /** Data di pubblicazione già formattata (gg/mm/aaaa). */
+
   publishedAt: string
   downloadUrl: string
 }
@@ -207,14 +196,13 @@ export interface TransparencyDocument {
 export interface TransparencyCta {
   title?: string
   description?: string
-  /** Indirizzo PEC a cui inviare la richiesta di accesso agli atti. */
+
   email?: string
   buttonLabel?: string
   icon?: string
   buttonIcon?: string
 }
 
-/** Valori sentinella dei filtri quando non è selezionata alcuna opzione. */
 const ALL_CATEGORIES = 'tutte'
 const ALL_YEARS = 'tutti'
 
@@ -239,13 +227,11 @@ const props = withDefaults(
   }
 )
 
-// Emits per eventuale tracciamento/gestione eventi dal genitore
 const emit = defineEmits<{
   (e: 'download', document: TransparencyDocument): void
   (e: 'reset-filters'): void
 }>()
 
-// Stato dei filtri
 const searchQuery = ref('')
 const selectedCategory = ref<string>(ALL_CATEGORIES)
 const selectedYear = ref<string | number>(ALL_YEARS)
@@ -257,7 +243,6 @@ const hasActiveFilters = computed(
     selectedYear.value !== ALL_YEARS
 )
 
-// Configurazione Call to Action dinamica con valori predefiniti
 const ctaContent = computed<Required<TransparencyCta>>(() => {
   return {
     title: props.cta.title ?? 'Non trovi il documento che cerchi?',
@@ -271,7 +256,6 @@ const ctaContent = computed<Required<TransparencyCta>>(() => {
   }
 })
 
-// Estrae automaticamente gli anni univoci dai documenti se non specificati espressamente
 const resolvedYears = computed<number[]>(() => {
   if (props.availableYears && props.availableYears.length > 0) {
     return props.availableYears
@@ -280,7 +264,6 @@ const resolvedYears = computed<number[]>(() => {
   return Array.from(years).sort((a, b) => b - a)
 })
 
-// Filtraggio reattivo dei documenti
 const filteredDocuments = computed(() => {
   return props.documents.filter((doc) => {
     const matchesCategory =

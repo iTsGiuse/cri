@@ -9,6 +9,7 @@
           to="/"
           class="navbar-brand me-lg-4"
           :aria-label="header.brand.imageAlt"
+          @click="closeMenu"
         >
           <NuxtImg
             :src="header.brand.imageUrl"
@@ -33,8 +34,24 @@
           <span class="navbar-toggler-icon" />
         </button>
 
-        <div id="mainNavbar" class="collapse navbar-collapse">
-          <ul class="navbar-nav ms-auto align-items-lg-center">
+        <div
+          id="mainNavbar"
+          ref="navbarCollapse"
+          class="collapse navbar-collapse fullscreen-menu"
+        >
+          <button
+            type="button"
+            class="mobile-menu-close d-lg-none"
+            aria-label="Chiudi menu"
+            @click="closeMenu"
+          >
+            <Icon
+              name="i-bi:x-lg"
+              aria-hidden="true"
+            />
+          </button>
+
+          <ul class="navbar-nav ms-auto align-items-lg-center px-3 px-lg-0">
             <li
               v-for="item in header.navItems"
               :key="item.label"
@@ -44,11 +61,10 @@
                 'voce-attiva': isActiveItem(item),
               }"
             >
-              <!-- MENU CON FIGLI -->
               <template v-if="hasChildren(item)">
                 <button
                   type="button"
-                  class="nav-link  dropdown-toggle text-white px-3 py-2 d-flex align-items-center gap-2 border-0 bg-transparent rounded"
+                  class="nav-link dropdown-toggle text-white px-3 py-2 d-flex align-items-center gap-2 border-0 bg-transparent rounded w-100"
                   :class="{
                     'link-attivo': isActiveItem(item),
                   }"
@@ -69,13 +85,13 @@
                     v-for="child in item.children"
                     :key="child.label"
                   >
-                    <!-- LINK ESTERNO -->
                     <a
                       v-if="child.external"
                       :href="child.url"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="dropdown-item d-flex align-items-center gap-3 rounded-2 py-2"
+                      @click="closeMenu"
                     >
                       <Icon
                         v-if="child.icon"
@@ -93,7 +109,6 @@
                       />
                     </a>
 
-                    <!-- LINK INTERNO -->
                     <NuxtLink
                       v-else
                       :to="child.url"
@@ -101,6 +116,7 @@
                       :class="{
                         'dropdown-item-attivo': isActiveLink(child.url),
                       }"
+                      @click="closeMenu"
                     >
                       <Icon
                         v-if="child.icon"
@@ -121,15 +137,14 @@
                 </ul>
               </template>
 
-              <!-- MENU SENZA FIGLI -->
               <template v-else>
-                <!-- LINK ESTERNO -->
                 <a
                   v-if="item.external"
                   :href="item.url"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="nav-link nav-link-arrow text-white px-3 py-2 d-flex align-items-center gap-2"
+                  @click="closeMenu"
                 >
                   <span>{{ item.label }}</span>
 
@@ -140,7 +155,6 @@
                   />
                 </a>
 
-                <!-- LINK INTERNO -->
                 <NuxtLink
                   v-else
                   :to="item.url"
@@ -148,6 +162,7 @@
                   :class="{
                     'link-attivo': isActiveLink(item.url),
                   }"
+                  @click="closeMenu"
                 >
                   <span>{{ item.label }}</span>
 
@@ -160,11 +175,11 @@
               </template>
             </li>
 
-            <!-- PULSANTE AZIONE -->
-            <li class="nav-item mt-3 mt-lg-0 ms-lg-3">
+            <li class="nav-item mt-4 mt-lg-0 ms-lg-3">
               <NuxtLink
                 :to="header.action.url"
                 class="btn btn-light text-danger fw-semibold rounded-pill px-4 py-2 w-100 d-flex align-items-center justify-content-center gap-2 pulsante-azione"
+                @click="closeMenu"
               >
                 <Icon
                   :name="header.action.icon"
@@ -188,92 +203,97 @@
 </template>
 
 <script setup lang="ts">
-import type { CtaLink, NavLink } from '~/types';
+import { ref } from 'vue'
+import type { CtaLink, NavLink } from '~/types'
 
 export type HeaderData = {
   brand: {
-    imageUrl: string;
-    imageAlt: string;
-  };
-
-  navItems: NavLink[];
-
-  action: CtaLink & { icon: string };
-};
+    imageUrl: string
+    imageAlt: string
+  }
+  navItems: NavLink[]
+  action: CtaLink & {
+    icon: string
+  }
+}
 
 const props = defineProps<{
-  header: HeaderData;
-}>();
+  header: HeaderData
+}>()
 
-const header = props.header;
+const header = props.header
+const route = useRoute()
 
-const route = useRoute();
+const navbarCollapse = ref<HTMLElement | null>(null)
 
-/**
- * Verifica se una voce corrisponde alla pagina attuale.
- *
- * Esempio:
- * /chi-siamo
- * /chi-siamo/storia
- *
- * In entrambi i casi /chi-siamo viene considerato attivo.
- */
+const closeMenu = () => {
+  if (
+    navbarCollapse.value &&
+    navbarCollapse.value.classList.contains('show')
+  ) {
+    if (
+      typeof window !== 'undefined' &&
+      (window as any).bootstrap
+    ) {
+      const bsCollapse =
+        (window as any).bootstrap.Collapse.getInstance(
+          navbarCollapse.value,
+        ) ||
+        new (window as any).bootstrap.Collapse(
+          navbarCollapse.value,
+          {
+            toggle: false,
+          },
+        )
+
+      bsCollapse.hide()
+    } else {
+      navbarCollapse.value.classList.remove('show')
+    }
+  }
+}
+
 const isActiveLink = (url?: string) => {
   if (!url) {
-    return false;
+    return false
   }
 
-  if (url === "/") {
-    return route.path === "/";
+  if (url === '/') {
+    return route.path === '/'
   }
 
   return (
     route.path === url ||
     route.path.startsWith(`${url}/`)
-  );
-};
+  )
+}
 
-/**
- * Verifica se una voce del menu ha una sottovoce attiva.
- */
 const hasActiveChild = (item: NavLink) => {
   return (
-    item.children?.some((child) => isActiveLink(child.url)) ??
-    false
-  );
-};
+    item.children?.some((child) =>
+      isActiveLink(child.url),
+    ) ?? false
+  )
+}
 
-/**
- * Verifica se la voce principale è attiva
- * oppure se contiene una sottovoce attiva.
- */
 const isActiveItem = (item: NavLink) => {
   return (
     isActiveLink(item.url) ||
     hasActiveChild(item)
-  );
-};
+  )
+}
 
 const hasChildren = (item: NavLink) => {
-  return Boolean(item.children?.length);
-};
+  return Boolean(item.children?.length)
+}
 </script>
 
 <style scoped>
-/* =========================================================
-   LOGO
-   ========================================================= */
-
 .brand-logo {
   max-height: 120px;
   width: auto;
   object-fit: contain;
 }
-
-
-/* =========================================================
-   DROPDOWN
-   ========================================================= */
 
 .dropdown-item {
   transition:
@@ -287,20 +307,10 @@ const hasChildren = (item: NavLink) => {
   color: #fff;
 }
 
-/*
- * Su hover/focus il fondo diventa rosso: icona e freccia devono passare al
- * bianco, altrimenti restano `text-danger`/`text-secondary` e spariscono.
- * Il selettore agisce sugli elementi figli perché <Icon> non rende un <i>.
- */
 .dropdown-item:hover > *,
 .dropdown-item:focus > * {
   color: #fff !important;
 }
-
-
-/* =========================================================
-   DROPDOWN ITEM ATTIVO
-   ========================================================= */
 
 .dropdown-item-attivo {
   background-color: var(--bs-danger);
@@ -318,11 +328,6 @@ const hasChildren = (item: NavLink) => {
   color: #fff !important;
 }
 
-
-/* =========================================================
-   FRECCIA DROPDOWN
-   ========================================================= */
-
 .freccia-dropdown {
   transition:
     transform 0.3s cubic-bezier(
@@ -337,11 +342,6 @@ const hasChildren = (item: NavLink) => {
 .dropdown-item:focus .freccia-dropdown {
   transform: translateX(8px);
 }
-
-
-/* =========================================================
-   LINK PRINCIPALI
-   ========================================================= */
 
 .nav-link-arrow {
   transition:
@@ -364,23 +364,10 @@ const hasChildren = (item: NavLink) => {
   transform: translateX(8px);
 }
 
-
-/* =========================================================
-   LINK ATTIVO
-   ========================================================= */
-
 .link-attivo {
   position: relative;
   font-weight: 600;
 }
-
-
-/*
- * Sottolineatura bianca.
- *
- * Usiamo ::before invece di text-decoration
- * per avere una linea più elegante e controllabile.
- */
 
 .link-attivo::before {
   content: "";
@@ -397,11 +384,6 @@ const hasChildren = (item: NavLink) => {
 
   border-radius: 999px;
 }
-
-
-/* =========================================================
-   MENU DROPDOWN ATTIVO
-   ========================================================= */
 
 .voce-attiva > .dropdown-toggle {
   position: relative;
@@ -424,21 +406,11 @@ const hasChildren = (item: NavLink) => {
   border-radius: 999px;
 }
 
-
-/* =========================================================
-   FRECCIA MENU
-   ========================================================= */
-
 .freccia-menu {
   transition:
     transform 0.3s ease;
 }
 
-/*
- * Lo stato aperto è quello che Bootstrap applica al toggle (.show):
- * così la freccia resta allineata anche quando il menu viene chiuso
- * da tastiera (Esc) o con un click esterno.
- */
 .dropdown-toggle.show .freccia-menu {
   transform: rotate(180deg);
 }
@@ -446,11 +418,6 @@ const hasChildren = (item: NavLink) => {
 .dropdown-toggle::after {
   display: none !important;
 }
-
-
-/* =========================================================
-   PULSANTE AZIONE
-   ========================================================= */
 
 .pulsante-azione {
   transition:
@@ -473,37 +440,159 @@ const hasChildren = (item: NavLink) => {
   transform: translateX(8px);
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
 @media (max-width: 991.98px) {
-  .dropdown-menu {
-    width: 100%;
-    margin-top: 0;
+  .fullscreen-menu.collapse.show,
+  .fullscreen-menu.collapsing {
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100dvh;
+
+    background-color: var(--bs-danger);
+
+    z-index: 1050;
+
+    overflow-y: auto;
+
+    display: flex !important;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 5rem 1.5rem 3rem;
+
+    transition: none !important;
   }
 
-  /*
-   * Bootstrap imposta `white-space: nowrap` sulle voci: con le etichette
-   * lunghe del menu il dropdown a tutta larghezza sfondava lateralmente.
-   */
-  .dropdown-item {
-    white-space: normal;
+  .fullscreen-menu.collapsing {
+    height: 100dvh !important;
+  }
+
+  .mobile-menu-close {
+    position: absolute;
+
+    top: 1.25rem;
+    right: 1.25rem;
+
+    width: 3rem;
+    height: 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    color: #fff;
+
+    font-size: 1.75rem;
+
+    z-index: 1060;
+
+    cursor: pointer;
+  }
+
+  .mobile-menu-close:hover,
+  .mobile-menu-close:focus-visible {
+    color: #fff;
+    opacity: 0.75;
+  }
+
+  .mobile-menu-close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+    border-radius: 0.25rem;
+  }
+
+  .fullscreen-menu > .navbar-nav {
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 0 !important;
+    margin: 0;
+  }
+
+  .nav-item {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-link,
+  .dropdown-toggle {
+    width: 100%;
+    justify-content: center;
+    font-size: 1.25rem;
   }
 
   .nav-link-arrow {
-    justify-content: space-between;
+    justify-content: center;
+  }
+
+  .nav-link-arrow,
+  .dropdown-toggle {
+    position: relative;
+  }
+
+  .nav-link-arrow .freccia-menu,
+  .dropdown-toggle .freccia-menu {
+    position: absolute;
+    right: 1rem;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    position: static !important;
+
+    inset: auto !important;
+
+    float: none !important;
+
+    width: 100%;
+
+    margin: 0 !important;
+
+    padding: 0.5rem !important;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    border: 0 !important;
+    border-radius: 0.75rem !important;
+
+    box-shadow: none !important;
+
+    transform: none !important;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  .dropdown-menu:not(.show) {
+    display: none;
+  }
+
+  .dropdown-item {
+    white-space: normal;
+    padding: 0.75rem 1rem;
   }
 
   .pulsante-azione {
     justify-content: center;
+    font-size: 1.1rem;
   }
-
-  /*
-   * Su mobile allarghiamo leggermente la sottolineatura
-   * per rendere più evidente la pagina attiva.
-   */
 
   .link-attivo::before,
   .voce-attiva > .dropdown-toggle::before {

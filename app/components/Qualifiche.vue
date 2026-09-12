@@ -2,12 +2,11 @@
   <section class="py-5 bg-body-tertiary">
     <div class="container py-4">
 
-      <!-- CATEGORIE -->
       <template
         v-for="category in sortedCategories"
         :key="category.id"
       >
-        <!-- HEADER CATEGORIA -->
+
         <div class="row align-items-center mb-4">
           <div class="col-auto">
             <div class="d-flex align-items-center gap-3">
@@ -32,7 +31,6 @@
           </div>
         </div>
 
-        <!-- CARDS QUALIFICHE -->
         <div class="row g-4 mb-5">
           <div
             v-for="qualification in sortedQualifications(category)"
@@ -44,7 +42,6 @@
             >
               <div class="card-body text-center p-4 d-flex flex-column">
 
-                <!-- ICONA -->
                 <div
                   class="text-danger mb-3 d-flex justify-content-center"
                 >
@@ -59,7 +56,6 @@
                   </div>
                 </div>
 
-                <!-- SIGLA -->
                 <div
                   v-if="qualification.code"
                   class="mb-2"
@@ -71,12 +67,10 @@
                   </span>
                 </div>
 
-                <!-- TITOLO -->
                 <h3 class="h5 fw-bold text-dark mb-2">
                   {{ qualification.title }}
                 </h3>
 
-                <!-- DESCRIZIONE -->
                 <p
                   v-if="qualification.description"
                   class="text-secondary mb-0 lh-lg"
@@ -97,12 +91,12 @@
 <script setup lang="ts">
 export interface Qualification {
   id: string | number
-  /** Sigla ufficiale della qualifica (es. "OPEM"). */
+
   code?: string
   title: string
   description?: string
   icon?: string
-  /** Posizione nell'elenco: valori più bassi compaiono per primi. */
+
   order: number
 }
 
@@ -143,4 +137,3 @@ const sortedQualifications = (
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.12) !important;
 }
 </style>
-

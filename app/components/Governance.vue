@@ -28,10 +28,9 @@
             :key="member.id"
             class="col-12 col-md-6 col-xl-4"
           >
-            <!-- Card verticale -->
+
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 bg-white d-flex flex-column">
-              
-              <!-- Sezione Immagine / Iniziali in alto -->
+
               <div class="ratio ratio-4x3 bg-light border-bottom position-relative">
                 <NuxtImg
                   v-if="member.imageUrl"
@@ -54,7 +53,6 @@
                 </div>
               </div>
 
-              <!-- Corpo della card in basso -->
               <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1 min-w-0">
                 <div class="min-w-0">
                   <div v-if="member.role" class="mb-2">
@@ -105,7 +103,7 @@ export interface GovernanceMember {
   id: string | number
   firstName: string
   lastName: string
-  /** Carica ricoperta all'interno del Comitato. */
+
   role?: string
   imageUrl?: string
   email?: string

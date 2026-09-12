@@ -2,12 +2,10 @@
   <div class="min-vh-100 d-flex flex-column bg-white text-dark">
     <div class="container py-5 my-md-3 flex-grow-1">
 
-      <!-- TIMELINE CENTRALE -->
       <div class="row justify-content-center mb-5">
         <div class="col-12 col-xl-11">
           <div class="position-relative py-4">
-            
-            <!-- Linea verticale centrale visibile solo da md in poi -->
+
             <div class="position-absolute start-50 translate-middle-x border-start border-2 border-danger-subtle d-none d-md-block top-0 bottom-0 opacity-75"></div>
 
             <div
@@ -15,20 +13,20 @@
               :key="index"
               class="row g-0 mb-5 position-relative align-items-center"
             >
-              <!-- BLOCCO CONTENUTO -->
-              <div 
+
+              <div
                 class="col-12 col-md-5"
                 :class="[
-                  index % 2 === 0 
-                    ? 'order-md-1 pe-md-4 text-start' 
+                  index % 2 === 0
+                    ? 'order-md-1 pe-md-4 text-start'
                     : 'order-md-3 ps-md-4 text-start'
                 ]"
               >
-                <div 
+                <div
                   class="card border-0 shadow-lg rounded-4 p-4 p-lg-5 bg-white h-100"
                   :class="index % 2 === 0 ? 'border-start border-4 border-danger' : 'border-end border-4 border-danger'"
                 >
-                  
+
                   <div class="d-flex flex-wrap align-items-center justify-content-start gap-2 mb-3">
                     <span class="badge bg-danger text-white px-3 py-2 fw-bold rounded-pill text-uppercase shadow-sm">
                       {{ milestone.year }}
@@ -54,15 +52,13 @@
                 </div>
               </div>
 
-              <!-- CENTRO: PALLINI DELLA TIMELINE (Visibili solo da md in su) -->
               <div class="col-md-2 d-none d-md-flex justify-content-center align-items-center order-md-2 position-relative">
                 <div class="bg-danger rounded-circle shadow-lg position-absolute border border-4 border-white"
                      style="width: 24px; height: 24px;">
                 </div>
               </div>
 
-              <!-- BLOCCO SIMMETRICO VUOTO (Per mantenere la struttura a zig-zag su desktop) -->
-              <div 
+              <div
                 class="col-12 col-md-5 d-none d-md-block"
                 :class="index % 2 === 0 ? 'order-md-3' : 'order-md-1'"
               >
@@ -78,11 +74,10 @@
         <Divisore />
       </div>
 
-      <!-- SEZIONE FINALE CALL TO ACTION -->
       <div class="row justify-content-center mb-5">
         <div class="col-12 col-lg-10 col-xl-9 text-center">
           <div class="p-4 p-md-5 rounded-4 bg-white border shadow-lg position-relative overflow-hidden">
-            <!-- Dettaglio grafico superiore -->
+
             <div class="position-absolute top-0 start-0 w-100 bg-danger" style="height: 6px;"></div>
 
             <div class="py-2">

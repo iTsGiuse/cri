@@ -13,7 +13,7 @@
           class="row align-items-center"
           :class="{ 'flex-lg-row-reverse': index % 2 !== 0 }"
         >
-          <!-- COLONNA IMMAGINE -->
+
           <div class="col-12 col-lg-6 mb-4 mb-lg-0">
             <div class="image-wrapper rounded overflow-hidden shadow-sm">
               <NuxtImg
@@ -30,7 +30,6 @@
             </div>
           </div>
 
-          <!-- COLONNA TESTO -->
           <div class="col-12 col-lg-6 text-center text-lg-start">
             <div
               :class="[
@@ -45,7 +44,6 @@
                 {{ section.description }}
               </p>
 
-              <!-- CTA SOLO SE COMPLETA -->
               <NuxtLink
                 v-if="section.cta?.label && section.cta?.url"
                 :to="section.cta.url"
@@ -69,7 +67,7 @@ export interface AlternatingSection {
   title: string
   description: string
   imageUrl: string
-  /** Pulsante facoltativo: reso solo quando ha sia etichetta sia URL. */
+
   cta?: CtaLink
 }
 
@@ -82,5 +80,5 @@ defineProps<{
 .alternating-sections {
   overflow-x: hidden;
 }
-/* `.object-fit-cover` è già una utility di Bootstrap 5.3: niente duplicato. */
+
 </style>
