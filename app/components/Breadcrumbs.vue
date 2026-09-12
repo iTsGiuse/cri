@@ -2,10 +2,10 @@
   <nav
     v-if="breadcrumbTrail.length > 0"
     aria-label="breadcrumb"
-    class="bg-danger py-3"
+    class="bg-danger py-3 "
   >
     <div
-      class="container d-flex justify-content-start mt-3 breadcrumb-wrapper"
+      class="container d-flex justify-content-start my-3 breadcrumb-wrapper"
     >
       <div
         class="breadcrumb-container d-inline-flex align-items-center bg-white bg-opacity-10 rounded-pill px-3 py-1 border border-white border-opacity-25 shadow-sm"
