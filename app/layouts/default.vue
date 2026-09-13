@@ -35,6 +35,7 @@ import {
   organizationConfig,
   siteConfig,
 } from '~/data/config'
+import { footerGruppiNavigazione } from '~/data/footer'
 
 const route = useRoute()
 
@@ -267,51 +268,7 @@ const footerData: FooterData = {
 
   socialLinks: activeSocialLinks,
 
-  columns: [
-    {
-      title: 'Servizi',
-      links: [
-        {
-          label: 'Emergenza 118 / 112',
-          url: '/servizi/emergenza-118',
-        },
-        {
-          label: 'Richiedi un trasporto',
-          url: '/servizi/richiedi-trasporto',
-        },
-        {
-          label: 'Assistenza manifestazioni',
-          url: '/servizi/assistenza-eventi',
-        },
-        {
-          label: 'Corsi alla popolazione e aziende',
-          url: '/servizi/corsi-popolazione',
-        },
-        {
-          label: 'Supporto sociale',
-          url: '/servizi/supporto-sociale',
-        },
-      ],
-    },
-
-    {
-      title: 'Partecipa',
-      links: [
-        {
-          label: 'Diventa volontario',
-          url: '/volontariato/diventa-volontario',
-        },
-        {
-          label: 'Corso di accesso e formazione',
-          url: '/volontariato/percorso-formativo',
-        },
-        {
-          label: 'Dona ora',
-          url: '/dona',
-        },
-      ],
-    },
-  ],
+  columns: footerGruppiNavigazione,
 
   contacts: {
     title: 'Sede e Recapiti',

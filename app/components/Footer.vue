@@ -41,41 +41,44 @@
 
         <div
           v-for="(column, index) in footer.columns"
-          :key="column.title"
+          :key="column.titolo"
           class="col-12 col-md-3 col-xl-3 text-center text-xl-start"
           :class="{ 'offset-xl-3': index > 0 && index % 3 === 0 }"
         >
           <h6
+            :id="`footer-gruppo-${index}`"
             class="fw-semibold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
           >
-            {{ column.title }}
+            {{ column.titolo }}
           </h6>
 
-          <ul class="list-unstyled mb-0">
-            <li
-              v-for="link in column.links"
-              :key="link.label"
-              class="mb-2"
-            >
-              <a
-                v-if="link.external"
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="link-light text-decoration-none small d-inline-block"
+          <nav :aria-labelledby="`footer-gruppo-${index}`">
+            <ul class="list-unstyled mb-0">
+              <li
+                v-for="link in column.link"
+                :key="link.label"
+                class="mb-2"
               >
-                {{ link.label }}
-              </a>
+                <a
+                  v-if="link.external"
+                  :href="link.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link-light text-decoration-none small d-inline-block"
+                >
+                  {{ link.label }}
+                </a>
 
-              <NuxtLink
-                v-else
-                :to="link.url"
-                class="link-light text-decoration-none small d-inline-block"
-              >
-                {{ link.label }}
-              </NuxtLink>
-            </li>
-          </ul>
+                <NuxtLink
+                  v-else
+                  :to="link.url"
+                  class="link-light text-decoration-none small d-inline-block"
+                >
+                  {{ link.label }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </nav>
         </div>
 
         <div
@@ -93,20 +96,22 @@
 
           <ul class="list-unstyled mb-0 small">
             <li class="mb-3">
-              <a
-                :href="footer.contacts.address.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="link-light text-decoration-none d-flex gap-2 align-items-start justify-content-center justify-content-xl-start"
-              >
-                <Icon
-                  :name="footer.contacts.address.icon"
-                  class="mt-1 flex-shrink-0 opacity-75"
-                  aria-hidden="true"
-                />
+              <address class="mb-0 fst-normal">
+                <a
+                  :href="footer.contacts.address.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link-light text-decoration-none d-flex gap-2 align-items-start justify-content-center justify-content-xl-start"
+                >
+                  <Icon
+                    :name="footer.contacts.address.icon"
+                    class="mt-1 flex-shrink-0 opacity-75"
+                    aria-hidden="true"
+                  />
 
-                <span>{{ footer.contacts.address.label }}</span>
-              </a>
+                  <span>{{ footer.contacts.address.label }}</span>
+                </a>
+              </address>
             </li>
 
             <li class="mb-3">
@@ -227,18 +232,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CtaLink, SocialLink } from '~/types';
-
-type FooterLink = {
-  label: string;
-  url: string;
-  external?: boolean;
-};
-
-type FooterColumn = {
-  title: string;
-  links: FooterLink[];
-};
+import type { CtaLink, GruppoNavigazione, LinkNavigazione, SocialLink } from '~/types';
 
 type ContactEntry = {
   label: string;
@@ -263,7 +257,7 @@ export type FooterData = {
 
   socialLinks: SocialLink[];
 
-  columns: FooterColumn[];
+  columns: GruppoNavigazione[];
 
   contacts: {
     title: string;
@@ -278,7 +272,7 @@ export type FooterData = {
     icon: string;
   };
 
-  legalLinks: FooterLink[];
+  legalLinks: LinkNavigazione[];
 
   legalInfo: string;
 };

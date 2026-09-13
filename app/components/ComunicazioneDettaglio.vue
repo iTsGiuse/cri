@@ -61,7 +61,22 @@
     <section class="py-5 py-lg-6">
       <div class="container">
         <article class="contenuto-articolo">
-          <div v-html="article.content" />
+          <section v-for="sezione in article.contenuti" :key="sezione.titolo" class="mb-5">
+            <h2>{{ sezione.titolo }}</h2>
+
+            <p v-for="paragrafo in sezione.paragrafi" :key="paragrafo">
+              {{ paragrafo }}
+            </p>
+
+            <ul v-if="sezione.elenco?.length">
+              <li v-for="voce in sezione.elenco" :key="voce">{{ voce }}</li>
+            </ul>
+          </section>
+
+          <div v-if="article.chiamataAzione" class="alert alert-danger border-0 rounded-4 mt-4">
+            <strong class="d-block mb-1">{{ article.chiamataAzione.titolo }}</strong>
+            <span>{{ article.chiamataAzione.testo }}</span>
+          </div>
         </article>
 
         <div class="border-top mt-5 pt-4">
@@ -180,22 +195,7 @@
 </template>
 
 <script setup lang="ts">
-interface Category {
-  id: string
-  name: string
-}
-
-interface Item {
-  id: string
-  slug: string
-  title: string
-  description: string
-  content: string
-  imageUrl: string
-  publishedAt: string
-  categoryId: string
-  author?: string
-}
+import type { CategoriaComunicazione, ComunicazioneBase } from '~/types/comunicazioni'
 
 interface PageConfig {
   basePath: string
@@ -215,9 +215,9 @@ interface PageConfig {
 }
 
 const props = defineProps<{
-  article: Item
-  relatedArticles: Item[]
-  categories: Category[]
+  article: ComunicazioneBase
+  relatedArticles: ComunicazioneBase[]
+  categories: CategoriaComunicazione[]
   pageConfig: PageConfig
 }>()
 
@@ -244,8 +244,9 @@ function formatDate(date: string): string {
   line-height: 1.85;
 }
 
-.contenuto-articolo :deep(p) { margin-bottom: 1.5rem; }
-.contenuto-articolo :deep(h2) {
+.contenuto-articolo p { margin-bottom: 1.5rem; }
+.contenuto-articolo > section:first-child h2 { margin-top: 0; }
+.contenuto-articolo h2 {
   color: var(--bs-dark);
   font-size: 1.75rem;
   font-weight: 700;
@@ -253,54 +254,20 @@ function formatDate(date: string): string {
   margin-top: 3rem;
   margin-bottom: 1rem;
 }
-.contenuto-articolo :deep(h3) {
-  color: var(--bs-dark);
-  font-size: 1.35rem;
-  font-weight: 600;
-  line-height: 1.35;
-  margin-top: 2.25rem;
-  margin-bottom: 1rem;
-}
-.contenuto-articolo :deep(ul),
-.contenuto-articolo :deep(ol) {
+.contenuto-articolo ul {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
 }
-.contenuto-articolo :deep(li) { margin-bottom: 0.5rem; }
-.contenuto-articolo :deep(blockquote) {
-  border-left: 4px solid var(--bs-danger);
-  color: var(--bs-secondary-color);
-  margin: 2rem 0;
-  padding: 0.5rem 0 0.5rem 1.5rem;
-}
-.contenuto-articolo :deep(a) { color: var(--bs-danger); }
-.contenuto-articolo :deep(img) {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin: 2rem auto;
-  border-radius: var(--bs-border-radius-lg);
-}
-.contenuto-articolo :deep(figure) { margin: 2rem 0; }
-.contenuto-articolo :deep(figcaption) {
-  color: var(--bs-secondary-color);
-  font-size: 0.875rem;
-  margin-top: 0.75rem;
-  text-align: center;
-}
+.contenuto-articolo li { margin-bottom: 0.5rem; }
 
 @media (max-width: 767.98px) {
   .contenuto-articolo {
     font-size: 1rem;
     line-height: 1.75;
   }
-  .contenuto-articolo :deep(h2) {
+  .contenuto-articolo h2 {
     font-size: 1.45rem;
     margin-top: 2.25rem;
-  }
-  .contenuto-articolo :deep(h3) {
-    font-size: 1.2rem;
-    margin-top: 1.75rem;
   }
 }
 </style>
