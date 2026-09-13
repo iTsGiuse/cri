@@ -8,6 +8,8 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,
@@ -38,7 +40,7 @@ const sections: AlternatingSection[] = [
     title: 'Informazione alla Popolazione e Resilienza',
     description: 'La prevenzione parte dai cittadini. Promuoviamo campagne di informazione e incontri pubblici (come la campagna nazionale "Io Non Rischio") per insegnare alle persone quali comportamenti corretti adottare prima, durante e dopo un\'emergenza, aumentando la resilienza della nostra comunità.',
     imageUrl: 'https://picsum.photos/seed/iononrischio/800/600',
-    cta: { label: 'Scopri i comportamenti di autoprotezione', url: '/prevenzione' },
+    cta: { label: 'Scopri i comportamenti di autoprotezione', url: '/cosa-facciamo/salute' },
   },
   {
     id: 6,
@@ -51,7 +53,7 @@ const sections: AlternatingSection[] = [
     title: 'Diventa Volontario di Protezione Civile',
     description: 'Se hai spirito di adattamento, ti piace lavorare in squadra e desideri metterti a disposizione della comunità nei momenti di maggiore bisogno, unisciti alla nostra squadra di protezione civile. C\'è bisogno di competenze tecniche, logistiche e operative.',
     imageUrl: 'https://picsum.photos/seed/volontario-pc/800/600',
-    cta: { label: 'Diventa Volontario', url: '/diventa-volontario' },
+    cta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario' },
   },
 ]
 </script>

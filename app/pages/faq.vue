@@ -8,6 +8,8 @@
 <script setup lang="ts">
 import type { FaqData, FaqCategory } from '~/components/Faq.vue'
 
+useSeoPagina()
+
 const faqCategories = ref<FaqCategory[]>([
   { id: 'servizi', name: 'Servizi Sanitari' },
   { id: 'volontariato', name: 'Volontariato e Corsi' },

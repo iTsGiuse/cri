@@ -19,9 +19,9 @@
           </div>
 
           <!-- Titolo -->
-          <h1 class="fw-bold fs-4 fs-md-3 lh-sm mb-1 px-2">
+          <p class="fw-bold fs-4 fs-md-3 lh-sm mb-1 px-2">
             {{ siteConfig.name }}
-          </h1>
+          </p>
 
           <!-- Descrizione -->
           <p

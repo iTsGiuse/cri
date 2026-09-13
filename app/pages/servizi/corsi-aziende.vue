@@ -8,6 +8,8 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,

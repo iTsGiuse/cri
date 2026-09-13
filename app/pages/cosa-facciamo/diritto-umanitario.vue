@@ -8,13 +8,15 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,
     title: 'I Sette Principi Fondamentali della Croce Rossa',
     description: 'Umanità, Imparzialità, Neutralità, Indipendenza, Volontariato, Unità e Universalità. Questi sette principi non sono solo le linee guida del nostro agire quotidiano a Rubiera e nel mondo, ma rappresentano un sistema valoriale ed etico che ispira ogni nostra attività di soccorso e tutela.',
     imageUrl: 'https://picsum.photos/seed/principi-cri/800/600',
-    cta: { label: 'Scopri i nostri principi', url: '/chi-siamo' },
+    cta: { label: 'Scopri i nostri principi', url: '/chi-siamo/comitato-e-contatti' },
   },
   {
     id: 2,
@@ -51,7 +53,7 @@ const sections: AlternatingSection[] = [
     title: 'Diventa Volontario per i Diritti e l\'Umanità',
     description: 'Promuovere i diritti umani, i principi umanitari e la cultura della pace richiede impegno e voce. Se vuoi contribuire a diffondere questi valori fondamentali all\'interno della comunità di Rubiera e delle scuole, unisciti alla nostra squadra.',
     imageUrl: 'https://picsum.photos/seed/volontario-diritti/800/600',
-    cta: { label: 'Diventa Volontario', url: '/diventa-volontario' },
+    cta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario' },
   },
 ]
 </script>

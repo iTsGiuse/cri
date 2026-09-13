@@ -8,13 +8,15 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,
     title: 'Protagonismo Giovanile e Partecipazione Attiva',
     description: 'I giovani non sono solo il futuro, ma il presente della Croce Rossa. A Rubiera diamo spazio alle idee e all\'energia dei ragazzi, rendendoli protagonisti nella progettazione e nella realizzazione delle attività associative e dei progetti rivolti al territorio.',
     imageUrl: 'https://picsum.photos/seed/giovani-protagonismo/800/600',
-    cta: { label: 'Unisciti ai Giovani CRI', url: '/diventa-volontario' },
+    cta: { label: 'Unisciti ai Giovani CRI', url: '/volontariato/diventa-volontario' },
   },
   {
     id: 2,
@@ -51,7 +53,7 @@ const sections: AlternatingSection[] = [
     title: 'Entra a Far Parte dell\'Area Giovani',
     description: 'Hai tra i 14 e i 32 anni e vuoi fare la differenza a Rubiera? Entrare nell\'Area Giovani della Croce Rossa significa fare nuove amicizie, acquisire competenze trasversali (soft skills), viaggiare, fare formazione e metterti in gioco per gli altri.',
     imageUrl: 'https://picsum.photos/seed/entra-giovani/800/600',
-    cta: { label: 'Diventa Volontario', url: '/diventa-volontario' },
+    cta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario' },
   },
 ]
 </script>

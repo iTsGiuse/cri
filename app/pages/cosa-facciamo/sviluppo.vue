@@ -8,13 +8,15 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,
     title: 'Raccolta Fondi e Sostenibilità delle Attività',
     description: 'Garantiamo la continuità e la crescita dei nostri servizi alla comunità attraverso campagne di raccolta fondi trasparenti, donazioni liberali, il 5×1000 e partenariati con realtà del territorio. Ogni risorsa raccolta viene reinvestita direttamente per l\'acquisto di mezzi, attrezzature e beni di prima necessità.',
     imageUrl: 'https://picsum.photos/seed/raccolta-fondi/800/600',
-    cta: { label: 'Scopri come sostenerci', url: '/sostienici' },
+    cta: { label: 'Scopri come sostenerci', url: '/dona' },
   },
   {
     id: 2,
@@ -27,7 +29,7 @@ const sections: AlternatingSection[] = [
     title: 'Promozione del Volontariato e Arruolamento',
     description: 'Curiamo le campagne di sensibilizzazione e i percorsi di accoglienza per chi desidera diventare volontario della Croce Rossa a Rubiera. Gestiamo i canali informativi dedicati ai nuovi aspiranti, accompagnandoli dal primo contatto fino all\'ingresso ufficiale in squadra.',
     imageUrl: 'https://picsum.photos/seed/promozione-volontariato/800/600',
-    cta: { label: 'Diventa Volontario', url: '/diventa-volontario' },
+    cta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario' },
   },
   {
     id: 4,
@@ -53,7 +55,7 @@ const sections: AlternatingSection[] = [
     title: 'Unisciti al Team di Sviluppo e Comunicazione',
     description: 'Hai competenze nella grafica, nella gestione dei social, nella scrittura, nell\'organizzazione di eventi o nel fundraising? Metti il tuo talento al servizio della Croce Rossa di Rubiera e aiuta a far crescere la nostra voce sul territorio.',
     imageUrl: 'https://picsum.photos/seed/volontario-comunicazione/800/600',
-    cta: { label: 'Unisciti a noi', url: '/diventa-volontario' },
+    cta: { label: 'Unisciti a noi', url: '/volontariato/diventa-volontario' },
   },
 ]
 </script>

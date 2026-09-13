@@ -8,53 +8,77 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,
-    title: 'Servizio di Emergenza-Urgenza 118',
-    description: 'Garantiamo la copertura dei servizi di soccorso sanitario in convenzione con il sistema 118 dell\'Azienda USL di Reggio Emilia. Le nostre ambulanze e i nostri equipaggi, formati e certificati secondo i protocolli regionali, sono operativi H24 per intervenire tempestivamente in caso di malori, traumi o emergenze sul territorio di Rubiera e nei comuni limitrofi.',
-    imageUrl: 'https://picsum.photos/seed/emergenza118/800/600',
+    title: 'Promuovere la Salute nella Comunità',
+    description:
+      'L\'Area Salute raccoglie tutte le attività con cui il Comitato di Rubiera promuove il benessere delle persone: educazione sanitaria, prevenzione, diffusione delle manovre salvavita e vicinanza a chi vive una condizione di fragilità. Il nostro obiettivo è che ogni cittadino sappia riconoscere un\'emergenza e sappia come comportarsi.',
+    imageUrl: 'https://picsum.photos/seed/cri-area-salute/800/600',
   },
   {
     id: 2,
-    title: 'Trasporti Sanitari e Inserimenti Ospedalieri',
-    description: 'Offriamo un servizio continuo di trasporto programmato per cittadini che necessitano di spostamenti da e per strutture ospedaliere, centri di riabilitazione o cliniche private. Effettuiamo dimissioni, ricoveri, visite specialistiche, dialisi e terapie ricorrenti mediante ambulanze, pulmini attrezzati con pedana per disabili e autovetture dedicate.',
-    imageUrl: 'https://picsum.photos/seed/trasporto-sanitario/800/600',
-    cta: { label: 'Prenota un trasporto', url: '/contatti' },
+    title: 'Diffondere la Cultura del Primo Soccorso',
+    description:
+      'Una comunità preparata salva vite. Portiamo le manovre salvavita e le nozioni di primo soccorso nelle scuole, nelle piazze e nei luoghi di aggregazione, perché il primo soccorritore è quasi sempre una persona comune che si trova sul posto prima dei mezzi di soccorso.',
+    imageUrl: 'https://picsum.photos/seed/cri-cultura-soccorso/800/600',
+    cta: {
+      label: 'Iscriviti a un corso per la popolazione',
+      url: '/servizi/corsi-popolazione',
+    },
   },
   {
     id: 3,
-    title: 'Assistenza Sanitaria a Manifestazioni ed Eventi',
-    description: 'Mettiamo a disposizione squadre di soccorritori, ambulanze e postazioni mediche avanzate per la copertura sanitaria di eventi sportivi, concerti, sagre, fiere ed eventi pubblici o privati. Progettiamo il piano dei soccorsi in conformità con la normativa vigente sulla sicurezza dei grandi eventi.',
-    imageUrl: 'https://picsum.photos/seed/assistenza-eventi/800/600',
-    cta: { label: 'Richiedi assistenza per un evento', url: '/contatti' },
+    title: 'Prevenzione e Stili di Vita Sani',
+    description:
+      'Organizziamo giornate di prevenzione aperte alla cittadinanza con controlli gratuiti della pressione arteriosa e momenti informativi sui corretti stili di vita. Informare e intercettare precocemente i fattori di rischio è uno degli strumenti più efficaci per contrastare le malattie croniche.',
+    imageUrl: 'https://picsum.photos/seed/cri-prevenzione/800/600',
+    cta: {
+      label: 'Scopri i prossimi eventi di prevenzione',
+      url: '/eventi',
+    },
   },
   {
     id: 4,
-    title: 'Formazione e Primo Soccorso per la Cittadinanza',
-    description: 'Organizziamo corsi teorico-pratici dedicati alla popolazione, alle famiglie e alle scuole: manovre di disostruzione pediatrica, utilizzo del defibrillatore semi-automatico (BLSD) e nozioni base di primo soccorso. Il nostro obiettivo è rendere ogni cittadino un anello attivo della catena del soccorso.',
-    imageUrl: 'https://picsum.photos/seed/formazione-salute/800/600',
-    cta: { label: 'Scopri i prossimi corsi', url: '/corsi' },
+    title: 'Educazione alla Salute per Ogni Età',
+    description:
+      'Dai laboratori per i più piccoli agli incontri dedicati ai genitori sulle manovre di disostruzione pediatrica, fino alle iniziative pensate per le persone anziane. Adattiamo linguaggio e contenuti a ogni fascia d\'età, perché l\'informazione sanitaria sia davvero comprensibile e utilizzabile.',
+    imageUrl: 'https://picsum.photos/seed/cri-educazione-salute/800/600',
   },
   {
     id: 5,
-    title: 'Corsi Sicurezza sul Lavoro (D.Lgs. 81/08)',
-    description: 'Forniamo percorsi formativi specifici dedicati alle aziende del territorio per la formazione e l\'aggiornamento degli addetti al primo soccorso aziendale (Gruppi A, B e C), garantendo il rispetto delle normative di legge sulla tutela e salute nei luoghi di lavoro.',
-    imageUrl: 'https://picsum.photos/seed/primo-soccorso-aziende/800/600',
-    cta: { label: 'Contatta il settore formazione', url: 'mailto:rubiera@cri.it' },
+    title: 'Salute e Fragilità: un Approccio Integrato',
+    description:
+      'La salute non è solo assenza di malattia. Lavoriamo in stretto raccordo con l\'Area Sociale del Comitato perché isolamento, povertà e difficoltà di accesso alle cure incidono direttamente sulle condizioni di salute delle persone più fragili del territorio.',
+    imageUrl: 'https://picsum.photos/seed/cri-salute-fragilita/800/600',
+    cta: {
+      label: 'Scopri l\'area Sociale e Inclusione',
+      url: '/cosa-facciamo/sociale',
+    },
   },
   {
     id: 6,
-    title: 'Prevenzione, Stili di Vita e Screening',
-    description: 'Promuoviamo la cultura della salute attraverso campagne di sensibilizzazione, giornate di prevenzione cardiovascolare e controlli gratuiti della pressione arteriosa o della glicemia in piazza. Lavoriamo quotidianamente per contrastare le malattie croniche e diffondere stili di vita sani.',
-    imageUrl: 'https://picsum.photos/seed/prevenzione-salute/800/600',
+    title: 'I Servizi Sanitari del Comitato',
+    description:
+      'Le attività di promozione della salute si affiancano ai servizi operativi che il Comitato garantisce ogni giorno: il soccorso in emergenza in convenzione con il 118, i trasporti sanitari programmati e l\'assistenza sanitaria alle manifestazioni pubbliche.',
+    imageUrl: 'https://picsum.photos/seed/cri-servizi-sanitari/800/600',
+    cta: {
+      label: 'Consulta tutti i servizi sanitari',
+      url: '/servizi/emergenza-118',
+    },
   },
   {
     id: 7,
-    title: 'Diventa Volontario nei Servizi Sanitari',
-    description: 'Tutti i nostri servizi nell\'Area Salute sono possibili grazie alla dedizione dei nostri volontari. Se desideri salire in ambulanza, aiutare nei trasporti ordinari o contribuire alla formazione della comunità, entra a far parte della nostra squadra.',
-    imageUrl: 'https://picsum.photos/seed/volontari-cri/800/600',
-    cta: { label: 'Diventa Volontario', url: '/diventa-volontario' },
+    title: 'Diventa Volontario nell\'Area Salute',
+    description:
+      'Le attività dell\'Area Salute sono possibili grazie ai volontari che dedicano tempo alla formazione della popolazione, alle giornate di prevenzione e ai servizi sanitari. Non servono competenze mediche pregresse: la formazione è interna e gratuita.',
+    imageUrl: 'https://picsum.photos/seed/cri-volontari-salute/800/600',
+    cta: {
+      label: 'Scopri come diventare volontario',
+      url: '/volontariato/diventa-volontario',
+    },
   },
 ]
 </script>

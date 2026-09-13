@@ -107,7 +107,6 @@
 </template>
 
 <script setup lang="ts">
-import { siteConfig } from '~/data/config'
 
 const historyContent = {
   timeline: [
@@ -159,15 +158,10 @@ const historyContent = {
     description: 'La storia della Croce Rossa a Rubiera non appartiene al passato: è un racconto in costante evoluzione che si arricchisce ogni giorno grazie all’energia, al tempo e al cuore di chi sceglie di donarsi agli altri. Unisciti a noi.',
     cta: {
       label: 'Scopri come diventare volontario',
-      url: '/chi-siamo/sede-e-contatti',
+      url: '/chi-siamo/comitato-e-contatti',
       icon: 'i-bi:heart-fill',
     },
   },
 }
 
-useSeoMeta({
-  title: `La Nostra Storia - ${siteConfig.name}`,
-  description:
-    'Ripercorri la lunga storia del Comitato di Rubiera della Croce Rossa Italiana: oltre 50 anni di volontariato, evoluzione e presenza costante al servizio della comunità.',
-})
 </script>

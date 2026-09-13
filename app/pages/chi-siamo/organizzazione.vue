@@ -13,6 +13,8 @@
 <script setup lang="ts">
 import type { GovernanceGroup } from '~/components/Governance.vue'
 
+useSeoPagina()
+
 const governanceGroups: GovernanceGroup[] = [
   {
     id: 'consiglio-direttivo',

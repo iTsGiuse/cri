@@ -64,7 +64,7 @@ const relatedArticles = computed(() => {
 })
 
 useSeoMeta({
-  title: () => `${article.value.title} | ${siteConfig.shortName}`,
+  title: () => article.value.title,
   description: () => article.value.description,
   ogTitle: () => article.value.title,
   ogDescription: () => article.value.description,

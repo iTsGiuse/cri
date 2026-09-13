@@ -134,7 +134,7 @@
             </p>
 
             <NuxtLink
-              to="/contatti"
+              to="/chi-siamo/comitato-e-contatti"
               class="btn btn-danger btn-lg rounded-pill px-4 py-2 text-white fw-semibold d-inline-flex align-items-center gap-2 shadow-sm"
             >
               <span>Contatta il Comitato di Rubiera</span>

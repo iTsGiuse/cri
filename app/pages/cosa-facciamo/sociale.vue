@@ -8,13 +8,15 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 
+useSeoPagina()
+
 const sections: AlternatingSection[] = [
   {
     id: 1,
     title: 'Supporto Alimentare e Distribuzione Viveri',
     description: 'Contrastiamo la povertà materiale e alimentare sul territorio di Rubiera attraverso la raccolta e la distribuzione periodica di generi alimentari di prima necessità e pacchi spesa alle famiglie in difficoltà economica, offrendo un ascolto empatico e un supporto concreto e discreto.',
     imageUrl: 'https://picsum.photos/seed/supporto-alimentare/800/600',
-    cta: { label: 'Scopri come donare cibo', url: '/sostienici' },
+    cta: { label: 'Scopri come donare cibo', url: '/dona' },
   },
   {
     id: 2,
@@ -27,7 +29,7 @@ const sections: AlternatingSection[] = [
     title: 'Trasporto Sociale e Accompagnamento Protetto',
     description: 'Garantiamo la mobilità protetta per persone anziane, con disabilità o con ridotta mobilità che necessitano di raggiungere centri diurni, luoghi di cura per terapie non urgenti o che hanno bisogno di supporto per sbrigare commissioni quotidiane essenziali.',
     imageUrl: 'https://picsum.photos/seed/trasporto-sociale/800/600',
-    cta: { label: 'Richiedi il servizio', url: '/contatti' },
+    cta: { label: 'Richiedi il servizio', url: '/chi-siamo/comitato-e-contatti' },
   },
   {
     id: 4,
@@ -40,7 +42,7 @@ const sections: AlternatingSection[] = [
     title: 'Inclusione e Supporto ai Giovani',
     description: 'Promuoviamo percorsi educativi, laboratori e spazi di socializzazione dedicati ai più giovani e agli adolescenti del territorio. Lavoriamo sulla prevenzione del disagio giovanile, sull\'educazione alla cittadinanza attiva e sull\'inclusione scolastica e sociale.',
     imageUrl: 'https://picsum.photos/seed/giovani-cri/800/600',
-    cta: { label: 'Scopri le attività giovani', url: '/giovani' },
+    cta: { label: 'Scopri le attività giovani', url: '/cosa-facciamo/giovani' },
   },
   {
     id: 6,
@@ -53,7 +55,7 @@ const sections: AlternatingSection[] = [
     title: 'Diventa Volontario nell\'Area Sociale',
     description: 'L\'Area Sociale vive grazie all\'energia e al cuore dei nostri volontari. Se hai a cuore il benessere della comunità di Rubiera, vuoi dedicare un po\' del tuo tempo agli altri e fare la differenza per chi è in difficoltà, unisciti alla nostra squadra.',
     imageUrl: 'https://picsum.photos/seed/volontario-sociale/800/600',
-    cta: { label: 'Diventa Volontario', url: '/diventa-volontario' },
+    cta: { label: 'Diventa Volontario', url: '/volontariato/diventa-volontario' },
   },
 ]
 </script>

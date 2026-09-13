@@ -365,7 +365,7 @@
 </template>
 
 <script setup lang="ts">
-import { siteConfig, contactConfig } from '~/data/config'
+import { contactConfig } from '~/data/config'
 
 const pageData = {
   requirementsSection: {
@@ -486,23 +486,4 @@ const faqs = [
   },
 ]
 
-useSeoMeta({
-  title: `Diventa volontario | ${siteConfig.shortName}`,
-  description:
-    'Scopri come diventare volontario della Croce Rossa Italiana – Comitato di Rubiera: requisiti, percorso di accesso, formazione e contatti.',
-  ogTitle: `Diventa volontario | ${siteConfig.shortName}`,
-  ogDescription:
-    'Scopri come diventare volontario della Croce Rossa Italiana – Comitato di Rubiera.',
-  ogType: 'website',
-  twitterCard: 'summary_large_image',
-})
-
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: `${siteConfig.url}/diventa-volontario`,
-    },
-  ],
-})
 </script>

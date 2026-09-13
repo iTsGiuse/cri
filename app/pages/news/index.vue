@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Hero heading-level="h2" />
+    <Hero />
     <Comunicazione
       :articles="newsArticles"
       :categories="newsCategories"
@@ -16,7 +16,7 @@ import { siteConfig } from '~/data/config'
 import { newsArticles, newsCategories } from '~/data/news'
 
 useSeoMeta({
-  title: `News | ${siteConfig.shortName}`,
+  title: 'Notizie',
   description: `Tutte le news e le comunicazioni della ${siteConfig.name}.`,
 })
 

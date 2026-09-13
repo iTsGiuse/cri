@@ -12,7 +12,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { organizationConfig } from './data/config'
+import {
+  activeSocialLinks,
+  contactConfig,
+  organizationConfig,
+} from './data/config'
 
 const config = useRuntimeConfig()
 const siteName = config.public.siteShortName
@@ -39,6 +43,37 @@ useSeoMeta({
   ogImageAlt: siteName,
   twitterCard: 'summary_large_image',
 })
+
+// --- Dati strutturati Schema.org ---
+// Solo informazioni verificabili presenti in data/config.ts.
+useSchemaOrg([
+  defineOrganization({
+    '@type': ['NGO', 'LocalBusiness'],
+    'name': organizationConfig.legalName,
+    'alternateName': siteName,
+    'description': description,
+    'url': siteUrl,
+    'logo': `${siteUrl}${organizationConfig.logo.imageUrl}`,
+    'taxID': organizationConfig.taxCode,
+    'email': contactConfig.email,
+    'telephone': contactConfig.phone.value,
+    'sameAs': activeSocialLinks.map((social) => social.url),
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': contactConfig.address.street,
+      'postalCode': contactConfig.address.postalCode,
+      'addressLocality': contactConfig.address.city,
+      'addressRegion': contactConfig.address.province,
+      'addressCountry': 'IT',
+    },
+  }),
+  defineWebSite({
+    name: siteName,
+    url: siteUrl,
+    inLanguage: config.public.language,
+  }),
+  defineWebPage(),
+])
 
 // --- Iubenda Cookie Solution ---
 if (iubenda.siteId && iubenda.cookiePolicyId) {

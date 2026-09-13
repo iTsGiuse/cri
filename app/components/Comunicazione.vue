@@ -142,6 +142,8 @@
             <NuxtLink
               :to="`${baseRoute}/${article.slug}`"
               class="text-decoration-none d-block"
+              tabindex="-1"
+              aria-hidden="true"
             >
               <div class="ratio ratio-16x9 bg-light overflow-hidden">
                 <NuxtImg
@@ -189,7 +191,7 @@
                   class="btn btn-link text-danger text-decoration-none fw-semibold p-0 d-inline-flex align-items-center gap-2"
                 >
                   {{ config.readMoreLabel }}
-                  <Icon name="i-bi:arrow-right" />
+                  <Icon name="i-bi:arrow-right" aria-hidden="true" />
                 </NuxtLink>
               </div>
             </div>

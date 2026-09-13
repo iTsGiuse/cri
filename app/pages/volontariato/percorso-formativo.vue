@@ -8,6 +8,8 @@
 <script setup lang="ts">
 import type { QualificationCategory } from '~/components/Qualifiche.vue'
 
+useSeoPagina()
+
 const qualificationCategories: QualificationCategory[] = [
   {
     id: 'salute',

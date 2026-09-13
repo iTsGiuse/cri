@@ -32,12 +32,12 @@ export const heroContentByPath: Record<string, HeroContent> = {
     },
   },
 
-  '/chi-siamo/il-comitato': {
+  '/chi-siamo/comitato-e-contatti': {
     badge: 'Chi Siamo',
     badgeIcon: 'i-bi:building-fill',
-    title: 'Il Comitato di Rubiera',
+    title: 'Comitato e Contatti',
     description:
-      'Scopri chi siamo, i nostri valori fondamentali e come operiamo sul territorio per offrire supporto quotidiano a chi ne ha più bisogno.',
+      'Chi siamo, dove trovarci e come contattarci: la sede, i recapiti e i riferimenti del Comitato di Rubiera.',
     imageUrl: 'https://picsum.photos/id/1018/1200/800',
     imageAlt: 'Sede Croce Rossa Rubiera',
     primaryCta: {
@@ -62,7 +62,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Foto storica della Croce Rossa',
     primaryCta: {
       label: 'Scopri il Comitato',
-      url: '/chi-siamo/il-comitato',
+      url: '/chi-siamo/comitato-e-contatti',
       icon: 'i-bi:building-fill',
     },
   },
@@ -82,7 +82,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     },
     secondaryCta: {
       label: 'Sede e Contatti',
-      url: '/chi-siamo/sede-e-contatti',
+      url: '/chi-siamo/comitato-e-contatti',
       icon: 'i-bi:geo-alt-fill',
     },
   },
@@ -112,28 +112,8 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Documenti e trasparenza',
     primaryCta: {
       label: 'Richiedi Info',
-      url: '/chi-siamo/sede-e-contatti',
+      url: '/chi-siamo/comitato-e-contatti',
       icon: 'i-bi:envelope-fill',
-    },
-  },
-
-  '/chi-siamo/sede-e-contatti': {
-    badge: 'Siamo Qui per Te',
-    badgeIcon: 'i-bi:geo-alt-fill',
-    title: 'Sede e Contatti',
-    description:
-      'Vieni a trovarci o mettiti in contatto con i nostri uffici centrali per informazioni, servizi e richieste amministrative.',
-    imageUrl: 'https://picsum.photos/id/1011/1200/800',
-    imageAlt: 'Contatti e centralino Rubiera',
-    primaryCta: {
-      label: 'Prenotazioni',
-      url: '/servizi/prenotazioni-e-informazioni',
-      icon: 'i-bi:calendar-check-fill',
-    },
-    secondaryCta: {
-      label: 'Richiedi Trasporto',
-      url: '/servizi/richiedi-trasporto',
-      icon: 'i-bi:truck-front-fill',
     },
   },
 
@@ -262,7 +242,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     },
     secondaryCta: {
       label: 'FAQ Trasporti',
-      url: '/faq/servizi-e-trasporti',
+      url: '/faq',
       icon: 'i-bi:question-circle-fill',
     },
   },
@@ -292,7 +272,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Corso Primo Soccorso popolazione',
     primaryCta: {
       label: 'FAQ Corsi',
-      url: '/faq/corsi-formazione',
+      url: '/faq',
       icon: 'i-bi:question-circle-fill',
     },
   },
@@ -307,7 +287,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Corso aziendale sicurezza',
     primaryCta: {
       label: 'Richiedi Preventivo',
-      url: '/chi-siamo/sede-e-contatti',
+      url: '/chi-siamo/comitato-e-contatti',
       icon: 'i-bi:envelope-fill',
     },
   },
@@ -322,7 +302,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Volontario in assistenza sociale',
     primaryCta: {
       label: 'Contatta il Centralino',
-      url: '/chi-siamo/sede-e-contatti',
+      url: '/chi-siamo/comitato-e-contatti',
       icon: 'i-bi:telephone-fill',
     },
   },
@@ -337,7 +317,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Modulo prenotazioni e info',
     primaryCta: {
       label: 'FAQ Servizi',
-      url: '/faq/servizi-e-trasporti',
+      url: '/faq',
       icon: 'i-bi:question-circle-fill',
     },
   },
@@ -351,34 +331,14 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageUrl: 'https://picsum.photos/id/1005/1200/800',
     imageAlt: 'Volontari sorridenti Croce Rossa',
     primaryCta: {
-      label: 'Il Corso di Accesso',
-      url: '/volontariato/corso-di-accesso',
-      icon: 'i-bi:info-circle-fill',
-    },
-    secondaryCta: {
-      label: 'Percorso Formativo',
+      label: 'Percorso formativo',
       url: '/volontariato/percorso-formativo',
       icon: 'i-bi:mortarboard-fill',
     },
-  },
-
-  '/volontariato/corso-di-accesso': {
-    badge: 'Iscrizioni Aperte',
-    badgeIcon: 'i-bi:info-circle-fill',
-    title: 'Come funziona il Corso di Accesso',
-    description:
-      'Scopri la durata, le materie trattate e le modalità d’iscrizione al corso base per diventare un Volontario della Croce Rossa Italiana.',
-    imageUrl: 'https://picsum.photos/id/1060/1200/800',
-    imageAlt: 'Aula corsi Croce Rossa',
-    primaryCta: {
-      label: 'Diventa Volontario',
-      url: '/volontariato/diventa-volontario',
-      icon: 'i-bi:person-plus-fill',
-    },
     secondaryCta: {
-      label: 'FAQ Volontariato',
-      url: '/faq/volontariato',
-      icon: 'i-bi:question-circle-fill',
+      label: 'Contatta il Comitato',
+      url: '/chi-siamo/comitato-e-contatti',
+      icon: 'i-bi:envelope-fill',
     },
   },
 
@@ -387,28 +347,18 @@ export const heroContentByPath: Record<string, HeroContent> = {
     badgeIcon: 'i-bi:mortarboard-fill',
     title: 'Percorso Formativo e Qualifiche',
     description:
-      'Dopo il corso base potrai specializzarti in soccorso in ambulanza, Protezione Civile, sociale, Diritto Umanitario e molto altro.',
+      'Dal corso di accesso alle specializzazioni: soccorso in ambulanza, protezione civile, area sociale e diritto internazionale umanitario.',
     imageUrl: 'https://picsum.photos/id/1062/1200/800',
-    imageAlt: 'Formazione continua volontari',
+    imageAlt: 'Formazione dei volontari della Croce Rossa',
     primaryCta: {
-      label: 'Gruppi di Lavoro',
-      url: '/volontariato/attivita-e-gruppi',
-      icon: 'i-bi:people-fill',
+      label: 'Diventa volontario',
+      url: '/volontariato/diventa-volontario',
+      icon: 'i-bi:person-plus-fill',
     },
-  },
-
-  '/volontariato/attivita-e-gruppi': {
-    badge: 'Aree Operative',
-    badgeIcon: 'i-bi:people-fill',
-    title: 'Attività e Gruppi di Lavoro',
-    description:
-      'Dalle unità di soccorso ai gruppi giovani, fino al supporto sociale: scopri in quali aree operative puoi mettere in gioco il tuo talento.',
-    imageUrl: 'https://picsum.photos/id/1059/1200/800',
-    imageAlt: 'Gruppi operativi al lavoro',
-    primaryCta: {
-      label: 'Cosa Facciamo',
-      url: '/cosa-facciamo/salute',
-      icon: 'i-bi:heart-pulse-fill',
+    secondaryCta: {
+      label: 'Domande frequenti',
+      url: '/faq',
+      icon: 'i-bi:question-circle-fill',
     },
   },
 
@@ -472,63 +422,23 @@ export const heroContentByPath: Record<string, HeroContent> = {
     },
   },
 
-  '/faq/servizi-e-trasporti': {
+  '/faq': {
     badge: 'Domande Frequenti',
-    badgeIcon: 'i-bi:truck-front-fill',
-    title: 'FAQ Trasporti e Servizi',
+    badgeIcon: 'i-bi:question-circle-fill',
+    title: 'Domande frequenti',
     description:
-      'Trova risposte rapide alle domande più comuni su prenotazione trasporti, costi, convenzioni e copertura dei servizi.',
+      'Risposte rapide su trasporti sanitari, corsi di formazione, volontariato e modalità di sostegno al Comitato di Rubiera.',
     imageUrl: 'https://picsum.photos/id/1039/1200/800',
-    imageAlt: 'Risposte FAQ Servizi',
+    imageAlt: 'Risposte alle domande più frequenti',
     primaryCta: {
-      label: 'Richiedi Trasporto',
+      label: 'Richiedi un trasporto',
       url: '/servizi/richiedi-trasporto',
       icon: 'i-bi:truck-front-fill',
     },
-  },
-
-  '/faq/corsi-formazione': {
-    badge: 'Domande Frequenti',
-    badgeIcon: 'i-bi:mortarboard-fill',
-    title: 'FAQ Corsi di Formazione',
-    description:
-      'Risposte dettagliate su attestati rilasciati, modalità di svolgimento e iscrizioni per i corsi alla popolazione e aziendali.',
-    imageUrl: 'https://picsum.photos/id/1062/1200/800',
-    imageAlt: 'Risposte FAQ Corsi',
-    primaryCta: {
-      label: 'Corsi Popolazione',
-      url: '/servizi/corsi-popolazione',
-      icon: 'i-bi:mortarboard-fill',
-    },
-  },
-
-  '/faq/volontariato': {
-    badge: 'Domande Frequenti',
-    badgeIcon: 'i-bi:person-heart',
-    title: 'FAQ Diventare Volontario',
-    description:
-      'Requisiti di età, impegno orario richiesto, e risposte ai dubbi più comuni prima di iscriversi al corso di accesso.',
-    imageUrl: 'https://picsum.photos/id/1013/1200/800',
-    imageAlt: 'Risposte FAQ Volontariato',
-    primaryCta: {
-      label: 'Diventa Volontario',
-      url: '/volontariato/diventa-volontario',
-      icon: 'i-bi:person-plus-fill',
-    },
-  },
-
-  '/faq/donazioni': {
-    badge: 'Domande Frequenti',
-    badgeIcon: 'i-bi:piggy-bank-fill',
-    title: 'FAQ Donazioni e 5x1000',
-    description:
-      'Come destinare il 5x1000, agevolazioni fiscali per privati e imprese, e come vengono impiegati i fondi raccolti.',
-    imageUrl: 'https://picsum.photos/id/1055/1200/800',
-    imageAlt: 'Risposte FAQ Donazioni',
-    primaryCta: {
-      label: 'Dona Ora',
-      url: '/dona',
-      icon: 'i-bi:heart-fill',
+    secondaryCta: {
+      label: 'Contatta il Comitato',
+      url: '/chi-siamo/comitato-e-contatti',
+      icon: 'i-bi:envelope-fill',
     },
   },
 
@@ -542,7 +452,7 @@ export const heroContentByPath: Record<string, HeroContent> = {
     imageAlt: 'Sostieni la Croce Rossa',
     primaryCta: {
       label: 'FAQ Donazioni',
-      url: '/faq/donazioni',
+      url: '/faq',
       icon: 'i-bi:question-circle-fill',
     },
   },

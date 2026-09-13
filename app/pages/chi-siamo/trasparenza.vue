@@ -8,6 +8,8 @@
 <script setup lang="ts">
 import type { TransparencyDocument } from '~/components/TrasparenzaDocumenti.vue'
 
+useSeoPagina()
+
 const documents: TransparencyDocument[] = [
   {
     id: 'doc-1',

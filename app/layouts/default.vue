@@ -30,6 +30,7 @@ import type { CtaSectionData } from '~/components/Cta.vue'
 import {
   activeSocialLinks,
   contactConfig,
+  legaleConfig,
   legalInfo,
   organizationConfig,
   siteConfig,
@@ -234,6 +235,26 @@ const ctaData: CtaSectionData = {
   imageAlt: 'Dona il 5×1000 alla Croce Rossa di Rubiera',
 };
 
+const collegamentiLegali = [
+  { label: 'Trasparenza e Documenti', url: '/chi-siamo/trasparenza' },
+  ...(legaleConfig.iubendaPrivacyPolicyId
+    ? [{
+        label: 'Privacy Policy',
+        url: `https://www.iubenda.com/privacy-policy/${legaleConfig.iubendaPrivacyPolicyId}`,
+        external: true,
+      }]
+    : []),
+  ...(legaleConfig.iubendaCookiePolicyId
+    ? [{
+        label: 'Cookie Policy',
+        url: `https://www.iubenda.com/privacy-policy/${legaleConfig.iubendaCookiePolicyId}/cookie-policy`,
+        external: true,
+      }]
+    : []),
+  { label: 'Accessibilità', url: '/accessibilita' },
+  { label: 'Note legali', url: '/note-legali' },
+]
+
 const footerData: FooterData = {
   brand: {
     url: '/',
@@ -282,7 +303,7 @@ const footerData: FooterData = {
         },
         {
           label: 'Corso di accesso e formazione',
-          url: '/volontariato/corso-di-accesso',
+          url: '/volontariato/percorso-formativo',
         },
         {
           label: 'Dona ora',
@@ -323,28 +344,7 @@ const footerData: FooterData = {
     icon: 'i-bi:person-plus-fill',
   },
 
-  legalLinks: [
-    {
-      label: 'Trasparenza e Documenti',
-      url: '/chi-siamo/trasparenza',
-    },
-    {
-      label: 'Privacy Policy',
-      url: '/privacy',
-    },
-    {
-      label: 'Cookie Policy',
-      url: '/cookie-policy',
-    },
-    {
-      label: 'Accessibilità',
-      url: '/accessibilita',
-    },
-    {
-      label: 'Note legali',
-      url: '/note-legali',
-    },
-  ],
+  legalLinks: collegamentiLegali,
 
   legalInfo,
 };

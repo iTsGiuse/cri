@@ -8,6 +8,8 @@
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 import type { SponsorSectionData } from '~/components/Sponsor.vue'
 
+useSeoPagina()
+
 const carouselSlides = getFeaturedCarouselSlides();
 
 const sponsorData: SponsorSectionData = {
@@ -133,7 +135,7 @@ const sponsorData: SponsorSectionData = {
     description:
       'Il tuo sostegno ci aiuta a essere ogni giorno al fianco delle persone e della comunità.',
     label: 'Sostienici',
-    url: '/sostienici',
+    url: '/dona',
   },
 };
 

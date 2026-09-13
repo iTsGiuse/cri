@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Hero heading-level="h2" />
+    <Hero />
     <Comunicazione
       :articles="campagneArticles"
       :categories="campagneCategories"
@@ -16,7 +16,7 @@ import { siteConfig } from '~/data/config'
 import { newsArticles as campagneArticles, newsCategories as campagneCategories } from '~/data/campagne'
 
 useSeoMeta({
-  title: `Campagne di Sensibilizzazione | ${siteConfig.shortName}`,
+  title: 'Campagne di sensibilizzazione',
   description: `Scopri le campagne ed i progetti di sensibilizzazione promossi dalla ${siteConfig.name}.`,
 })
 
