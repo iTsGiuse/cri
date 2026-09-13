@@ -1,4 +1,3 @@
-// app/data/config.ts
 import type { SocialLink } from '../types'
 import type { OrarioApertura } from '../types/contenuti'
 
@@ -59,14 +58,11 @@ export const contactConfig = {
   },
 } as const
 
-// DA VERIFICARE con il Comitato prima della pubblicazione.
 export const orariConfig: OrarioApertura[] = [
   { giorni: 'Lunedì – Venerdì', orario: '09:00 – 12:00' },
   { giorni: 'Sabato e festivi', orario: 'Solo servizi programmati' },
 ]
 
-// Gli ID Iubenda popolano le pagine privacy e cookie policy.
-// Finché sono vuoti le relative voci non vengono mostrate nel footer.
 export const legaleConfig = {
   iubendaSiteId: '',
   iubendaCookiePolicyId: '',

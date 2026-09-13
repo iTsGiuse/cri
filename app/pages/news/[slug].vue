@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { siteConfig } from '~/data/config'
 import { newsArticles, newsCategories } from '~/data/news'
 
 const route = useRoute()
@@ -63,12 +62,10 @@ const relatedArticles = computed(() => {
     .slice(0, 3)
 })
 
-useSeoMeta({
-  title: () => article.value.title,
-  description: () => article.value.description,
-  ogTitle: () => article.value.title,
-  ogDescription: () => article.value.description,
-  ogImage: () => article.value.imageUrl,
-  twitterCard: 'summary_large_image',
-})
+useSeoPagina(() => ({
+  titolo: article.value.title,
+  descrizione: article.value.description,
+  immagine: article.value.imageUrl,
+  tipo: 'article',
+}))
 </script>

@@ -1,4 +1,3 @@
-// app/data/campagne.ts
 import type { Campagna, CategoriaComunicazione } from '~/types/comunicazioni'
 
 export type NewsCategory = CategoriaComunicazione

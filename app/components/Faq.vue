@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col-12">
 
-        <!-- Barra Filtri -->
         <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4">
           <div class="card-body p-3 p-md-4 bg-white">
             <div class="row g-3 align-items-center">
@@ -38,7 +37,6 @@
           </div>
         </div>
 
-        <!-- Contatore e Pulsante Reset -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mb-4 px-1">
           <div class="d-flex align-items-center gap-2">
             <span class="fw-bold text-dark fs-5">Domande trovate</span>
@@ -54,7 +52,6 @@
           </button>
         </div>
 
-        <!-- Accordion FAQ -->
         <div v-if="filteredFaqItems.length > 0" id="accordionFaqRubiera" class="accordion accordion-flush d-flex flex-column gap-3">
           <div
             v-for="(item, index) in filteredFaqItems"
@@ -99,7 +96,6 @@
           </div>
         </div>
 
-        <!-- Stato Nessun Risultato -->
         <div v-else class="card border-0 shadow-sm rounded-4 text-center py-5 px-3 bg-white">
           <div class="card-body">
             <div class="empty-icon-wrapper rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center mb-3">
@@ -121,7 +117,6 @@
 
         <LazyDivisore />
 
-        <!-- Card CTA Contatti -->
         <div class="card bg-light border-0 rounded-4 p-4 p-md-5 text-center shadow-lg">
           <div class="card-body p-0">
             <div class="d-inline-flex align-items-center justify-content-center bg-danger text-white rounded-circle mb-3 p-3" style="width: 50px; height: 50px;">

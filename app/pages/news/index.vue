@@ -12,13 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { siteConfig } from '~/data/config'
 import { newsArticles, newsCategories } from '~/data/news'
 
-useSeoMeta({
-  title: 'Notizie',
-  description: `Tutte le news e le comunicazioni della ${siteConfig.name}.`,
-})
+useSeoPagina()
 
 const newsConfig = {
   searchLabel: 'Cerca nelle news',

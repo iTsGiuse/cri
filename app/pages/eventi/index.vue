@@ -12,13 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { siteConfig } from '~/data/config'
 import { newsArticles as eventArticles, newsCategories as eventCategories } from '~/data/eventi'
 
-useSeoMeta({
-  title: 'Eventi',
-  description: `Tutti gli eventi e le iniziative della ${siteConfig.name}.`,
-})
+useSeoPagina()
 
 const eventsConfig = {
   searchLabel: 'Cerca negli eventi',

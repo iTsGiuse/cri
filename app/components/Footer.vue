@@ -79,73 +79,67 @@
               </li>
             </ul>
           </nav>
-        </div>
 
-        <div
-          class="col-12 col-md-6 col-xl-3 text-center text-xl-start"
-          :class="{
-            'offset-xl-3':
-              footer.columns.length > 0 && footer.columns.length % 3 === 0,
-          }"
-        >
-          <h6
-            class="fw-semibold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
-          >
-            {{ footer.contacts.title }}
-          </h6>
+          <template v-if="index === 0">
+            <h6
+              class="fw-semibold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3 mt-4"
+            >
+              {{ footer.contacts.title }}
+            </h6>
 
-          <ul class="list-unstyled mb-0 small">
-            <li class="mb-3">
-              <address class="mb-0 fst-normal">
+            <ul class="list-unstyled mb-0 small">
+              <li class="mb-3">
+                <address class="mb-0 fst-normal">
+                  <a
+                    :href="footer.contacts.address.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link-light text-decoration-none d-flex gap-2 align-items-start justify-content-center justify-content-xl-start"
+                  >
+                    <Icon
+                      :name="footer.contacts.address.icon"
+                      class="mt-1 flex-shrink-0 opacity-75"
+                      aria-hidden="true"
+                    />
+
+                    <span>{{ footer.contacts.address.label }}</span>
+                  </a>
+                </address>
+              </li>
+
+              <li class="mb-3">
                 <a
-                  :href="footer.contacts.address.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="link-light text-decoration-none d-flex gap-2 align-items-start justify-content-center justify-content-xl-start"
+                  :href="`tel:${footer.contacts.phone.value}`"
+                  class="link-light text-decoration-none d-flex gap-2 align-items-center justify-content-center justify-content-xl-start"
                 >
                   <Icon
-                    :name="footer.contacts.address.icon"
-                    class="mt-1 flex-shrink-0 opacity-75"
+                    :name="footer.contacts.phone.icon"
+                    class="flex-shrink-0 opacity-75"
                     aria-hidden="true"
                   />
 
-                  <span>{{ footer.contacts.address.label }}</span>
+                  <span>{{ footer.contacts.phone.label }}</span>
                 </a>
-              </address>
-            </li>
+              </li>
 
-            <li class="mb-3">
-              <a
-                :href="`tel:${footer.contacts.phone.value}`"
-                class="link-light text-decoration-none d-flex gap-2 align-items-center justify-content-center justify-content-xl-start"
-              >
-                <Icon
-                  :name="footer.contacts.phone.icon"
-                  class="flex-shrink-0 opacity-75"
-                  aria-hidden="true"
-                />
+              <li>
+                <a
+                  :href="`mailto:${footer.contacts.email.value}`"
+                  class="link-light text-decoration-none d-flex gap-2 align-items-center justify-content-center justify-content-xl-start"
+                >
+                  <Icon
+                    :name="footer.contacts.email.icon"
+                    class="flex-shrink-0 opacity-75"
+                    aria-hidden="true"
+                  />
 
-                <span>{{ footer.contacts.phone.label }}</span>
-              </a>
-            </li>
-
-            <li>
-              <a
-                :href="`mailto:${footer.contacts.email.value}`"
-                class="link-light text-decoration-none d-flex gap-2 align-items-center justify-content-center justify-content-xl-start"
-              >
-                <Icon
-                  :name="footer.contacts.email.icon"
-                  class="flex-shrink-0 opacity-75"
-                  aria-hidden="true"
-                />
-
-                <span class="text-break">
-                  {{ footer.contacts.email.label }}
-                </span>
-              </a>
-            </li>
-          </ul>
+                  <span class="text-break">
+                    {{ footer.contacts.email.label }}
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </template>
         </div>
       </div>
 

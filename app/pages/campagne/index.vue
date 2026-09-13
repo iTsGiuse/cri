@@ -12,13 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { siteConfig } from '~/data/config'
 import { newsArticles as campagneArticles, newsCategories as campagneCategories } from '~/data/campagne'
 
-useSeoMeta({
-  title: 'Campagne di sensibilizzazione',
-  description: `Scopri le campagne ed i progetti di sensibilizzazione promossi dalla ${siteConfig.name}.`,
-})
+useSeoPagina()
 
 const campagneConfig = {
   searchLabel: 'Cerca nelle campagne',

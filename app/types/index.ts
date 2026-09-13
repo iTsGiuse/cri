@@ -27,7 +27,6 @@ export interface LinkNavigazione {
   external?: boolean
 }
 
-/** Un gruppo di link di navigazione (es. una colonna del footer). */
 export interface GruppoNavigazione {
   titolo: string
   link: LinkNavigazione[]

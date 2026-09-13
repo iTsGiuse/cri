@@ -2,7 +2,6 @@
   <section class="py-5 bg-light" id="comitato">
     <div class="container">
 
-      <!-- 1. EMERGENZA IN PRIMO PIANO -->
       <div class="alert border-0 bg-danger text-white rounded-4 p-4 p-lg-4 mb-4 shadow">
         <div class="row align-items-center justify-content-between g-3">
           <div class="col-lg-8 d-flex align-items-center gap-3.5">
@@ -33,15 +32,12 @@
         </div>
       </div>
 
-      <!-- 2. CORPO PRINCIPALE: CONTATTI + MAPPA -->
       <div class="row g-4">
         
-        <!-- Colonna Sinistra: Contatti & Orari -->
         <div class="col-lg-5 d-flex flex-column gap-4">
           
           <div class="card border-0 rounded-4 shadow-sm p-4 bg-white d-flex flex-column justify-content-between h-100">
             <div>
-              <!-- Header Card Info -->
               <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
                 <div>
                   <span class="text-muted small text-uppercase fw-semibold d-block">Contatti ufficiali</span>
@@ -56,10 +52,8 @@
                 />
               </div>
 
-              <!-- Lista Azioni rapide (centrate verticalmente rispetto al testo) -->
               <div class="d-flex flex-column gap-3">
                 
-                <!-- Indirizzo / Sede -->
                 <div class="d-flex gap-3 align-items-center">
                   <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
                     <Icon name="bi:building" class="fs-5" />
@@ -71,7 +65,6 @@
                   </div>
                 </div>
 
-                <!-- Telefono -->
                 <div class="d-flex gap-3 align-items-center">
                   <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
                     <Icon name="bi:telephone-fill" class="fs-5" />
@@ -84,7 +77,6 @@
                   </div>
                 </div>
 
-                <!-- Email & PEC -->
                 <div class="d-flex gap-3 align-items-center">
                   <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
                     <Icon name="bi:envelope-fill" class="fs-5" />
@@ -102,7 +94,6 @@
 
               </div>
 
-              <!-- Orari -->
               <div class="mt-4 pt-3 border-top">
                 <div class="d-flex align-items-center gap-2 mb-2">
                   <Icon name="bi:clock" class="text-danger fs-5" />
@@ -150,10 +141,8 @@
 
         </div>
 
-        <!-- Colonna Destra: Mappa interattiva -->
         <div class="col-lg-7 d-flex flex-column">
           <div class="card border-0 rounded-4 shadow-sm overflow-hidden h-100 d-flex flex-column bg-white">
-            <!-- Intestazione mappa più alta e generosa -->
             <div class="px-4 py-4 bg-white border-bottom d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center gap-2.5">
                 <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">

@@ -61,7 +61,6 @@
                 'voce-attiva': isActiveItem(item),
               }"
             >
-              <!-- CASO 1: Voce con sottomenu Dropdown -->
               <template v-if="hasChildren(item)">
                 <button
                   type="button"
@@ -86,7 +85,6 @@
                     v-for="child in item.children"
                     :key="child.label"
                   >
-                    <!-- Sottomenu Link Esterno -->
                     <a
                       v-if="child.external"
                       :href="child.url"
@@ -111,7 +109,6 @@
                       />
                     </a>
 
-                    <!-- Sottomenu Link Interno -->
                     <NuxtLink
                       v-else
                       :to="child.url"
@@ -140,9 +137,7 @@
                 </ul>
               </template>
 
-              <!-- CASO 2: Voce Singola (Senza Figli) -->
               <template v-else>
-                <!-- Link Singolo Esterno -->
                 <a
                   v-if="item.external"
                   :href="item.url"
@@ -160,7 +155,6 @@
                   />
                 </a>
 
-                <!-- Link Singolo Interno (Senza freccia) -->
                 <NuxtLink
                   v-else
                   :to="item.url"
@@ -175,7 +169,6 @@
               </template>
             </li>
 
-            <!-- Pulsante d'Azione -->
             <li class="nav-item mt-4 mt-lg-0 ms-lg-3">
               <NuxtLink
                 :to="header.action.url"

@@ -1,4 +1,3 @@
-// app/data/news.ts
 import type { CategoriaComunicazione, Notizia } from '~/types/comunicazioni'
 
 export type NewsCategory = CategoriaComunicazione

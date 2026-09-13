@@ -1,7 +1,6 @@
 <template>
   <main class="bg-light py-5">
     <div class="container pb-5">
-      <!-- REQUISITI -->
       <section class="mb-5" aria-labelledby="requirements-title">
         <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-4">
           <div>
@@ -56,7 +55,6 @@
         </div>
       </section>
 
-      <!-- PERCORSO -->
       <section class="mb-5" aria-labelledby="steps-title">
         <div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
           <div class="card-body p-4 p-lg-5">
@@ -110,7 +108,6 @@
               </div>
             </div>
 
-            <!-- CTA -->
             <div
               class="border-top mt-5 pt-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4"
             >
@@ -146,14 +143,12 @@
         </div>
       </section>
 
-      <!-- FAQ + CONTATTI -->
       <section aria-labelledby="info-title">
         <h2 id="info-title" class="visually-hidden">
           Informazioni e contatti
         </h2>
 
         <div class="row g-4">
-          <!-- FAQ -->
           <div class="col-12 col-lg-7">
             <div class="card border-0 rounded-4 shadow-sm bg-white h-100">
               <div class="card-body p-4 p-lg-5">
@@ -216,7 +211,6 @@
             </div>
           </div>
 
-          <!-- CONTATTI -->
           <div class="col-12 col-lg-5">
             <aside
               class="card border-0 rounded-4 shadow-sm bg-white h-100"
@@ -236,7 +230,6 @@
                 </p>
 
                 <div class="d-flex flex-column gap-3">
-                  <!-- TELEFONO -->
                   <a
                     :href="`tel:${contactConfig.phone.value}`"
                     class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none"
@@ -260,7 +253,6 @@
                     </div>
                   </a>
 
-                  <!-- EMAIL -->
                   <a
                     :href="`mailto:${contactConfig.email}`"
                     class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none"
@@ -284,7 +276,6 @@
                     </div>
                   </a>
 
-                  <!-- INDIRIZZO -->
                   <a
                     :href="contactConfig.address.mapsUrl"
                     target="_blank"
@@ -331,7 +322,6 @@
         </div>
       </section>
 
-      <!-- CTA FINALE -->
       <section
         class="mt-5"
         aria-labelledby="final-cta-title"

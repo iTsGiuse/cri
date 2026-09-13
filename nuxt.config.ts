@@ -125,8 +125,6 @@ export default defineNuxtConfig({
     densities: [1, 2],
   },
 
-  // Il sito è interamente statico: le pagine vengono pre-renderizzate al build
-  // e servite come HTML, con crawling automatico dei link interni.
   routeRules: {
     '/**': { prerender: true },
   },

@@ -69,7 +69,7 @@ const qualificationCategories: QualificationCategory[] = [
   {
     id: 'trasporto-soccorso',
     title: 'Trasporto sanitario e soccorso',
-    icon: 'i-bi:ambulance',
+    icon: 'i-bi:truck-front-fill',
     order: 2,
 
     qualifications: [
@@ -88,7 +88,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Trasporto Sanitario e Soccorso in Ambulanza',
         description:
           'Percorso formativo dedicato ai volontari e dipendenti CRI che operano nel trasporto sanitario e nel soccorso in ambulanza.',
-        icon: 'i-bi:ambulance',
+        icon: 'i-bi:truck-front-fill',
         order: 2,
       },
       {
@@ -134,7 +134,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Operatore Telecomunicazioni',
         description:
           'Formazione per operare nell’ambito delle telecomunicazioni a supporto delle attività CRI.',
-        icon: 'i-bi:radio',
+        icon: 'i-bi:broadcast-pin',
         order: 3,
       },
       {
@@ -143,7 +143,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Operatore Cinofilo',
         description:
           'Percorso per operatori cinofili della Croce Rossa Italiana.',
-        icon: 'i-bi:dog',
+        icon: 'i-bi:search-heart',
         order: 4,
       },
       {
@@ -575,7 +575,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Specialista Telecomunicazioni',
         description:
           'Specializzazione avanzata nell’ambito delle telecomunicazioni.',
-        icon: 'i-bi:radio',
+        icon: 'i-bi:broadcast-pin',
         order: 9,
       },
       {
@@ -584,7 +584,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Unità Cinofila Specializzata in Attività Sociali',
         description:
           'Specializzazione cinofila dedicata alle attività sociali.',
-        icon: 'i-bi:dog',
+        icon: 'i-bi:search-heart',
         order: 10,
       },
       {
@@ -621,7 +621,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Trainer Istruttore di Guida',
         description:
           'Percorso per trainer istruttori di guida CRI.',
-        icon: 'i-bi:steering-wheel',
+        icon: 'i-bi:car-front-fill',
         order: 2,
       },
       {
@@ -630,7 +630,7 @@ const qualificationCategories: QualificationCategory[] = [
         title: 'Trainer Specializzato Guida in Emergenza-Urgenza CRI',
         description:
           'Percorso specialistico per la guida CRI in emergenza-urgenza.',
-        icon: 'i-bi:ambulance',
+        icon: 'i-bi:truck-front-fill',
         order: 3,
       },
       {

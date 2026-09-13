@@ -138,7 +138,6 @@
         >
           <article class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden news-card">
             
-            <!-- Link dinamico alla rotta specifica -->
             <NuxtLink
               :to="`${baseRoute}/${article.slug}`"
               class="text-decoration-none d-block"

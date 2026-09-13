@@ -1,7 +1,7 @@
 <template>
   <div>
     <Transition name="fade">
-      <Caricamento v-if="isLoading" />
+      <Caricamento v-if="mostraCaricamento" />
     </Transition>
 
     <NuxtLayout>
@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
   activeSocialLinks,
   contactConfig,
@@ -24,28 +23,53 @@ const siteUrl = config.public.siteUrl.replace(/\/$/, '')
 const description = config.public.siteDescription
 const iubenda = config.public.iubenda
 
-// --- Gestione Stato Caricamento (7 secondi) ---
-const isLoading = ref(true)
+const CHIAVE_SPLASH_SESSIONE = 'cri-rubiera-splash-visto'
+const DURATA_MINIMA_SPLASH_MS = 700
 
-onMounted(() => {
+const mostraCaricamento = ref(true)
+
+onNuxtReady(() => {
+  let giaVisto = false
+  try {
+    giaVisto = sessionStorage.getItem(CHIAVE_SPLASH_SESSIONE) === '1'
+    sessionStorage.setItem(CHIAVE_SPLASH_SESSIONE, '1')
+  } catch {
+    giaVisto = false
+  }
+
+  const attesa = giaVisto
+    ? 0
+    : Math.max(0, DURATA_MINIMA_SPLASH_MS - performance.now())
+
   setTimeout(() => {
-    isLoading.value = false
-  }, 4000)
+    mostraCaricamento.value = false
+  }, attesa)
 })
 
-// --- SEO & Meta Configuration ---
+useHead({
+  script: [
+    {
+      key: 'splash-sessione',
+      tagPriority: 'critical',
+      innerHTML: `try{if(sessionStorage.getItem('${CHIAVE_SPLASH_SESSIONE}')==='1')document.documentElement.classList.add('splash-visto')}catch(e){}`,
+    },
+  ],
+  noscript: [
+    {
+      key: 'splash-noscript',
+      innerHTML: '<style>.loading-screen{display:none!important}</style>',
+    },
+  ],
+})
+
 useSeoMeta({
   titleTemplate: (title) => title ? `${title} | ${siteName}` : siteName,
   description,
   ogSiteName: siteName,
   ogDescription: description,
-  ogImage: `${siteUrl}${organizationConfig.logo.imageUrl}`,
-  ogImageAlt: siteName,
   twitterCard: 'summary_large_image',
 })
 
-// --- Dati strutturati Schema.org ---
-// Solo informazioni verificabili presenti in data/config.ts.
 useSchemaOrg([
   defineOrganization({
     '@type': ['NGO', 'LocalBusiness'],
@@ -75,7 +99,6 @@ useSchemaOrg([
   defineWebPage(),
 ])
 
-// --- Iubenda Cookie Solution ---
 if (iubenda.siteId && iubenda.cookiePolicyId) {
   const iubendaConfiguration = {
     siteId: Number(iubenda.siteId),

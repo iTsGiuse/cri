@@ -13,7 +13,6 @@
           class="row align-items-center"
           :class="{ 'flex-lg-row-reverse': index % 2 !== 0 }"
         >
-          <!-- Immagine -->
           <div class="col-12 col-lg-6 mb-4 mb-lg-0">
             <div class="image-wrapper rounded overflow-hidden shadow-sm">
               <NuxtImg
@@ -30,7 +29,6 @@
             </div>
           </div>
 
-          <!-- Testo e CTA -->
           <div class="col-12 col-lg-6 text-center text-lg-start">
             <div
               :class="[
@@ -46,7 +44,6 @@
               </p>
 
               <template v-if="section.cta?.label && section.cta?.url">
-                <!-- Link Esterno: usa <a> con target="_blank" -->
                 <a
                   v-if="isExternal(section.cta.url)"
                   :href="section.cta.url"
@@ -68,7 +65,6 @@
                   />
                 </a>
 
-                <!-- Link Interno: usa <NuxtLink> -->
                 <NuxtLink
                   v-else
                   :to="section.cta.url"
@@ -105,9 +101,6 @@ defineProps<{
   sections: AlternatingSection[]
 }>()
 
-/**
- * Verfica se l'URL passato è un link esterno o un file.
- */
 function isExternal(url: string): boolean {
   if (!url) return false
   return (
