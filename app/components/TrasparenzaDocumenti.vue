@@ -7,7 +7,7 @@
           <div class="row g-3 align-items-center">
 
             <div class="col-12 col-lg-5">
-              <label for="ricerca-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Cerca documento</label>
+              <label for="ricerca-documenti" class="form-label text-muted fw-semibold text-uppercase text-xs tracking-wider mb-1">Cerca documento</label>
               <div class="input-group">
                 <span class="input-group-text bg-light border-end-0 text-secondary rounded-start-3">
                   <Icon name="i-bi:search" class="" />
@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-              <label for="categoria-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Categoria</label>
+              <label for="categoria-documenti" class="form-label text-muted fw-semibold text-uppercase text-xs tracking-wider mb-1">Categoria</label>
               <select id="categoria-documenti" v-model="selectedCategory" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
                 <option :value="ALL_CATEGORIES">Tutte le Categorie</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-3">
-              <label for="anno-documenti" class="form-label text-muted fw-bold text-uppercase text-xs tracking-wider mb-1">Anno</label>
+              <label for="anno-documenti" class="form-label text-muted fw-semibold text-uppercase text-xs tracking-wider mb-1">Anno</label>
               <select id="anno-documenti" v-model="selectedYear" class="form-select bg-light border-0 shadow-none py-2 text-sm rounded-3">
                 <option :value="ALL_YEARS">Tutti gli Anni</option>
                 <option v-for="year in resolvedYears" :key="year" :value="year">

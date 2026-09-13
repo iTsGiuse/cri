@@ -1,3 +1,5 @@
+// app/data/news.ts
+
 export interface NewsCategory {
   id: string
   name: string
@@ -12,6 +14,7 @@ export interface NewsArticle {
   publishedAt: string
   imageUrl: string
   content: string
+  featured?: boolean
 }
 
 export const newsCategories: NewsCategory[] = [
@@ -54,6 +57,7 @@ export const newsArticles: NewsArticle[] = [
       'Sono aperte le iscrizioni al nuovo corso di formazione per chi desidera entrare a far parte della Croce Rossa Italiana.',
     categoryId: 'formazione',
     publishedAt: '2026-09-08',
+    featured: true,
     imageUrl:
       'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1200&q=80',
     content: `
@@ -138,6 +142,7 @@ export const newsArticles: NewsArticle[] = [
       'I nostri volontari saranno presenti per incontrare cittadini e famiglie e raccontare le attività del Comitato.',
     categoryId: 'eventi',
     publishedAt: '2026-08-28',
+    featured: true,
     imageUrl:
       'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=80',
     content: `

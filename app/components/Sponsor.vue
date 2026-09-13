@@ -87,7 +87,7 @@
             {{ sponsor.cta.description }}
           </p>
 
-          <NuxtLink :to="sponsor.cta.url" class="btn btn-danger btn-lg px-4">
+          <NuxtLink :to="sponsor.cta.url" class="btn btn-danger fw-semibold btn-lg px-4">
             {{ sponsor.cta.label }}
           </NuxtLink>
         </div>

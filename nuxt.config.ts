@@ -39,7 +39,7 @@ export default defineNuxtConfig({
       {
         name: 'Montserrat',
         provider: 'google',
-        weights: [400, 500, 600, 700, 800],
+        weights: [400, 500, 600, 700],
       },
     ],
   },

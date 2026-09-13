@@ -94,8 +94,6 @@ const donationData = {
         'Contattaci per verificare che gli oggetti possano essere accettati e per concordare la consegna.',
     },
 
-    // `icon` contiene sempre il nome completo dell'icona, come nel resto
-    // del progetto: nessuna concatenazione lato template.
     contacts: [
       {
         icon: 'i-bi:telephone',
@@ -113,7 +111,6 @@ const donationData = {
   },
 }
 
-/** Chiave del campo appena copiato negli appunti, per il feedback visivo. */
 const copiedKey = ref<string | null>(null)
 
 const copyValue = async (value: string, key: string) => {
@@ -159,7 +156,7 @@ const copyValue = async (value: string, key: string) => {
             <div class="pe-lg-5">
 
               <div
-                class="text-danger text-uppercase small fw-bold mb-3"
+                class="text-danger text-uppercase small fw-semibold mb-3"
               >
                 {{ donationData.fivePerMille.eyebrow }}
               </div>
@@ -200,7 +197,7 @@ const copyValue = async (value: string, key: string) => {
 
                   <button
                     type="button"
-                    class="btn btn-outline-danger flex-shrink-0"
+                    class="btn btn-outline-danger fw-semibold flex-shrink-0"
                     @click="
                       copyValue(
                         donationData.fivePerMille.taxCode.value,
@@ -292,7 +289,7 @@ const copyValue = async (value: string, key: string) => {
             <div class="pe-lg-5">
 
               <div
-                class="text-danger text-uppercase small fw-bold mb-3"
+                class="text-danger text-uppercase small fw-semibold mb-3"
               >
                 {{ donationData.bankTransfer.eyebrow }}
               </div>
@@ -343,7 +340,7 @@ const copyValue = async (value: string, key: string) => {
                   <button
                     v-if="field.copyable"
                     type="button"
-                    class="btn btn-outline-danger btn-sm flex-shrink-0"
+                    class="btn btn-outline-danger btn-sm fw-semibold flex-shrink-0"
                     @click="copyValue(field.value, field.id)"
                   >
                     <Icon
@@ -376,7 +373,7 @@ const copyValue = async (value: string, key: string) => {
 
               <a
                 :href="`mailto:${donationData.bankTransfer.contact.email}`"
-                class="btn btn-danger flex-shrink-0"
+                class="btn btn-danger fw-semibold flex-shrink-0"
               >
                 <Icon name="i-bi:envelope" class=" me-2" />
 
@@ -419,7 +416,7 @@ const copyValue = async (value: string, key: string) => {
             <div class="pe-lg-5">
 
               <div
-                class="text-danger text-uppercase small fw-bold mb-3"
+                class="text-danger text-uppercase small fw-semibold mb-3"
               >
                 {{ donationData.goods.eyebrow }}
               </div>
@@ -514,7 +511,7 @@ const copyValue = async (value: string, key: string) => {
                 v-for="contact in donationData.goods.contacts"
                 :key="contact.href"
                 :href="contact.href"
-                class="btn"
+                class="btn fw-semibold"
                 :class="`btn-${contact.variant}`"
               >
 

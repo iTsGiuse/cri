@@ -2,43 +2,43 @@
   <ComunicazioneDettaglio
     :article="article"
     :related-articles="relatedArticles"
-    :categories="newsCategories"
+    :categories="campagneCategories"
     :page-config="pageConfig"
   />
 </template>
 
 <script setup lang="ts">
 import { siteConfig } from '~/data/config'
-import { newsArticles, newsCategories } from '~/data/news'
+import { newsArticles as campagneArticles, newsCategories as campagneCategories } from '~/data/campagne'
 
 const route = useRoute()
 
 const pageConfig = {
-  basePath: '/news',
+  basePath: '/campagne',
   back: {
-    label: 'Torna alle news',
+    label: 'Torna alle campagne',
     icon: 'i-bi:arrow-left',
-    url: '/news',
+    url: '/campagne',
   },
   meta: {
     categoryIcon: 'i-bi:tag-fill',
     dateIcon: 'i-bi:calendar-event',
-    publishedLabel: 'Pubblicato il',
-    dateLabel: 'Pubblicazione',
+    publishedLabel: 'Lanciata il',
+    dateLabel: 'Data di lancio',
   },
   author: {
-    label: 'Autore',
+    label: 'Promotore',
     icon: 'i-bi:person-fill',
     defaultAuthor: 'Croce Rossa Italiana – Comitato di Rubiera',
   },
   related: {
-    eyebrow: 'Potrebbe interessarti',
-    title: 'Altre news',
-    allLabel: 'Tutte le news',
+    eyebrow: 'Iniziative Correlate',
+    title: 'Altre campagne',
+    allLabel: 'Tutte le campagne',
     allIcon: 'i-bi:arrow-right',
-    openLabel: 'Apri la news',
+    openLabel: 'Apri campagna',
     dateIcon: 'i-bi:calendar-event',
-    readLabel: 'Leggi la news',
+    readLabel: 'Leggi la campagna',
     readIcon: 'i-bi:arrow-right',
   },
 }
@@ -46,18 +46,18 @@ const pageConfig = {
 const slug = computed(() => String(route.params.slug))
 
 const article = computed(() => {
-  const found = newsArticles.find((item) => item.slug === slug.value)
+  const found = campagneArticles.find((item) => item.slug === slug.value)
   if (!found) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'News non trovata',
+      statusMessage: 'Campagna non trovata',
     })
   }
   return found
 })
 
 const relatedArticles = computed(() => {
-  return newsArticles
+  return campagneArticles
     .filter((item) => item.id !== article.value.id && item.categoryId === article.value.categoryId)
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, 3)

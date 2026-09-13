@@ -81,7 +81,7 @@
             <div class="position-absolute top-0 start-0 w-100 bg-danger" style="height: 6px;"></div>
 
             <div class="py-2">
-              <span class="text-danger fw-bold text-uppercase small mb-2 d-block">
+              <span class="text-danger fw-semibold text-uppercase small mb-2 d-block">
                 {{ historyContent.conclusion.eyebrow }}
               </span>
               <h2 class="h3 fw-bold mb-3 text-dark">

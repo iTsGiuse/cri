@@ -7,40 +7,8 @@
 <script setup lang="ts">
 import type { AlternatingSection } from '~/components/SezioniAlternate.vue'
 import type { SponsorSectionData } from '~/components/Sponsor.vue'
-import type { CarouselSlide } from '~/components/Carosello.vue'
 
-const carouselSlides: CarouselSlide[] = [
-  {
-    title: 'Benvenuto nel nostro sito',
-    description:
-      'Scopri tutti i nostri servizi e trova la soluzione più adatta alle tue esigenze.',
-    imageUrl: 'https://picsum.photos/id/1018/1920/800',
-    cta: {
-      label: 'Scopri di più',
-      url: '/servizi',
-    },
-  },
-  {
-    title: 'Soluzioni moderne',
-    description:
-      'Tecnologia, design e semplicità per offrirti un’esperienza migliore.',
-    imageUrl: 'https://picsum.photos/id/1015/1920/800',
-    cta: {
-      label: 'I nostri servizi',
-      url: '/servizi',
-    },
-  },
-  {
-    title: 'Contattaci',
-    description:
-      'Hai bisogno di maggiori informazioni? Siamo a tua disposizione.',
-    imageUrl: 'https://picsum.photos/id/1016/1920/800',
-    cta: {
-      label: 'Contattaci',
-      url: '/contatti',
-    },
-  },
-];
+const carouselSlides = getFeaturedCarouselSlides();
 
 const sponsorData: SponsorSectionData = {
   eyebrow: 'Insieme per la comunità',

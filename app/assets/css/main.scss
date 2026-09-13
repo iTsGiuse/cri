@@ -1,18 +1,7 @@
-// Caricamento Bootstrap con il colore "danger" del Comitato.
-// `@use ... with` sostituisce il vecchio `@import`, deprecato in Dart Sass
-// e in rimozione nella 3.0.
+
 @use 'bootstrap/scss/bootstrap' with (
   $danger: #B3221C
 );
-
-// =========================================================
-// FOCUS
-// =========================================================
-//
-// Il progetto non usa il ring a ombra di Bootstrap: lo manteniamo nascosto
-// per conservare la resa attuale, ma il focus da tastiera deve restare
-// sempre percepibile (WCAG 2.4.7). `currentColor` garantisce il contrasto
-// sia sui fondi chiari sia su quelli rossi.
 
 button,
 a,
@@ -32,7 +21,6 @@ summary,
   }
 }
 
-// Font globale (scaricato e servito automaticamente da @nuxt/fonts)
 body {
   font-family: 'Montserrat', sans-serif;
 }

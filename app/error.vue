@@ -76,7 +76,7 @@
                   :title="social.name"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn btn-outline-light d-inline-flex align-items-center gap-2 rounded-pill px-3 "
+                  class="btn btn-outline-light fw-semibold d-inline-flex align-items-center gap-2 rounded-pill px-3"
                 >
                   <Icon :name="social.icon" aria-hidden="true"></Icon>
 
@@ -143,7 +143,7 @@
 
                     <div class="flex-grow-1">
                       <small
-                        class="text-danger fw-bold d-block text-uppercase"
+                        class="text-danger fw-semibold d-block text-uppercase"
                         :style="{
                           fontSize: errorPage.contacts.emergency.labelSize,
                         }"
@@ -151,7 +151,7 @@
                         {{ errorPage.contacts.emergency.label }}
                       </small>
 
-                      <span class="fw-bolder fs-3 text-danger lh-1">
+                      <span class="fw-bold fs-3 text-danger lh-1">
                         {{ errorPage.contacts.emergency.value }}
                       </span>
                     </div>

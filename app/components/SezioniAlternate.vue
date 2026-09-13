@@ -13,7 +13,7 @@
           class="row align-items-center"
           :class="{ 'flex-lg-row-reverse': index % 2 !== 0 }"
         >
-
+          <!-- Immagine -->
           <div class="col-12 col-lg-6 mb-4 mb-lg-0">
             <div class="image-wrapper rounded overflow-hidden shadow-sm">
               <NuxtImg
@@ -30,6 +30,7 @@
             </div>
           </div>
 
+          <!-- Testo e CTA -->
           <div class="col-12 col-lg-6 text-center text-lg-start">
             <div
               :class="[
@@ -44,13 +45,43 @@
                 {{ section.description }}
               </p>
 
-              <NuxtLink
-                v-if="section.cta?.label && section.cta?.url"
-                :to="section.cta.url"
-                class="btn btn-danger btn-lg px-4 py-2 shadow-sm"
-              >
-                {{ section.cta.label }}
-              </NuxtLink>
+              <template v-if="section.cta?.label && section.cta?.url">
+                <!-- Link Esterno: usa <a> con target="_blank" -->
+                <a
+                  v-if="isExternal(section.cta.url)"
+                  :href="section.cta.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-danger fw-semibold btn-lg px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2"
+                >
+                  <span>{{ section.cta.label }}</span>
+                  <Icon
+                    v-if="section.cta.icon"
+                    :name="section.cta.icon"
+                    aria-hidden="true"
+                  />
+                  <Icon
+                    v-else
+                    name="i-bi:box-arrow-up-right"
+                    aria-hidden="true"
+                    class="fs-6"
+                  />
+                </a>
+
+                <!-- Link Interno: usa <NuxtLink> -->
+                <NuxtLink
+                  v-else
+                  :to="section.cta.url"
+                  class="btn btn-danger fw-semibold btn-lg px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2"
+                >
+                  <span>{{ section.cta.label }}</span>
+                  <Icon
+                    v-if="section.cta.icon"
+                    :name="section.cta.icon"
+                    aria-hidden="true"
+                  />
+                </NuxtLink>
+              </template>
             </div>
           </div>
         </div>
@@ -67,18 +98,31 @@ export interface AlternatingSection {
   title: string
   description: string
   imageUrl: string
-
   cta?: CtaLink
 }
 
 defineProps<{
   sections: AlternatingSection[]
 }>()
+
+/**
+ * Verfica se l'URL passato è un link esterno o un file.
+ */
+function isExternal(url: string): boolean {
+  if (!url) return false
+  return (
+    url.startsWith('http://') ||
+    url.startsWith('https://') ||
+    url.startsWith('//') ||
+    url.startsWith('mailto:') ||
+    url.startsWith('tel:') ||
+    /\.(pdf|doc|docx|xls|xlsx|zip)$/i.test(url)
+  )
+}
 </script>
 
 <style scoped>
 .alternating-sections {
   overflow-x: hidden;
 }
-
 </style>

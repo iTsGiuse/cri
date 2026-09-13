@@ -26,6 +26,7 @@ import type { TopBarInfo } from '~/components/TopBar.vue'
 import type { HeaderData } from '~/components/Header.vue'
 import type { FooterData } from '~/components/Footer.vue'
 import type { CtaSectionData } from '~/components/Cta.vue'
+
 import {
   activeSocialLinks,
   contactConfig,
@@ -67,8 +68,8 @@ const headerData: HeaderData = {
       label: 'Chi siamo',
       children: [
         {
-          label: 'Il Comitato',
-          url: '/chi-siamo/il-comitato',
+          label: 'Comitato e Contatti',
+          url: '/chi-siamo/comitato-e-contatti',
           icon: 'i-bi:building-fill',
         },
         {
@@ -77,24 +78,19 @@ const headerData: HeaderData = {
           icon: 'i-bi:clock-history',
         },
         {
-          label: 'Organizzazione e governance',
+          label: 'Organizzazione e Governance',
           url: '/chi-siamo/organizzazione',
           icon: 'i-bi:diagram-3-fill',
         },
         {
-          label: 'Principi e valori',
+          label: 'Principi e Valori',
           url: '/chi-siamo/principi-e-valori',
           icon: 'i-bi:heart-fill',
         },
         {
-          label: 'Trasparenza e documenti',
+          label: 'Trasparenza e Documenti',
           url: '/chi-siamo/trasparenza',
           icon: 'i-bi:file-earmark-text-fill',
-        },
-        {
-          label: 'Sede e contatti',
-          url: '/chi-siamo/sede-e-contatti',
-          icon: 'i-bi:geo-alt-fill',
         },
       ],
     },
@@ -185,19 +181,9 @@ const headerData: HeaderData = {
           icon: 'i-bi:person-plus-fill',
         },
         {
-          label: 'Come funziona il corso di accesso',
-          url: '/volontariato/corso-di-accesso',
-          icon: 'i-bi:info-circle-fill',
-        },
-        {
           label: 'Percorso formativo e qualifiche',
           url: '/volontariato/percorso-formativo',
           icon: 'i-bi:mortarboard-fill',
-        },
-        {
-          label: 'Attività e gruppi di lavoro',
-          url: '/volontariato/attivita-e-gruppi',
-          icon: 'i-bi:people-fill',
         },
       ],
     },
@@ -225,28 +211,8 @@ const headerData: HeaderData = {
 
     {
       label: 'FAQ',
-      children: [
-        {
-          label: 'Trasporti e Servizi Sanitari',
-          url: '/faq/servizi-e-trasporti',
-          icon: 'i-bi:truck-front-fill',
-        },
-        {
-          label: 'Corsi di Formazione',
-          url: '/faq/corsi-formazione',
-          icon: 'i-bi:mortarboard-fill',
-        },
-        {
-          label: 'Diventare Volontario',
-          url: '/faq/volontariato',
-          icon: 'i-bi:person-heart',
-        },
-        {
-          label: 'Donazioni e 5x1000',
-          url: '/faq/donazioni',
-          icon: 'i-bi:piggy-bank-fill',
-        },
-      ],
+      url: '/faq',
+      icon: 'i-bi:question-circle-fill',
     },
   ],
 

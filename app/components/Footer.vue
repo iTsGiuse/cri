@@ -1,4 +1,3 @@
-```vue
 <template>
   <footer class="bg-danger text-white">
     <div class="container py-5">
@@ -47,7 +46,7 @@
           :class="{ 'offset-xl-3': index > 0 && index % 3 === 0 }"
         >
           <h6
-            class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
+            class="fw-semibold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
           >
             {{ column.title }}
           </h6>
@@ -87,7 +86,7 @@
           }"
         >
           <h6
-            class="fw-bold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
+            class="fw-semibold text-uppercase fs-6 tracking-wider border-bottom border-white border-opacity-25 pb-2 mb-3"
           >
             {{ footer.contacts.title }}
           </h6>

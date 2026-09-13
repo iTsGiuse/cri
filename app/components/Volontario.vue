@@ -1,632 +1,508 @@
 <template>
-  <div class="bg-light">
+  <main class="bg-light py-5">
+    <div class="container pb-5">
+      <!-- REQUISITI -->
+      <section class="mb-5" aria-labelledby="requirements-title">
+        <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-4">
+          <div>
+            <span class="text-danger fw-semibold small text-uppercase">
+              {{ pageData.requirementsSection.eyebrow }}
+            </span>
 
-    <section class="py-4 py-lg-5">
-      <div class="container">
+            <h2 id="requirements-title" class="h3 fw-bold text-dark mb-0 mt-1">
+              {{ pageData.requirementsSection.title }}
+            </h2>
+          </div>
 
-        <div class="row justify-content-center">
-          <div class="col-12 col-xl-10">
+          <span class="text-secondary small">
+            {{ pageData.requirementsSection.subtitle }}
+          </span>
+        </div>
 
-            <div class="mb-4 mb-lg-5 text-center text-lg-start">
-              <span class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 mb-3">
-                <Icon
-                  :name="pageContent.badge.icon"
-                  class="me-1"
-                />
+        <div class="row g-4">
+          <div
+            v-for="requirement in requirements"
+            :key="requirement.number"
+            class="col-12 col-md-4"
+          >
+            <article
+              class="card border-0 rounded-4 shadow-sm h-100 border-top border-danger border-4"
+            >
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <div
+                    class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="width: 44px; height: 44px;"
+                    aria-hidden="true"
+                  >
+                    <Icon :name="requirement.icon" />
+                  </div>
 
-                {{ pageContent.badge.label }}
+                  <span class="text-danger fw-bold small">
+                    {{ requirement.number }}
+                  </span>
+                </div>
+
+                <h3 class="h5 fw-bold text-dark mb-2">
+                  {{ requirement.title }}
+                </h3>
+
+                <p class="text-secondary small mb-0">
+                  {{ requirement.description }}
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERCORSO -->
+      <section class="mb-5" aria-labelledby="steps-title">
+        <div class="card border-0 rounded-4 shadow-sm bg-white overflow-hidden">
+          <div class="card-body p-4 p-lg-5">
+            <div class="mb-4">
+              <span
+                class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2"
+              >
+                {{ pageData.stepsSection.badge }}
               </span>
 
-              <h2 class="display-5 fw-bold text-dark mb-3">
-                {{ pageContent.title }}
+              <h2 id="steps-title" class="h3 fw-bold text-dark mb-2">
+                {{ pageData.stepsSection.title }}
               </h2>
 
-              <p class="lead text-secondary mb-0">
-                {{ pageContent.intro }}
+              <p class="text-secondary small mb-0">
+                {{ pageData.stepsSection.description }}
               </p>
             </div>
 
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="pb-4 pb-lg-5">
-      <div class="container">
-
-        <div class="row g-4">
-
-          <div
-            v-for="benefit in pageContent.benefits"
-            :key="benefit.title"
-            class="col-12 col-md-6 col-lg-4"
-          >
-            <div class="card h-100 border-0 shadow-sm rounded-4">
-              <div class="card-body p-4">
-
-                <div
-                  class="d-inline-flex align-items-center justify-content-center rounded-3 bg-danger-subtle text-danger mb-4"
-                  style="width: 52px; height: 52px;"
+            <div class="row g-4">
+              <div
+                v-for="step in steps"
+                :key="step.number"
+                class="col-12 col-sm-6 col-lg-3"
+              >
+                <article
+                  class="bg-light border rounded-4 h-100 p-4"
                 >
-                  <Icon
-                    :name="benefit.icon"
-                    class="fs-4"
-                  />
-                </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-4"
+                  >
+                    <span class="badge bg-danger text-white rounded-pill px-3 py-2">
+                      Step {{ step.number }}
+                    </span>
 
-                <h2 class="h5 fw-bold text-dark mb-3">
-                  {{ benefit.title }}
-                </h2>
+                    <Icon
+                      :name="step.icon"
+                      class="text-danger fs-5"
+                      aria-hidden="true"
+                    />
+                  </div>
 
-                <p class="text-secondary mb-0">
-                  {{ benefit.description }}
-                </p>
+                  <h3 class="h5 fw-bold text-dark mb-2">
+                    {{ step.title }}
+                  </h3>
 
+                  <p class="text-secondary small mb-0">
+                    {{ step.description }}
+                  </p>
+                </article>
               </div>
             </div>
-          </div>
 
-        </div>
-
-      </div>
-    </section>
-
-    <section class="py-4 py-lg-5 bg-white">
-      <div class="container">
-
-        <div class="row align-items-center g-4 g-lg-5">
-
-          <div class="col-12 col-lg-6">
-
-            <div class="rounded-4 overflow-hidden shadow-sm">
-              <NuxtImg
-                :src="pageContent.requirements.imageUrl"
-                :alt="pageContent.requirements.imageAlt"
-                width="1000"
-                height="750"
-                format="webp"
-                loading="lazy"
-                class="img-fluid w-100"
-              />
-            </div>
-
-          </div>
-
-          <div class="col-12 col-lg-6">
-
-            <span class="text-danger text-uppercase fw-bold small">
-              {{ pageContent.requirements.eyebrow }}
-            </span>
-
-            <h2 class="display-6 fw-bold text-dark mt-2 mb-3">
-              {{ pageContent.requirements.title }}
-            </h2>
-
-            <p class="text-secondary mb-4">
-              {{ pageContent.requirements.description }}
-            </p>
-
-            <div class="d-flex flex-column gap-3">
-
-              <div
-                v-for="requirement in pageContent.requirements.items"
-                :key="requirement.title"
-                class="d-flex align-items-start gap-3"
-              >
-
+            <!-- CTA -->
+            <div
+              class="border-top mt-5 pt-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4"
+            >
+              <div class="d-flex align-items-center gap-3">
                 <div
-                  class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-danger-subtle text-danger"
-                  style="width: 40px; height: 40px;"
+                  class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                  style="width: 48px; height: 48px;"
+                  aria-hidden="true"
                 >
-                  <Icon :name="requirement.icon" />
+                  <Icon name="bi:envelope-heart-fill" />
                 </div>
 
                 <div>
                   <h3 class="h6 fw-bold text-dark mb-1">
-                    {{ requirement.title }}
+                    {{ pageData.stepsSection.cta.title }}
                   </h3>
 
-                  <p class="small text-secondary mb-0">
-                    {{ requirement.description }}
+                  <p class="text-secondary small mb-0">
+                    {{ pageData.stepsSection.cta.description }}
                   </p>
                 </div>
-
               </div>
 
+              <a
+                :href="`mailto:${contactConfig.email}`"
+                class="btn btn-danger rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center justify-content-center gap-2 flex-shrink-0"
+              >
+                {{ pageData.stepsSection.cta.buttonText }}
+                <Icon name="bi:arrow-right" aria-hidden="true" />
+              </a>
             </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <section class="py-4 py-lg-5">
-      <div class="container">
-
-        <div class="row justify-content-center mb-4 mb-lg-5">
-          <div class="col-12 col-xl-8 text-center">
-
-            <span class="text-danger text-uppercase fw-bold small">
-              {{ pageContent.path.eyebrow }}
-            </span>
-
-            <h2 class="display-6 fw-bold text-dark mt-2 mb-3">
-              {{ pageContent.path.title }}
-            </h2>
-
-            <p class="text-secondary mb-0">
-              {{ pageContent.path.description }}
-            </p>
-
           </div>
         </div>
+      </section>
+
+      <!-- FAQ + CONTATTI -->
+      <section aria-labelledby="info-title">
+        <h2 id="info-title" class="visually-hidden">
+          Informazioni e contatti
+        </h2>
 
         <div class="row g-4">
+          <!-- FAQ -->
+          <div class="col-12 col-lg-7">
+            <div class="card border-0 rounded-4 shadow-sm bg-white h-100">
+              <div class="card-body p-4 p-lg-5">
+                <span class="text-danger fw-semibold small text-uppercase">
+                  {{ pageData.faqSection.eyebrow }}
+                </span>
 
-          <div
-            v-for="(step, index) in pageContent.path.steps"
-            :key="step.title"
-            class="col-12 col-md-6 col-lg-3"
-          >
-
-            <div class="card h-100 border-0 shadow-sm rounded-4">
-              <div class="card-body p-4">
-
-                <div
-                  class="d-flex align-items-center justify-content-center rounded-circle bg-danger text-white fw-bold mb-4"
-                  style="width: 48px; height: 48px;"
-                >
-                  {{ index + 1 }}
-                </div>
-
-                <h3 class="h5 fw-bold text-dark mb-3">
-                  {{ step.title }}
+                <h3 class="h3 fw-bold text-dark mt-1 mb-2">
+                  {{ pageData.faqSection.title }}
                 </h3>
 
-                <p class="text-secondary small mb-0">
-                  {{ step.description }}
+                <p class="text-secondary small mb-4">
+                  {{ pageData.faqSection.description }}
                 </p>
 
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <section class="py-4 py-lg-5 bg-white">
-      <div class="container">
-
-        <div class="row justify-content-center mb-4 mb-lg-5">
-          <div class="col-12 col-xl-8 text-center">
-
-            <span class="text-danger text-uppercase fw-bold small">
-              {{ pageContent.activities.eyebrow }}
-            </span>
-
-            <h2 class="display-6 fw-bold text-dark mt-2 mb-3">
-              {{ pageContent.activities.title }}
-            </h2>
-
-            <p class="text-secondary mb-0">
-              {{ pageContent.activities.description }}
-            </p>
-
-          </div>
-        </div>
-
-        <div class="row g-3 g-lg-4">
-
-          <div
-            v-for="activity in pageContent.activities.items"
-            :key="activity.title"
-            class="col-12 col-sm-6 col-lg-4"
-          >
-
-            <div class="d-flex align-items-start gap-3 p-3 p-lg-4 border rounded-4 h-100 bg-light">
-
-              <div
-                class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3 bg-danger text-white"
-                style="width: 44px; height: 44px;"
-              >
-                <Icon :name="activity.icon" />
-              </div>
-
-              <div>
-                <h3 class="h6 fw-bold text-dark mb-1">
-                  {{ activity.title }}
-                </h3>
-
-                <p class="small text-secondary mb-0">
-                  {{ activity.description }}
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <section class="py-4 py-lg-5">
-      <div class="container">
-
-        <div class="row justify-content-center">
-
-          <div class="col-12 col-xl-9">
-
-            <div class="text-center mb-4 mb-lg-5">
-
-              <span class="text-danger text-uppercase fw-bold small">
-                {{ pageContent.faq.eyebrow }}
-              </span>
-
-              <h2 class="display-6 fw-bold text-dark mt-2 mb-0">
-                {{ pageContent.faq.title }}
-              </h2>
-
-            </div>
-
-            <div class="accordion" id="faqVolontari">
-
-              <div
-                v-for="(faqItem, index) in pageContent.faq.items"
-                :key="faqItem.question"
-                class="accordion-item border-0 shadow-sm rounded-3 mb-3 overflow-hidden"
-              >
-
-                <h3
-                  :id="`faq-heading-${index}`"
-                  class="accordion-header"
-                >
-                  <button
-                    class="accordion-button collapsed fw-semibold shadow-none"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    :data-bs-target="`#faq-collapse-${index}`"
-                    :aria-controls="`faq-collapse-${index}`"
+                <div class="accordion accordion-flush" id="volunteerFaq">
+                  <div
+                    v-for="(faq, index) in faqs"
+                    :key="faq.question"
+                    class="accordion-item"
                   >
-                    {{ faqItem.question }}
-                  </button>
-                </h3>
+                    <h4
+                      :id="`faq-heading-${index}`"
+                      class="accordion-header"
+                    >
+                      <button
+                        class="accordion-button collapsed px-0 shadow-none bg-transparent"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="`#faq-${index}`"
+                        :aria-controls="`faq-${index}`"
+                      >
+                        <span class="fw-semibold text-dark">
+                          {{ faq.question }}
+                        </span>
+                      </button>
+                    </h4>
 
-                <div
-                  :id="`faq-collapse-${index}`"
-                  class="accordion-collapse collapse"
-                  :aria-labelledby="`faq-heading-${index}`"
-                  data-bs-parent="#faqVolontari"
-                >
-                  <div class="accordion-body text-secondary">
-                    {{ faqItem.answer }}
+                    <div
+                      :id="`faq-${index}`"
+                      class="accordion-collapse collapse"
+                      :aria-labelledby="`faq-heading-${index}`"
+                      data-bs-parent="#volunteerFaq"
+                    >
+                      <div class="accordion-body px-0 pt-0 text-secondary small">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
+                <NuxtLink
+                  to="/faq"
+                  class="text-danger fw-semibold text-decoration-none small d-inline-flex align-items-center gap-2 mt-4"
+                >
+                  {{ pageData.faqSection.linkText }}
+                  <Icon name="bi:arrow-right" aria-hidden="true" />
+                </NuxtLink>
               </div>
-
             </div>
-
           </div>
 
-        </div>
+          <!-- CONTATTI -->
+          <div class="col-12 col-lg-5">
+            <aside
+              class="card border-0 rounded-4 shadow-sm bg-white h-100"
+              aria-labelledby="contacts-title"
+            >
+              <div class="card-body p-4 p-lg-5">
+                <span class="text-danger fw-semibold small text-uppercase">
+                  {{ pageData.contactsSection.eyebrow }}
+                </span>
 
-      </div>
-    </section>
+                <h3 id="contacts-title" class="h3 fw-bold text-dark mt-1 mb-2">
+                  {{ pageData.contactsSection.title }}
+                </h3>
 
-    <section class="pb-5">
-      <div class="container">
+                <p class="text-secondary small mb-4">
+                  {{ pageData.contactsSection.description }}
+                </p>
 
-        <div class="bg-danger rounded-4 shadow-lg p-4 p-md-5">
+                <div class="d-flex flex-column gap-3">
+                  <!-- TELEFONO -->
+                  <a
+                    :href="`tel:${contactConfig.phone.value}`"
+                    class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none"
+                  >
+                    <div
+                      class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                      style="width: 44px; height: 44px;"
+                      aria-hidden="true"
+                    >
+                      <Icon name="bi:telephone-fill" />
+                    </div>
 
-          <div class="row align-items-center g-4">
+                    <div>
+                      <span class="d-block text-secondary small">
+                        Telefono
+                      </span>
 
-            <div class="col-12 col-lg-8">
+                      <span class="text-dark fw-bold">
+                        {{ contactConfig.phone.label }}
+                      </span>
+                    </div>
+                  </a>
 
-              <h2 class="display-6 fw-bold text-white mb-3">
-                {{ pageContent.cta.title }}
-              </h2>
+                  <!-- EMAIL -->
+                  <a
+                    :href="`mailto:${contactConfig.email}`"
+                    class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none"
+                  >
+                    <div
+                      class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                      style="width: 44px; height: 44px;"
+                      aria-hidden="true"
+                    >
+                      <Icon name="bi:envelope-fill" />
+                    </div>
 
-              <p class="text-white text-opacity-75 mb-0">
-                {{ pageContent.cta.description }}
-              </p>
+                    <div>
+                      <span class="d-block text-secondary small">
+                        Email
+                      </span>
 
-            </div>
+                      <span class="text-danger fw-bold">
+                        {{ contactConfig.email }}
+                      </span>
+                    </div>
+                  </a>
 
-            <div class="col-12 col-lg-4">
+                  <!-- INDIRIZZO -->
+                  <a
+                    :href="contactConfig.address.mapsUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border text-decoration-none"
+                  >
+                    <div
+                      class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                      style="width: 44px; height: 44px;"
+                      aria-hidden="true"
+                    >
+                      <Icon name="bi:geo-alt-fill" />
+                    </div>
 
-              <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2">
+                    <div>
+                      <span class="d-block text-secondary small">
+                        Sede
+                      </span>
 
-                <NuxtLink
-                  :to="pageContent.cta.primary.url"
-                  class="btn btn-light text-danger fw-semibold rounded-3 py-3 px-4 d-flex align-items-center justify-content-center gap-2"
+                      <address class="text-dark fw-semibold small mb-0 fst-normal">
+                        {{ contactConfig.address.label }}
+                      </address>
+                    </div>
+                  </a>
+                </div>
+
+                <div
+                  class="alert alert-danger border-0 bg-danger-subtle text-danger small fw-semibold d-flex align-items-start gap-2 mt-4 mb-0"
+                  role="note"
                 >
-                  <Icon :name="pageContent.cta.primary.icon" />
+                  <Icon
+                    name="bi:info-circle-fill"
+                    class="fs-5 flex-shrink-0"
+                    aria-hidden="true"
+                  />
 
-                  {{ pageContent.cta.primary.label }}
-
-                  <Icon name="i-bi:arrow-right" />
-                </NuxtLink>
-
-                <NuxtLink
-                  :to="pageContent.cta.secondary.url"
-                  class="btn btn-outline-light fw-semibold rounded-3 py-3 px-4 d-flex align-items-center justify-content-center gap-2"
-                >
-                  <Icon :name="pageContent.cta.secondary.icon" />
-
-                  {{ pageContent.cta.secondary.label }}
-                </NuxtLink>
-
+                  <span>
+                    {{ pageData.contactsSection.note }}
+                  </span>
+                </div>
               </div>
-
-            </div>
-
+            </aside>
           </div>
-
         </div>
+      </section>
 
-      </div>
-    </section>
+      <!-- CTA FINALE -->
+      <section
+        class="mt-5"
+        aria-labelledby="final-cta-title"
+      >
+        <div class="bg-danger text-white rounded-4 p-4 p-lg-5 text-center">
+          <div class="mx-auto" style="max-width: 720px;">
+            <span class="opacity-75 small fw-semibold text-uppercase">
+              {{ pageData.finalCta.eyebrow }}
+            </span>
 
-  </div>
+            <h2 id="final-cta-title" class="h2 fw-bold mt-2 mb-3">
+              {{ pageData.finalCta.title }}
+            </h2>
+
+            <p class="mb-4 opacity-75">
+              {{ pageData.finalCta.description }}
+            </p>
+
+            <a
+              :href="`mailto:${contactConfig.email}`"
+              class="btn btn-light text-danger rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2"
+            >
+              {{ pageData.finalCta.buttonText }}
+              <Icon name="bi:arrow-right" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">
-import { siteConfig } from '~/data/config'
+import { siteConfig, contactConfig } from '~/data/config'
 
-const pageContent = {
-
-  badge: {
-    label: 'Croce Rossa Italiana',
-    icon: 'i-bi:heart-fill',
-  },
-
-  title: 'Diventa volontario',
-
-  intro:
-    'Entra nella Croce Rossa Italiana e metti il tuo tempo, le tue capacità e la tua voglia di aiutare al servizio della comunità.',
-
-  benefits: [
-
-    {
-      title: 'Aiuta chi ha bisogno',
-      description:
-        'Contribuisci concretamente alle attività del Comitato e porta il tuo aiuto alle persone che ne hanno più bisogno.',
-      icon: 'i-bi:heart-pulse',
-    },
-
-    {
-      title: 'Impara nuove competenze',
-      description:
-        'Partecipa a corsi e attività formative che ti permettono di acquisire competenze utili nella vita di tutti i giorni.',
-      icon: 'i-bi:book',
-    },
-
-    {
-      title: 'Fai parte di una squadra',
-      description:
-        'Conosci nuove persone, condividi esperienze e collabora con altri volontari accomunati dagli stessi valori.',
-      icon: 'i-bi:people',
-    },
-
-  ],
-
-  requirements: {
-
+const pageData = {
+  requirementsSection: {
     eyebrow: 'Prima di iniziare',
-
-    title: 'Chi può diventare volontario?',
-
-    description:
-      'Il volontariato in Croce Rossa è aperto a tutte le persone che desiderano impegnarsi per gli altri e condividere i nostri Principi Fondamentali.',
-
-    imageUrl: '/images/volontari.jpg',
-
-    imageAlt: 'Volontari della Croce Rossa Italiana',
-
-    items: [
-
-      {
-        title: 'Avere almeno 14 anni',
-        description:
-          'È possibile iniziare il percorso di volontariato a partire dai 14 anni, secondo le modalità previste per la propria fascia di età.',
-        icon: 'i-bi:person-check',
-      },
-
-      {
-        title: 'Condividere i nostri valori',
-        description:
-          'È importante riconoscersi nei Principi Fondamentali della Croce Rossa e nel suo impegno a favore delle persone.',
-        icon: 'i-bi:heart',
-      },
-
-      {
-        title: 'Avere voglia di partecipare',
-        description:
-          'Non è necessario essere esperti: formazione e affiancamento ti accompagneranno durante il percorso.',
-        icon: 'i-bi:hand-thumbs-up',
-      },
-
-      {
-        title: 'Mettere a disposizione il proprio tempo',
-        description:
-          'Ogni volontario può contribuire compatibilmente con i propri impegni e con le proprie disponibilità.',
-        icon: 'i-bi:clock',
-      },
-
-    ],
-
+    title: 'Cosa serve per diventare volontario',
+    subtitle: 'Requisiti di accesso',
   },
-
-  path: {
-
-    eyebrow: 'Come iniziare',
-
-    title: 'Il tuo percorso da volontario',
-
+  stepsSection: {
+    badge: 'Il percorso',
+    title: 'Come entrare in Croce Rossa',
     description:
-      'Diventare volontario è un percorso semplice e graduale. Ti accompagneremo passo dopo passo.',
-
-    steps: [
-
-      {
-        title: 'Contattaci',
-        description:
-          'Mettiti in contatto con il Comitato per ricevere informazioni sulle attività e sulle modalità di partecipazione.',
-      },
-
-      {
-        title: 'Partecipa al corso',
-        description:
-          'Segui il percorso formativo previsto per conoscere la Croce Rossa, i suoi valori e il ruolo dei volontari.',
-      },
-
-      {
-        title: 'Inizia l’attività',
-        description:
-          'Dopo la formazione potrai iniziare a partecipare alle attività del Comitato in base alle tue disponibilità.',
-      },
-
-      {
-        title: 'Cresci con noi',
-        description:
-          'Continua a formarti, acquisisci nuove competenze e scopri le tante attività in cui puoi dare il tuo contributo.',
-      },
-
-    ],
-
+      'Quattro passaggi per conoscere il Comitato, seguire il percorso formativo e iniziare la tua esperienza da volontario.',
+    cta: {
+      title: 'Vuoi sapere quando parte il prossimo corso?',
+      description:
+        'Contattaci per ricevere informazioni sulle prossime attività formative.',
+      buttonText: 'Scrivici',
+    },
   },
-
-  activities: {
-
-    eyebrow: 'Il mondo della Croce Rossa',
-
-    title: 'In cosa puoi impegnarti',
-
-    description:
-      'Le attività sono numerose e diverse tra loro. Potrai trovare quella più vicina alle tue passioni e alle esigenze della comunità.',
-
-    items: [
-
-      {
-        title: 'Assistenza e soccorso',
-        description:
-          'Supporta le attività dedicate all’assistenza e al soccorso delle persone.',
-        icon: 'i-bi:activity',
-      },
-
-      {
-        title: 'Emergenze',
-        description:
-          'Contribuisci alle attività di preparazione e risposta alle emergenze.',
-        icon: 'i-bi:exclamation-triangle',
-      },
-
-      {
-        title: 'Inclusione sociale',
-        description:
-          'Partecipa ai progetti rivolti alle persone più vulnerabili.',
-        icon: 'i-bi:people',
-      },
-
-      {
-        title: 'Giovani',
-        description:
-          'Collabora nelle attività dedicate ai giovani e alla loro crescita.',
-        icon: 'i-bi:person-hearts',
-      },
-
-      {
-        title: 'Formazione',
-        description:
-          'Aiuta a diffondere conoscenze e comportamenti utili alla comunità.',
-        icon: 'i-bi:mortarboard',
-      },
-
-      {
-        title: 'Prevenzione',
-        description:
-          'Partecipa alle iniziative di sensibilizzazione e prevenzione.',
-        icon: 'i-bi:shield-check',
-      },
-
-    ],
-
-  },
-
-  faq: {
-
+  faqSection: {
     eyebrow: 'Domande frequenti',
-
-    title: 'Hai qualche dubbio?',
-
-    items: [
-
-      {
-        question: 'Devo avere esperienza per diventare volontario?',
-        answer:
-          'No. Non è necessario avere esperienza precedente. La formazione e l’affiancamento ti permetteranno di acquisire gradualmente le competenze necessarie.',
-      },
-
-      {
-        question: 'Quanto tempo devo dedicare al volontariato?',
-        answer:
-          'Non esiste un’unica disponibilità valida per tutti. Potrai concordare la tua partecipazione in base alle attività disponibili e al tempo che puoi mettere a disposizione.',
-      },
-
-      {
-        question: 'Posso scegliere le attività a cui partecipare?',
-        answer:
-          'Le attività a cui potrai partecipare dipendono dalla tua formazione, dalle esigenze del Comitato e dalle opportunità disponibili. Insieme potrai individuare quelle più adatte a te.',
-      },
-
-      {
-        question: 'Come posso avere maggiori informazioni?',
-        answer:
-          'Puoi contattare direttamente il Comitato oppure utilizzare il pulsante di contatto presente in questa pagina per ricevere tutte le informazioni sul percorso.',
-      },
-
-    ],
-
-  },
-
-  cta: {
-
-    title: 'Vuoi metterti in gioco?',
-
+    title: 'Hai ancora qualche dubbio?',
     description:
-      'Scopri come entrare nella nostra squadra e inizia il tuo percorso come volontario della Croce Rossa Italiana.',
-
-    primary: {
-      label: 'Diventa volontario',
-      url: '/contatti',
-      icon: 'i-bi:heart-fill',
-    },
-
-    secondary: {
-      label: 'Contattaci',
-      url: '/contatti',
-      icon: 'i-bi:envelope',
-    },
-
+      'Ecco alcune delle domande più comuni sul percorso per diventare volontario.',
+    linkText: 'Consulta tutte le FAQ',
   },
-
+  contactsSection: {
+    eyebrow: 'Riferimenti',
+    title: 'Contatti del Comitato',
+    description:
+      'Hai domande sul volontariato? Puoi contattarci direttamente attraverso i nostri recapiti ufficiali.',
+    note: 'Per informazioni sul prossimo corso, contattaci direttamente: ti forniremo date e modalità aggiornate.',
+  },
+  finalCta: {
+    eyebrow: 'Fai la differenza',
+    title: 'Il tuo tempo può diventare aiuto concreto',
+    description:
+      'Scopri il volontariato in Croce Rossa e trova il modo migliore per mettere le tue capacità al servizio della comunità.',
+    buttonText: 'Contattaci',
+  },
 }
 
+const requirements = [
+  {
+    number: '01',
+    icon: 'bi:person-fill',
+    title: 'Età minima',
+    description:
+      "È possibile intraprendere il percorso a partire dai 14 anni. Per i minorenni sono previste le autorizzazioni richieste dalla normativa e dai regolamenti CRI.",
+  },
+  {
+    number: '02',
+    icon: 'bi:globe2',
+    title: 'Condivisione dei Principi',
+    description:
+      'È necessario condividere i Principi Fondamentali della Croce Rossa e aderire ai valori che guidano l’attività dei volontari.',
+  },
+  {
+    number: '03',
+    icon: 'bi:mortarboard-fill',
+    title: 'Formazione',
+    description:
+      'Il percorso prevede la partecipazione alla formazione prevista per l’accesso all’attività di volontariato presso il Comitato.',
+  },
+]
+
+const steps = [
+  {
+    number: '01',
+    icon: 'bi:chat-dots-fill',
+    title: 'Contattaci',
+    description:
+      'Scrivici o contattaci per manifestare il tuo interesse e ricevere informazioni sul prossimo percorso di accesso.',
+  },
+  {
+    number: '02',
+    icon: 'bi:people-fill',
+    title: 'Conosci il Comitato',
+    description:
+      'Partecipa agli incontri previsti per conoscere le attività, i volontari e le opportunità offerte dal Comitato di Rubiera.',
+  },
+  {
+    number: '03',
+    icon: 'bi:book-half',
+    title: 'Segui la formazione',
+    description:
+      'Partecipa al percorso formativo previsto e acquisisci le conoscenze necessarie per iniziare la tua esperienza.',
+  },
+  {
+    number: '04',
+    icon: 'bi:patch-check-fill',
+    title: 'Inizia il volontariato',
+    description:
+      'Concluse le attività previste dal percorso, potrai iniziare a partecipare alle attività del Comitato secondo le tue disponibilità.',
+  },
+]
+
+const faqs = [
+  {
+    question: 'Quanto dura il percorso di accesso?',
+    answer:
+      'La durata e l’organizzazione del percorso possono variare in base alla programmazione del Comitato. Contattaci per conoscere le prossime date disponibili.',
+  },
+  {
+    question: 'È previsto un costo per il percorso?',
+    answer:
+      'Eventuali quote, contributi o costi collegati al percorso possono dipendere dalle disposizioni e dalla programmazione in vigore. Per informazioni aggiornate è consigliato contattare direttamente il Comitato.',
+  },
+  {
+    question: 'Quanto tempo devo dedicare al volontariato?',
+    answer:
+      'L’impegno può variare in base alle attività svolte e alla disponibilità del volontario. Durante il percorso potrai conoscere le diverse possibilità e individuare quelle più compatibili con il tuo tempo.',
+  },
+  {
+    question: 'Posso diventare volontario anche se sono minorenne?',
+    answer:
+      'Il percorso può iniziare dai 14 anni. Per i minorenni sono previste specifiche condizioni e autorizzazioni: contattaci per conoscere le modalità applicabili.',
+  },
+]
+
 useSeoMeta({
-
   title: `Diventa volontario | ${siteConfig.shortName}`,
-
   description:
-    `Scopri come diventare volontario della ${siteConfig.name}.`,
-
+    'Scopri come diventare volontario della Croce Rossa Italiana – Comitato di Rubiera: requisiti, percorso di accesso, formazione e contatti.',
+  ogTitle: `Diventa volontario | ${siteConfig.shortName}`,
+  ogDescription:
+    'Scopri come diventare volontario della Croce Rossa Italiana – Comitato di Rubiera.',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
 })
 
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: `${siteConfig.url}/diventa-volontario`,
+    },
+  ],
+})
 </script>

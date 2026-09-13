@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav
-      class="navbar navbar-expand-lg bg-danger navbar-dark shadow-sm border-bottom border-dark border-opacity-75"
+      class="navbar navbar-expand-lg bg-danger navbar-dark shadow-sm border-bottom border-white border-opacity-25"
       aria-label="Navigazione principale"
     >
       <div class="container py-2">
@@ -61,6 +61,7 @@
                 'voce-attiva': isActiveItem(item),
               }"
             >
+              <!-- CASO 1: Voce con sottomenu Dropdown -->
               <template v-if="hasChildren(item)">
                 <button
                   type="button"
@@ -85,6 +86,7 @@
                     v-for="child in item.children"
                     :key="child.label"
                   >
+                    <!-- Sottomenu Link Esterno -->
                     <a
                       v-if="child.external"
                       :href="child.url"
@@ -109,6 +111,7 @@
                       />
                     </a>
 
+                    <!-- Sottomenu Link Interno -->
                     <NuxtLink
                       v-else
                       :to="child.url"
@@ -137,7 +140,9 @@
                 </ul>
               </template>
 
+              <!-- CASO 2: Voce Singola (Senza Figli) -->
               <template v-else>
+                <!-- Link Singolo Esterno -->
                 <a
                   v-if="item.external"
                   :href="item.url"
@@ -155,26 +160,22 @@
                   />
                 </a>
 
+                <!-- Link Singolo Interno (Senza freccia) -->
                 <NuxtLink
                   v-else
                   :to="item.url"
-                  class="nav-link nav-link-arrow text-white px-3 py-2 d-flex align-items-center gap-2"
+                  class="nav-link text-white px-3 py-2 d-flex align-items-center justify-content-center justify-content-lg-start"
                   :class="{
                     'link-attivo': isActiveLink(item.url),
                   }"
                   @click="closeMenu"
                 >
                   <span>{{ item.label }}</span>
-
-                  <Icon
-                    name="i-bi:chevron-right"
-                    class="ms-auto freccia-menu small"
-                    aria-hidden="true"
-                  />
                 </NuxtLink>
               </template>
             </li>
 
+            <!-- Pulsante d'Azione -->
             <li class="nav-item mt-4 mt-lg-0 ms-lg-3">
               <NuxtLink
                 :to="header.action.url"
@@ -460,7 +461,6 @@ const hasChildren = (item: NavLink) => {
 
     align-items: center;
     justify-content: flex-start;
-
     padding: 5rem 1.5rem 3rem;
 
     transition: none !important;
@@ -520,6 +520,7 @@ const hasChildren = (item: NavLink) => {
 
     padding: 0 !important;
     margin: 0;
+    margin-top: 50px;
   }
 
   .nav-item {

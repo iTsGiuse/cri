@@ -1,11 +1,11 @@
-
+// app/data/config.ts
 import type { SocialLink } from '../types'
 
 export const siteConfig = {
   name: 'Croce Rossa Italiana – Comitato di Rubiera',
   shortName: 'Croce Rossa Rubiera',
   description:
-    'Croce Rossa Italiana – Comitato di Rubiera. Attività, volontariato, iniziative e informazioni sul Comitato.',
+    'Attività, volontariato, iniziative e informazioni sul Comitato.',
   url: 'https://rubiera.cri.it',
   locale: 'it_IT',
   language: 'it',

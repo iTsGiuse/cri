@@ -1,14 +1,35 @@
-<script setup lang="ts">
-import { organizationConfig } from '~/data/config'
+<template>
+  <div>
+    <Transition name="fade">
+      <Caricamento v-if="isLoading" />
+    </Transition>
 
-// I valori dinamici passano da runtimeConfig (sovrascrivibile via env);
-// il marchio è un dato statico e arriva da ~/data/config.
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { organizationConfig } from './data/config'
+
 const config = useRuntimeConfig()
 const siteName = config.public.siteShortName
 const siteUrl = config.public.siteUrl.replace(/\/$/, '')
 const description = config.public.siteDescription
 const iubenda = config.public.iubenda
 
+// --- Gestione Stato Caricamento (7 secondi) ---
+const isLoading = ref(true)
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false
+  }, 4000)
+})
+
+// --- SEO & Meta Configuration ---
 useSeoMeta({
   titleTemplate: (title) => title ? `${title} | ${siteName}` : siteName,
   description,
@@ -19,8 +40,7 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-// Iubenda must be present in the server-rendered <head>, before optional tags.
-// Autoblocking is the global gate for existing and future third-party scripts.
+// --- Iubenda Cookie Solution ---
 if (iubenda.siteId && iubenda.cookiePolicyId) {
   const iubendaConfiguration = {
     siteId: Number(iubenda.siteId),
@@ -53,8 +73,14 @@ if (iubenda.siteId && iubenda.cookiePolicyId) {
 }
 </script>
 
-<template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-</template>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
